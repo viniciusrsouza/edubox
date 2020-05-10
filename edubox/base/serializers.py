@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from edubox.users.serializers import UserSerializer
 from edubox.base.models import *
 
 class PostFileSerializer(serializers.ModelSerializer):
@@ -23,8 +24,8 @@ class PostFileSerializer(serializers.ModelSerializer):
     
 
 class PostSerializer(serializers.ModelSerializer):
-    files = PostFileSerializer(many=True)
-
+    files = PostFileSerializer(many=True, required=False)
+    author = UserSerializer()
     class Meta:
         model = Post
         fields = [  'id',
@@ -32,15 +33,16 @@ class PostSerializer(serializers.ModelSerializer):
                     'author',
                     'course',
                     'text',
-                    'assignment',
-                    'is_pinned'
-                    'date']
+                    'is_pinned',
+                    'created_at']
 
     def create(self, validated_data):
-        files_data = validated_data.pop('files')
+        files_data = validated_data.pop('files', None)
+
         post = Post.objects.create(**validated_data)
-        for file_data in files_data:
-            PostFile.objects.create(post=post, **file_data)
+        if files_data:
+            for file_data in files_data:
+                PostFile.objects.create(post=post, **file_data)
         return post
 
     def update(self, instance, validated_data):

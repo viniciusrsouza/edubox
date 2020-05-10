@@ -9,6 +9,6 @@ urlpatterns = [
 
     path("posts/", view=views.PostsListCreate.as_view()),
 
-    path("posts/<int:id>", view=views.PostDetail.as_view()),
+    path("posts/<int:pk>", view=views.PostDetail.as_view()),
 
 ]

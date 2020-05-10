@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny, DjangoModelPermissions
-from edubox.users.serializer import CreateAuthUserSerializer
+from edubox.users.serializers import CreateAuthUserSerializer
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
 

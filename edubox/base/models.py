@@ -58,11 +58,11 @@ class PostFile(models.Model):
     
 
 class Post(models.Model):
-    course = models.ForeignKey('base.Course', on_delete=models.CASCADE)    
-    text = models.CharField(max_length=10000)
+    course = models.ForeignKey('base.Course', on_delete=models.CASCADE, blank=True, null=True)    
+    text = models.CharField(max_length=10000, blank=True, null=True)
     author = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    is_pinned = models.BooleanField(default=False) 
-    created_at = models.DateTimeField(auto_now_add=True)
+    is_pinned = models.BooleanField(default=False, blank=True, null=True) 
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 
 
