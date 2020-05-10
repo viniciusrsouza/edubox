@@ -7,15 +7,12 @@ from django.views import defaults as default_views
 from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-    ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("edubox.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
+    path("api/", include(("edubox.base.urls"))),
+    path("api/users/", include(("edubox.users.urls"))),
+    path("api/accounts/", include("allauth.urls")),
 
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
@@ -43,7 +40,3 @@ if settings.DEBUG:
         ),
         path("500/", default_views.server_error),
     ]
-    if "debug_toolbar" in settings.INSTALLED_APPS:
-        import debug_toolbar
-
-        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns

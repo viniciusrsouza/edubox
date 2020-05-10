@@ -25,7 +25,7 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
 # In Windows, this must be set to your system time zone.
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Sao_Paulo"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "pt-BR"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
@@ -44,6 +44,13 @@ LOCALE_PATHS = [ROOT_DIR.path("locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db-dev.sqlite3',
+    },
+}
+'''
+DATABASES = {
+    'default': {
         'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql'),
         'NAME': os.getenv('DATABASE_NAME', 'edubox'),
         'USER': os.getenv('DATABASE_USER', 'postgres'),
@@ -52,6 +59,7 @@ DATABASES = {
         'PORT': os.getenv('DATABASE_PORT', '5432'),
     }
 }
+'''
 #DATABASES = {"default": env.db("DATABASE_URL")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
@@ -71,12 +79,10 @@ DJANGO_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
 ]
 THIRD_PARTY_APPS = [
     'corsheaders',
-    "crispy_forms",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -86,7 +92,6 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'edubox.base.apps.BaseConfig',
     'edubox.users.apps.UsersConfig',
-    'edubox.languages.apps.LanguagesConfig',
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
