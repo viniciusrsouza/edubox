@@ -1,8 +1,1 @@
-<<<<<<< HEAD
 -r ./base.txt
-=======
--r ./base.txt
-
-Werkzeug==0.14.1  # pyup: < 0.15 # https://github.com/pallets/werkzeug
-psycopg2==2.8.3 --no-binary psycopg2  # https://github.com/psycopg/psycopg2
->>>>>>> 44d25fd6f1ff501f4f6ac4be5de4e5ad82a3679f
