@@ -10,6 +10,5 @@ class User(AbstractUser):
     department = models.CharField(blank=True, max_length=255)
     picture = models.ImageField(upload_to="uploads/", blank=True)
 
-
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
