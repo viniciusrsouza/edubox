@@ -16,6 +16,16 @@ class PostDetail(RetrieveAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
+class CourseListCreate(ListCreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+class CourseDetail(RetrieveAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = CourseSerializer
+    queryset = Course.objects.all()
+
 
 class Test(APIView):
     def get(self, request,*args, **kwargs):

@@ -24,8 +24,8 @@ class PostFileSerializer(serializers.ModelSerializer):
     
 
 class PostSerializer(serializers.ModelSerializer):
-    files = PostFileSerializer(many=True, required=False)
-    author = UserSerializer()
+    files = PostFileSerializer(many=True, required=False, allow_null=True, default=[])
+    
     class Meta:
         model = Post
         fields = [  'id',
@@ -65,4 +65,23 @@ class PostSerializer(serializers.ModelSerializer):
             else:
                 PostFile.objects.create(post=instance, **file)
 
+        return instance
+
+
+class CourseSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Course
+        fields = [  'id',
+                    'title',
+                    'description',
+                    'created_at']
+
+    def create(self, validated_data):
+        return Course.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.title  = validated_data.get('title', instance.title)
+        instance.description  = validated_data.get('description', instance.description)
+        instance.save()
         return instance
