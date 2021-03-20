@@ -6,13 +6,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import Vue from "vue";
 
-export default defineComponent({
+export default Vue.extend({
   name: "Home",
-  components: {
-    HelloWorld,
-  },
 });
 </script>
