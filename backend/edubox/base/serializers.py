@@ -85,3 +85,10 @@ class CourseSerializer(serializers.ModelSerializer):
         instance.description  = validated_data.get('description', instance.description)
         instance.save()
         return instance
+
+
+class CourseSerializer2(serializers.Serializer):
+    id = serializers.IntegerField()
+    title = serializers.CharField(max_length=200)
+    description = serializers.CharField(max_length=200)
+    created_at = serializers.DateTimeField()
