@@ -35,7 +35,7 @@ class CreateAuthUserView(generics.CreateAPIView):
         if request.data['password'] != request.data['confirm_password']:
             return Response({"success": False, 'message':'Os passwords são diferentes.'}) 
         auth_user.set_password(request.data['password'])
-        auth_user.is_active = False
+        auth_user.is_active = True
         auth_user.save()
         #self.send_registration_link_email(auth_user.email)
 
