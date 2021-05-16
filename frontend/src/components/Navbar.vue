@@ -2,20 +2,26 @@
   <div class="navbar-container">
     <div class="navbar-home-logo">
       <img class="navbar-logo" src="../../public/logo-aibox.png" />
-      <span class="navbar-title">Edubox</span>
+      <span class="navbar-title">{{ t("edubox") }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import t from "../locale";
 export default Vue.extend({
   name: "Navbar",
+  methods: { t },
 });
 </script>
 
 <style lang="scss" scoped>
 .navbar-container {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 100;
   display: flex;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.08);
 }
@@ -35,5 +41,6 @@ export default Vue.extend({
   font-size: 1.4rem;
   font-weight: 500;
   color: $primary;
+  text-transform: capitalize;
 }
 </style>

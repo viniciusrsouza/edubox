@@ -1,9 +1,17 @@
 <template>
-  <div>
+  <div class="home-container">
     <Navbar />
     <div class="home-top">
-      <div class="home-title">Courses</div>
-      <Button text="New Course" icon="plus-circle-outline" :primary="true" />
+      <div class="home-title">{{ t("courses") }}</div>
+      <Button
+        :text="t('new_course')"
+        icon="plus-circle-outline"
+        :primary="true"
+        :click="() => addCourse()"
+      />
+    </div>
+    <div class="home-content">
+      <Card v-for="course in courses" :key="course.id" :course="course" />
     </div>
   </div>
 </template>
@@ -12,10 +20,51 @@
 import Vue from "vue";
 import Navbar from "../components/Navbar.vue";
 import Button from "../components/Button.vue";
+import Card from "../components/Courses/Card.vue";
+import t from "../locale";
 
 export default Vue.extend({
   name: "Home",
-  components: { Navbar, Button },
+  components: { Navbar, Button, Card },
+  methods: {
+    t,
+    addCourse: function () {
+      console.log("teste");
+      this.courses.push({
+        id: ++this.last_id,
+        title: "Artificial Intelligence",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
+        favorite: false,
+      });
+    },
+  },
+  data: () => ({
+    courses: [
+      {
+        id: 0,
+        title: "Artificial Intelligence",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
+        favorite: false,
+      },
+      {
+        id: 2,
+        title: "Artificial Intelligence",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
+        favorite: false,
+      },
+      {
+        id: 3,
+        title: "Artificial Intelligence",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
+        favorite: false,
+      },
+    ],
+    last_id: 3,
+  }),
 });
 </script>
 
@@ -24,12 +73,20 @@ export default Vue.extend({
   font-size: 2rem;
   font-weight: 500;
   color: $primary;
-  padding: 0.5em;
+  padding: 0.5em 1em;
+  text-transform: capitalize;
 }
 
 .home-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.home-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+  gap: 2em;
+  margin: 1em 2em;
 }
 </style>
