@@ -1,18 +1,18 @@
 <template>
     <TwoColumnTemplate >
-      <LoginForm/>
+      <SignUpForm/>
     </TwoColumnTemplate>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import TwoColumnTemplate from "../components/TwoColumnTemplate.vue";
-import LoginForm from '../components/LoginForm.vue';
+import SignUpForm from '../components/SignUpForm.vue';
 export default Vue.extend({
-  name: "Login",
+  name: "SignUp",
   components: {
     TwoColumnTemplate,
-    LoginForm,
+    SignUpForm,
   },
 });
 </script>
