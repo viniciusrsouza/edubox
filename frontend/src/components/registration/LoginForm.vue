@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import LogoAndName from "./LogoAndName.vue";
+import LogoAndName from "../LogoAndName.vue";
 import TextForm from "./TextForm.vue";
 export default Vue.extend({
   name: "LoginForm",
