@@ -1,8 +1,14 @@
-import axios from "axios";
+class API {
+  baseUrl = "http://localhost:5001/api";
 
-const api = axios.create({
-  baseURL: "http://localhost:5001/api",
-  timeout: 1000,
-});
+  async post(endpoint: string, body: Record<string, unknown>) {
+    return fetch(`${this.baseUrl}${endpoint}/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  }
+}
 
+const api = new API();
 export default api;
