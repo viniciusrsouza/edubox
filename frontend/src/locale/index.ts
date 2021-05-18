@@ -1,4 +1,5 @@
 import en_US from "./en-US";
+import pt_BR from "./pt-BR";
 
 const t = (key: string) => {
   // TODO add language selector

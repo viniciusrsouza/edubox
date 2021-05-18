@@ -1,13 +1,13 @@
 <template>
-  <v-card elevation="2" class="course-card-container">
+  <v-card elevation="8" class="course-card-container">
     <div class="options">
       <v-btn
         icon
         :class="'btn ' + (favorite ? 'btn-star-clicked' : '')"
         @click="onClickStar"
       >
-        <v-icon>{{ favorite ? "mdi-star" : "mdi-star-outline" }}</v-icon></v-btn
-      >
+        <v-icon>{{ favorite ? "mdi-star" : "mdi-star-outline" }}</v-icon>
+      </v-btn>
       <v-btn icon class="btn"> <v-icon>mdi-dots-horizontal</v-icon></v-btn>
     </div>
     <div class="header">

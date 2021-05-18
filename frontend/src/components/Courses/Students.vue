@@ -93,5 +93,6 @@ type Students = {
 .student-rest {
   background: $primary;
   z-index: 3;
+  user-select: none;
 }
 </style>

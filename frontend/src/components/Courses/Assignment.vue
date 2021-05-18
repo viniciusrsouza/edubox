@@ -33,6 +33,12 @@ interface Assignment {
   display: flex;
   align-items: center;
   gap: 0.5em;
+  box-shadow: none;
+
+  &:hover {
+    background: #fcfcfc;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.08);
+  }
 
   .marker {
     height: 0.5em;
