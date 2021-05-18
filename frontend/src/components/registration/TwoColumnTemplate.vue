@@ -3,7 +3,7 @@
     <v-row no-gutters style="height: 100%">
       <v-col cols="8" style="text-align: center">
         <img
-          src="../assets/Online_Learning.png"
+          src="../../assets/Online_Learning.png"
           alt="onlineLearning"
           style="position: relative; top: 50%; transform: translateY(-50%)"
         />
