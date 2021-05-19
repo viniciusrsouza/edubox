@@ -1,14 +1,12 @@
 <template>
-  
-    <v-text-field
-      solo
-      :id="id"
-      :label="inputPlaceholder"
-      :prepend-inner-icon="icon"
-      :type="type"
-      class="textForm"
-    ></v-text-field>
-  
+  <v-text-field
+    solo
+    :id="id"
+    :label="inputPlaceholder"
+    :prepend-inner-icon="icon"
+    :type="type"
+    class="textForm"
+  ></v-text-field>
 </template>
 
 <script lang="ts">
