@@ -2,8 +2,8 @@
   <v-form>
     <v-card-text>
       <LogoAndName />
-      <TextForm :icon="'mdi-account'" :inputPlaceholder="'Email'" />
-      <TextForm :icon="'mdi-lock'" :inputPlaceholder="'Password'" />
+      <TextForm :icon="'mdi-account'" :inputPlaceholder="'Email'" :type="'email'" :id="'email'"/>
+      <TextForm :icon="'mdi-lock'" :inputPlaceholder="'Password'" :type="'password'" :id="'pw'"/>
       <v-btn
         elevation="2"
         x-large
@@ -30,7 +30,14 @@ export default Vue.extend({
   },
   methods: {
     login() {
-      api.post('/token')
+      let email = document.getElementById('email');
+      let pw = document.getElementById('pw');
+      let options = {
+        "username": email,
+        "password": pw
+      }
+
+      api.post('/token', options)
       .then((response) => {
         console.log(response);
       })

@@ -2,8 +2,10 @@
   
     <v-text-field
       solo
+      :id="id"
       :label="inputPlaceholder"
       :prepend-inner-icon="icon"
+      :type="type"
       class="textForm"
     ></v-text-field>
   
@@ -13,7 +15,7 @@
 import Vue from "vue";
 export default Vue.extend({
   name: "TextForm",
-  props: ["icon", "inputPlaceholder"],
+  props: ["icon", "inputPlaceholder", "type", "id"],
 });
 </script>
 
