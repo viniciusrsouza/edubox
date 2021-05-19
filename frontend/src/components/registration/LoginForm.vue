@@ -21,8 +21,7 @@
 import Vue from "vue";
 import LogoAndName from "../LogoAndName.vue";
 import TextForm from "./TextForm.vue";
-import api from "../../services/api_service";
-
+import api from '../../services/api_axios';
 export default Vue.extend({
   name: "LoginForm",
   components: {
@@ -31,7 +30,13 @@ export default Vue.extend({
   },
   methods: {
     login() {
-      api.post("/token", { username: "asd", password: "asd" });
+      api.post('/token')
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     },
   },
 });
