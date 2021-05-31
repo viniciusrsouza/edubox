@@ -19,4 +19,8 @@ urlpatterns = [
 
     path("courses/<int:pk>/", view=views.CourseDetail.as_view()),
 
+    path("assignments/", view=views.AssignmentListCreate.as_view()),
+
+    path("assignments/<int:pk>/", view=views.AssignmentDetail.as_view()),
+
 ]

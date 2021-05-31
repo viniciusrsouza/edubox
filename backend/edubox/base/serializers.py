@@ -92,3 +92,20 @@ class CourseSerializer2(serializers.Serializer):
     title = serializers.CharField(max_length=200)
     description = serializers.CharField(max_length=200)
     created_at = serializers.DateTimeField()
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Assignment
+        fields = [  'id',
+                    'title',
+                    'teacher',]
+
+    def create(self, validated_data):
+        return Course.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.title  = validated_data.get('title', instance.title)
+        instance.teacher  = validated_data.get('teacher', instance.teacher)
+        instance.save()
+        return instance
