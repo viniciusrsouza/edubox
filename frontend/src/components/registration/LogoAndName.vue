@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <img src="../assets/logo-aibox.png" alt="logo-aibox"/>
+    <img src="../../assets/logo-aibox.png" alt="logo-aibox"/>
     <h1>Edubox</h1>
   </v-container>
 </template>

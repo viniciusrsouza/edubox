@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import LogoAndName from "../LogoAndName.vue";
+import LogoAndName from "./LogoAndName.vue";
 import TextForm from "./TextForm.vue";
 import api from "../../services/api_axios";
 export default Vue.extend({
@@ -47,11 +47,13 @@ export default Vue.extend({
         password: pw,
       });
       api
-        .post("/token/", options, {headers:{"Content-Type" : "application/json"}})
+        .post("/token/", options, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then((response) => {
-          localStorage.setItem('refresh', response.data.refresh);
-          localStorage.setItem('access', response.data.access);
-          this.$router.push('/')
+          localStorage.setItem("refresh", response.data.refresh);
+          localStorage.setItem("access", response.data.access);
+          this.$router.push("/");
         })
         .catch((err) => {
           console.log(err.response.data);
