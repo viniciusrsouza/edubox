@@ -28,6 +28,16 @@ class CourseDetail(generics.RetrieveAPIView):
     queryset = Course.objects.all()
 
 
+class AssignmentListCreate(generics.ListCreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Assignment.objects.all()
+    serializer_class = AssignmentSerializer
+
+class AssignmentDetail(generics.RetrieveAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = AssignmentSerializer
+    queryset = Assignment.objects.all()
+
 class Test2(APIView):
     permission_classes = [AllowAny]
     
