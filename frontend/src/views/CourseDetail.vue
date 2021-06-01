@@ -28,6 +28,10 @@ export default Vue.extend({
     Navbar,
     PostListContent
   },
+  mounted: function (){
+    /*this.$route.query.id tem o valor do id do curso atual*/ 
+    console.log(this.$route.query.id);
+  }
 });
 </script>
 
