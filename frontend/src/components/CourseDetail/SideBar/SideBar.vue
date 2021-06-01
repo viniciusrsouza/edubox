@@ -57,7 +57,7 @@
           >Join new course</v-list-item-title
         >
       </v-list-item>
-      <DisciplineListItem
+      <CourseListItem
         v-for="course in courses"
         :key="course.id"
         :course="course"
@@ -68,11 +68,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import DisciplineListItem from "./DisciplineListItem.vue";
+import CourseListItem from "./CourseListItem.vue";
 export default Vue.extend({
   name: "SideBar",
   components: {
-    DisciplineListItem,
+    CourseListItem,
   },
   data: () => ({
     courses: [
