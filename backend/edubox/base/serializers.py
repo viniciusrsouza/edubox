@@ -75,6 +75,7 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = [  'id',
                     'title',
                     'description',
+                    'favorite',
                     'created_at']
 
     def create(self, validated_data):

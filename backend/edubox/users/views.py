@@ -19,7 +19,10 @@ class CreateAuthUserView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = CreateAuthUserSerializer(data=request.data.copy())
         serializer.is_valid(raise_exception=True)
-        result = services.UserRegister.execute(**serializer.validated_data)
+        try:
+            result = services.UserRegister.execute(**serializer.validated_data)
+        except:
+            return Response({'success':False, 'message':'Something gone wrong.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         if result['success']:
             return Response(result, status=status.HTTP_201_CREATED)
         else:
