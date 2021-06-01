@@ -9,5 +9,8 @@ const strings = new Map([
   ["password", "password"],
   ["confirm_password", "confirm password"],
   ["sign_up", "sign up"],
+  ["write_new_post", "Write a new post"],
+  ["show_less_responses", "Show less responses"],
+  ["show_more_responses", "Show more responses"],
 ]);
 export default strings;
