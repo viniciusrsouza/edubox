@@ -7,12 +7,14 @@
         :inputPlaceholder="'Email'"
         :type="'email'"
         :id="'email'"
+        :setValue="setEmail"
       />
       <TextForm
         :icon="'mdi-lock'"
         :inputPlaceholder="'Password'"
         :type="'password'"
         :id="'pw'"
+        :setValue="setPassword"
       />
       <v-btn
         elevation="2"
@@ -40,11 +42,9 @@ export default Vue.extend({
   },
   methods: {
     login() {
-      let email = (document.getElementById("email") as HTMLInputElement).value;
-      let pw = (document.getElementById("pw") as HTMLInputElement).value;
       let options = JSON.stringify({
-        username: email,
-        password: pw,
+        username: this.email,
+        password: this.password,
       });
       api
         .post("/token/", options, {
@@ -59,7 +59,17 @@ export default Vue.extend({
           console.log(err.response.data);
         });
     },
+    setEmail(email) {
+      this.email = email;
+    },
+    setPassword(password) {
+      this.password = password;
+    },
   },
+  data: () => ({
+    email: "",
+    password: "",
+  }),
 });
 </script>
 
