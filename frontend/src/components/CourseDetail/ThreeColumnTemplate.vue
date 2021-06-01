@@ -5,14 +5,10 @@
         <slot name="sidebar"></slot>
       </v-col>
       <v-col cols="6">
-        <v-card class="pa-2" outlined tile>
-          <slot name="content"></slot>
-        </v-card>
+        <slot name="content"></slot>
       </v-col>
       <v-col>
-        <v-card class="pa-2" outlined tile>
-          <slot name="calendar"></slot>
-        </v-card>
+        <slot name="calendar"></slot>
       </v-col>
     </v-row>
   </v-container>

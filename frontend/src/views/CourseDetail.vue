@@ -1,12 +1,12 @@
 <template>
-  <div class="home-container">
+  <div>
     <Navbar />
     <three-column-template>
       <template v-slot:sidebar>
         <side-bar />
       </template>
       <template v-slot:content>
-        <h1>Here might be a page title</h1>
+        <PostListContent/>
       </template>
       <template v-slot:calendar>
         <h1>Here might be a page title</h1>
@@ -20,11 +20,13 @@ import Vue from "vue";
 import SideBar from "../components/CourseDetail/SideBar.vue";
 import ThreeColumnTemplate from "../components/CourseDetail/ThreeColumnTemplate.vue";
 import Navbar from '../components/Navbar.vue'
+import PostListContent from '../components/CourseDetail/PostList/PostListContent.vue'
 export default Vue.extend({
   components: {
     SideBar,
     ThreeColumnTemplate,
-    Navbar
+    Navbar,
+    PostListContent
   },
 });
 </script>

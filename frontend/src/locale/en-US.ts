@@ -4,5 +4,6 @@ const strings = new Map([
   ["edubox", "edubox"],
   ["assignments", "assignments"],
   ["see_more", "see more"],
+  ["write_new_post", "Write a new post"],
 ]);
 export default strings;

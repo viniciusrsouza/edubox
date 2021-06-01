@@ -45,7 +45,7 @@
       <v-list-item>
         <v-list-item-content class="align-text-center text-color-blue">
           <v-list-item-title>
-            Courses <v-icon x-small>mdi-open-in-new</v-icon>
+            Courses <v-icon x-small class="text-color-blue">mdi-open-in-new</v-icon>
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
