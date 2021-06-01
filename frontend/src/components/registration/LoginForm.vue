@@ -46,8 +46,7 @@ export default Vue.extend({
         username: this.email,
         password: this.password,
       });
-      api
-        .post("/token/", options, {
+      api.post("api/token/", options, {
           headers: { "Content-Type": "application/json" },
         })
         .then((response) => {
@@ -59,10 +58,10 @@ export default Vue.extend({
           console.log(err.response.data);
         });
     },
-    setEmail(email) {
+    setEmail(email: string) {
       this.email = email;
     },
-    setPassword(password) {
+    setPassword(password: string) {
       this.password = password;
     },
   },

@@ -22,6 +22,7 @@ import Navbar from "../components/Navbar.vue";
 import Button from "../components/Button.vue";
 import Card from "../components/Courses/Card.vue";
 import t from "../locale";
+import api from "../services/api_axios";
 
 export default Vue.extend({
   name: "Home",
@@ -39,31 +40,24 @@ export default Vue.extend({
       });
     },
   },
+   mounted: function() {
+      api.get("/api/courses/", {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((response) => {
+          //this.courses.push({...this.courses, ...response.data.results});
+          this.courses = [...this.courses, ...response.data.results];
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+       
+      //getCourses()
+    },
   data: () => ({
     courses: [
-      {
-        id: 0,
-        title: "Artificial Intelligence",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
-        favorite: false,
-      },
-      {
-        id: 2,
-        title: "Artificial Intelligence",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
-        favorite: false,
-      },
-      {
-        id: 3,
-        title: "Artificial Intelligence",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
-        favorite: false,
-      },
-    ],
-    last_id: 3,
+    ]
   }),
 });
 </script>
