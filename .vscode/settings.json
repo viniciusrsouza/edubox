@@ -1,3 +1,9 @@
 {
-    "python.pythonPath": "venv/bin/python3"
+    "python.pythonPath": "/home/caio/env36/bin/python3",
+    "python.analysis.extraPaths": ["."],
+    "python.languageServer": "Pylance",
+    "python.linting.pydocstyleEnabled": true,
+    "python.linting.maxNumberOfProblems": 999999,
+    "python.linting.enabled": true
+    //"python.envFile": "${workspaceFolder}/variables.env"
 }
