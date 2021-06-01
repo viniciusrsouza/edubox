@@ -26,10 +26,6 @@ export default Vue.extend({
     ThreeColumnTemplate,
     Navbar,
   },
-  mounted: function (){
-    /*this.$route.query.id tem o valor do id do curso atual*/ 
-    console.log(this.$route.query.id);
-  }
 });
 </script>
 

@@ -31,13 +31,9 @@
       />
     </div>
     <div class="footer">
-      <<<<<<< HEAD
       <v-btn class="btn" @click="redirect(course.id)" text>{{
         t("see_more")
       }}</v-btn>
-      =======
-      <v-btn @click="redirect()" class="btn" text>{{ t("see_more") }}</v-btn>
-      >>>>>>> adf16022d09a2caa8127385b35d9500e7a6eac41
       <Students :students="[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" />
     </div>
   </v-card>
