@@ -43,42 +43,30 @@ import api from "../services/api_axios";
 export default Vue.extend({
   name: "Home",
   components: { Navbar, Card },
-  methods: {
-    t,
-    addCourse: function () {
-      console.log("teste");
-      this.courses.push({
-        id: ++this.last_id,
-        title: "Artificial Intelligence",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in mauris purus. Morbi vestibulum dui sed urna porta consequat. In a arcu rutrum, consectetur est ac, volutpat eros.",
-        favorite: false,
-      });
-    },
-  },
-   mounted: function() {
-      api.get("/api/courses/", {
-          headers: { "Content-Type": "application/json" },
-        })
-        .then((response) => {
-          //this.courses.push({...this.courses, ...response.data.results});
-          this.courses = [...this.courses, ...response.data.results];
-          console.log(response.data);
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
-       
-      //getCourses()
-    },
+  methods: { t },
   data: () => ({
     add_options: [
       { title: t("create_course"), endpoint: "creation" },
       { title: t("join_course"), endpoint: "" },
     ],
-    courses: [
-    ]
+    courses: [],
   }),
+  mounted: function () {
+    api
+      .get("/api/courses/", {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        //this.courses.push({...this.courses, ...response.data.results});
+        this.courses = [...this.courses, ...response.data.results];
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+
+    //getCourses()
+  },
 });
 </script>
 

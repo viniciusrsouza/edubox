@@ -31,7 +31,9 @@
       />
     </div>
     <div class="footer">
-      <v-btn class="btn" text>{{ t("see_more") }}</v-btn>
+      <v-btn class="btn" @click="redirect(course.id)" text>{{
+        t("see_more")
+      }}</v-btn>
       <Students :students="[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" />
     </div>
   </v-card>
@@ -48,6 +50,9 @@ export default Vue.extend({
     t,
     onClickStar: function () {
       this.favorite = !this.favorite;
+    },
+    redirect(id: number) {
+      this.$router.push(`course/${id}`);
     },
   },
   components: { Assignment, Students },

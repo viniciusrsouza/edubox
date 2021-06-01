@@ -6,6 +6,8 @@ import SignUp from "../views/SignUp.vue";
 import Creation from "../views/Creation.vue";
 import CourseDetail from "../views/CourseDetail.vue";
 import CoursePeople from "../views/CoursePeople.vue";
+import PersonListContent from "../components/CourseDetail/PersonList/PersonListContent.vue";
+import PostListContent from "../components/CourseDetail/PostList/PostListContent.vue";
 
 Vue.use(VueRouter);
 
@@ -31,9 +33,19 @@ const routes: Array<RouteConfig> = [
     component: Creation,
   },
   {
-    path: "/course_detail",
+    path: "/course/:id",
     name: "Course Detail",
     component: CourseDetail,
+    children: [
+      {
+        path: "",
+        component: PostListContent,
+      },
+      {
+        path: "user",
+        component: PersonListContent,
+      },
+    ],
   },
   {
     path: "/course_people",
