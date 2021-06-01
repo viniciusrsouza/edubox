@@ -59,10 +59,10 @@ export default Vue.extend({
           console.log(err.response.data);
         });
     },
-    setEmail(email) {
+    setEmail(email: string) {
       this.email = email;
     },
-    setPassword(password) {
+    setPassword(password: string) {
       this.password = password;
     },
   },

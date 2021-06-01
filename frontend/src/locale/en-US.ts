@@ -12,5 +12,7 @@ const strings = new Map([
   ["write_new_post", "Write a new post"],
   ["show_less_responses", "Show less responses"],
   ["show_more_responses", "Show more responses"],
+  ["create_course", "Create Course"],
+  ["join_course", "Join Course"],
 ]);
 export default strings;

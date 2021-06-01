@@ -3,12 +3,29 @@
     <Navbar />
     <div class="home-top">
       <div class="home-title">{{ t("courses") }}</div>
-      <Button
-        :text="t('new_course')"
-        icon="plus-circle-outline"
-        :primary="true"
-        :click="() => addCourse()"
-      />
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="btn-container ma-4 white--text"
+            color="#3b5c78"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon class="me-2">mdi-plus-circle-outline</v-icon>
+            {{ t("new_course") }}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in add_options"
+            :key="index"
+            link
+            :href="item.endpoint"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </div>
     <div class="home-content">
       <Card v-for="course in courses" :key="course.id" :course="course" />
@@ -19,13 +36,12 @@
 <script lang="ts">
 import Vue from "vue";
 import Navbar from "../components/Navbar.vue";
-import Button from "../components/Button.vue";
 import Card from "../components/Courses/Card.vue";
 import t from "../locale";
 
 export default Vue.extend({
   name: "Home",
-  components: { Navbar, Button, Card },
+  components: { Navbar, Card },
   methods: {
     t,
     addCourse: function () {
@@ -40,6 +56,10 @@ export default Vue.extend({
     },
   },
   data: () => ({
+    add_options: [
+      { title: t("create_course"), endpoint: "creation" },
+      { title: t("join_course"), endpoint: "" },
+    ],
     courses: [
       {
         id: 0,
