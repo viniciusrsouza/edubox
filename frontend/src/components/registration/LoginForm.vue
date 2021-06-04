@@ -25,6 +25,20 @@
         @click="login"
         >Sign In</v-btn
       >
+      <div class="separator my-10" />
+      <div class="sign-up-container">
+        <div class="text-sign-up">Not registered yet?</div>
+        <v-btn
+          elevation="2"
+          x-large
+          color="#3B5C78"
+          style="width: 100%"
+          class="white--text"
+          @click="redirect"
+        >
+          Sign Up
+        </v-btn>
+      </div>
     </v-card-text>
   </v-form>
 </template>
@@ -46,7 +60,8 @@ export default Vue.extend({
         username: this.email,
         password: this.password,
       });
-      api.post("api/token/", options, {
+      api
+        .post("api/token/", options, {
           headers: { "Content-Type": "application/json" },
         })
         .then((response) => {
@@ -64,6 +79,9 @@ export default Vue.extend({
     setPassword(password: string) {
       this.password = password;
     },
+    redirect() {
+      this.$router.push("/signup");
+    },
   },
   data: () => ({
     email: "",
@@ -72,4 +90,19 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.separator {
+  width: 80%;
+  background-color: $primary;
+  margin: auto;
+  height: 1px;
+}
+
+.text-sign-up {
+  color: $primary;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.5em;
+}
+</style>

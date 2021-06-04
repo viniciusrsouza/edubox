@@ -4,6 +4,7 @@
       <img class="navbar-logo" src="../../public/logo-aibox.png" />
       <span class="navbar-title">{{ t("edubox") }}</span>
     </div>
+    <v-btn text class="mx-4" @click="logout"> {{ t("logout") }} </v-btn>
   </div>
 </template>
 
@@ -12,7 +13,14 @@ import Vue from "vue";
 import t from "../locale";
 export default Vue.extend({
   name: "Navbar",
-  methods: { t },
+  methods: {
+    t,
+    logout() {
+      localStorage.setItem("access", "");
+      localStorage.setItem("refresh", "");
+      this.$router.go();
+    },
+  },
 });
 </script>
 
@@ -24,6 +32,8 @@ export default Vue.extend({
   z-index: 100;
   display: flex;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.08);
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-home-logo {

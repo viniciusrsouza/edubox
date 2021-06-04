@@ -9,14 +9,12 @@
       </v-col>
     </v-row>
     <v-list-item>
-        <v-list-item-avatar>
-            <v-img src="@/assets/undraw/undraw_female_avatar_w3jk.svg"></v-img>
-        </v-list-item-avatar>
-        <v-list-item-content>
-            <v-list-item-title>
-                by {{response.created_by}}
-            </v-list-item-title>
-        </v-list-item-content>
+      <v-list-item-avatar>
+        <v-img src="@/assets/undraw/undraw_female_avatar_w3jk.svg"></v-img>
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <v-list-item-title> by {{ response.created_by }} </v-list-item-title>
+      </v-list-item-content>
     </v-list-item>
   </div>
 </template>
@@ -41,20 +39,20 @@ interface PostResponse {
 </script>
 
 <style scoped>
-.margin{
-    margin-left: 10px;
+.margin {
+  margin-left: 10px;
 }
 
 .distance-top {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
-.no-margin-bottom{
-    margin-bottom: 0px !important;
+.no-margin-bottom {
+  margin-bottom: 0px !important;
 }
 
 .border-left {
-  border-left: 3px solid gray;
+  border-left: 1px solid gray;
 }
 
 .height-limit {
@@ -62,7 +60,7 @@ interface PostResponse {
 }
 .row-wrapper {
   margin-left: 35px;
-  border-left: 3px solid #CBCBCB;
+  border-left: 1px solid #cbcbcb;
   margin-bottom: 25px;
   display: inline-block;
 }

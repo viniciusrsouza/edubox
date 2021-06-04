@@ -16,13 +16,15 @@
         :icon="'mdi-lock'"
         :inputPlaceholder="t('password')"
         :setValue="(e) => (password = e)"
+        type="password"
       />
       <TextForm
         :icon="'mdi-lock'"
         :inputPlaceholder="t('confirm_password')"
         :setValue="(e) => (confirm_password = e)"
+        type="password"
       />
-      <v-checkbox>
+      <v-checkbox @change="agreeChange">
         <template v-slot:label>
           <div>
             I agree with the
@@ -49,8 +51,9 @@
         color="#3B5C78"
         style="width: 100%"
         class="white--text"
+        :disabled="!allFieldsValid()"
         @click="signup"
-        >Sign Up</v-btn
+        >{{ t("sign_up") }}</v-btn
       >
     </v-card-text>
   </v-form>
@@ -68,13 +71,39 @@ export default Vue.extend({
   methods: {
     t,
     signup() {
-      const payload = {
-        full_name: this.full_name,
-        email: this.email,
-        password: this.password,
-        confirm_password: this.confirm_password,
-      };
-      api.post("/users/create/", payload).then((res) => console.log(res));
+      const [full_name, email, password, confirm_password] = [
+        this.full_name,
+        this.email,
+        this.password,
+        this.confirm_password,
+      ];
+      const payload = { full_name, email, password, confirm_password };
+      api.post("api/users/", payload).then((res) => {
+        if (res.status === 201) {
+          api
+            .post("api/token/", { username: email, password })
+            .then((response) => {
+              localStorage.setItem("refresh", response.data.refresh);
+              localStorage.setItem("access", response.data.access);
+              this.$router.push("/");
+            })
+            .catch((err) => {
+              console.log(err.response.data);
+            });
+        }
+      });
+    },
+    agreeChange(checked) {
+      this.agree_with_terms = checked;
+    },
+    allFieldsValid(): boolean {
+      return (
+        this.full_name &&
+        this.email &&
+        this.password &&
+        this.confirm_password &&
+        this.agree_with_terms
+      );
     },
   },
   components: {
@@ -82,10 +111,11 @@ export default Vue.extend({
     TextForm,
   },
   data: () => ({
-    full_name: String,
-    email: String,
-    password: String,
-    confirm_password: String,
+    full_name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    agree_with_terms: false,
   }),
 });
 </script>
