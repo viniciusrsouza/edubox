@@ -38,7 +38,7 @@ import Vue from "vue";
 import Navbar from "../components/navbar/Navbar.vue";
 import Card from "../components/Courses/Card.vue";
 import t from "../locale";
-import api from "../services/api_axios";
+import CoursesService from "../services/courses_service";
 
 export default Vue.extend({
   name: "Home",
@@ -55,26 +55,19 @@ export default Vue.extend({
   },
   data: () => ({
     add_options: [
-      { title: t("create_course"), endpoint: "creation" },
+      { title: t("create_course"), endpoint: "create_course" },
       { title: t("join_course"), endpoint: "" },
     ],
     courses: [],
   }),
   mounted: function () {
-    api
-      .get("/api/courses?limit=100", {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((response) => {
-        //this.courses.push({...this.courses, ...response.data.results});
-        this.courses = [...this.courses, ...response.data.results];
-        console.log(response.data);
+    CoursesService.getAll()
+      .then(({ data }) => {
+        this.courses = [...this.courses, ...data.results];
       })
       .catch((err) => {
         console.log(err.response.data);
       });
-
-    //getCourses()
   },
 });
 </script>

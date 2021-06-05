@@ -3,9 +3,8 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import SignUp from "../views/SignUp.vue";
-import Creation from "../views/Creation.vue";
+import CreateCourse from "../views/CreateCourse.vue";
 import CourseDetail from "../views/CourseDetail.vue";
-import CoursePeople from "../views/CoursePeople.vue";
 import PersonListContent from "../components/CourseDetail/PersonList/PersonListContent.vue";
 import PostListContent from "../components/CourseDetail/PostList/PostListContent.vue";
 
@@ -14,31 +13,31 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home,
     meta: { requiresAuth: true },
   },
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     component: Login,
     meta: { requiresUnauth: true },
   },
   {
     path: "/signup",
-    name: "Sign Up",
+    name: "sign_up",
     component: SignUp,
     meta: { requiresUnauth: true },
   },
   {
-    path: "/creation",
-    name: "New course",
-    component: Creation,
+    path: "/create_course",
+    name: "create_course",
+    component: CreateCourse,
     meta: { requiresAuth: true },
   },
   {
     path: "/course/:id",
-    name: "Course Detail",
+    name: "course_details",
     component: CourseDetail,
     children: [
       {
@@ -47,7 +46,7 @@ const routes: Array<RouteConfig> = [
         meta: { requiresAuth: true },
       },
       {
-        path: "user",
+        path: "users",
         component: PersonListContent,
         meta: { requiresAuth: true },
       },
@@ -57,12 +56,6 @@ const routes: Array<RouteConfig> = [
         meta: { requiresAuth: true },
       },
     ],
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/course_people",
-    name: "Course People",
-    component: CoursePeople,
     meta: { requiresAuth: true },
   },
 ];

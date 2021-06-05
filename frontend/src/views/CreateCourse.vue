@@ -46,16 +46,14 @@
 <script lang="ts">
 import Vue from "vue";
 import Navbar from "../components/navbar/Navbar.vue";
-import api from "../services/api_axios";
+import CoursesService from "../services/courses_service";
 export default Vue.extend({
-  name: "Creation",
+  name: "create_course",
   methods: {
     create() {
       const payload = { title: this.title, description: this.description };
-      api.post("api/courses/", payload).then((res) => {
-        if (res.status === 201) {
-          this.$router.push("/");
-        }
+      CoursesService.create(payload).then(({ success }) => {
+        if (success) this.$router.push("/");
       });
     },
   },

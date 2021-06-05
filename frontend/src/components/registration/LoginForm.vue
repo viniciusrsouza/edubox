@@ -47,7 +47,7 @@
 import Vue from "vue";
 import LogoAndName from "./LogoAndName.vue";
 import TextForm from "./TextForm.vue";
-import api from "../../services/api_axios";
+import AuthService from "../../services/auth_service";
 export default Vue.extend({
   name: "LoginForm",
   components: {
@@ -56,18 +56,14 @@ export default Vue.extend({
   },
   methods: {
     login() {
-      let options = JSON.stringify({
+      let options = {
         username: this.email,
         password: this.password,
-      });
-      api
-        .post("api/token/", options, {
-          headers: { "Content-Type": "application/json" },
-        })
-        .then((response) => {
-          localStorage.setItem("refresh", response.data.refresh);
-          localStorage.setItem("access", response.data.access);
-          this.$router.push("/");
+      };
+
+      AuthService.login(options)
+        .then(({ success }) => {
+          if (success) this.$router.push("/");
         })
         .catch((err) => {
           console.log(err.response.data);

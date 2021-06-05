@@ -64,34 +64,36 @@ import Vue from "vue";
 import LogoAndName from "./LogoAndName.vue";
 import TextForm from "./TextForm.vue";
 import t from "../../locale";
-import api from "../../services/api_axios";
+import AuthService from "../../services/auth_service";
 
 export default Vue.extend({
   name: "SignUpForm",
   methods: {
     t,
     signup() {
-      const [full_name, email, password, confirm_password] = [
-        this.full_name,
-        this.email,
-        this.password,
-        this.confirm_password,
-      ];
-      const payload = { full_name, email, password, confirm_password };
-      api.post("api/users/", payload).then((res) => {
-        if (res.status === 201) {
-          api
-            .post("api/token/", { username: email, password })
-            .then((response) => {
-              localStorage.setItem("refresh", response.data.refresh);
-              localStorage.setItem("access", response.data.access);
-              this.$router.push("/");
+      const payload = {
+        full_name: this.full_name,
+        email: this.email,
+        password: this.password,
+        confirm_password: this.confirm_password,
+      };
+      AuthService.signup(payload)
+        .then(({ success }) => {
+          if (success)
+            AuthService.login({
+              username: payload.email,
+              password: payload.password,
             })
-            .catch((err) => {
-              console.log(err.response.data);
-            });
-        }
-      });
+              .then((res) => {
+                if (res.success) this.$router.push("/");
+              })
+              .catch((err) => {
+                console.log(err.response.data);
+              });
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
     },
     agreeChange(checked) {
       this.agree_with_terms = checked;
