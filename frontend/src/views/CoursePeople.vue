@@ -9,7 +9,9 @@
         <PersonListContent />
       </template>
       <template v-slot:calendar>
-        <v-btn large color="#3b5c78" class="white--text"><v-icon left dark>mdi-account-plus-outline</v-icon> Add People </v-btn>
+        <v-btn large color="#3b5c78" class="white--text"
+          ><v-icon left dark>mdi-account-plus-outline</v-icon> Add People
+        </v-btn>
       </template>
     </three-column-template>
   </div>
@@ -19,7 +21,7 @@
 import Vue from "vue";
 import SideBar from "../components/CourseDetail/SideBar/SideBar.vue";
 import ThreeColumnTemplate from "../components/CourseDetail/ThreeColumnTemplate.vue";
-import Navbar from "../components/Navbar.vue";
+import Navbar from "../components/navbar/Navbar.vue";
 import PersonListContent from "../components/CourseDetail/PersonList/PersonListContent.vue";
 export default Vue.extend({
   components: {

@@ -28,14 +28,14 @@
       </v-menu>
     </div>
     <div class="home-content">
-      <Card v-for="course in courses" :key="course.id" :course="course" />
+      <Card v-for="course in getCourses()" :key="course.id" :course="course" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Navbar from "../components/Navbar.vue";
+import Navbar from "../components/navbar/Navbar.vue";
 import Card from "../components/Courses/Card.vue";
 import t from "../locale";
 import api from "../services/api_axios";
@@ -43,7 +43,16 @@ import api from "../services/api_axios";
 export default Vue.extend({
   name: "Home",
   components: { Navbar, Card },
-  methods: { t },
+  methods: {
+    t,
+    getCourses: function () {
+      return this.courses.filter((c) => {
+        return c.title
+          .toLowerCase()
+          .startsWith(this.$store.state.navbar.search.toLowerCase());
+      });
+    },
+  },
   data: () => ({
     add_options: [
       { title: t("create_course"), endpoint: "creation" },
@@ -53,7 +62,7 @@ export default Vue.extend({
   }),
   mounted: function () {
     api
-      .get("/api/courses/", {
+      .get("/api/courses?limit=100", {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {

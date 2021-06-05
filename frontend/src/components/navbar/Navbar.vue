@@ -1,24 +1,35 @@
 <template>
   <div class="navbar-container">
-    <div class="navbar-home-logo">
-      <img class="navbar-logo" src="../../public/logo-aibox.png" />
-      <span class="navbar-title">{{ t("edubox") }}</span>
+    <div class="navbar-logo-container">
+      <div class="navbar-home-logo" @click="redirectHome">
+        <img class="navbar-logo" src="../../../public/logo-aibox.png" />
+        <span class="navbar-title">{{ t("edubox") }}</span>
+      </div>
     </div>
-    <v-btn text class="mx-4" @click="logout"> {{ t("logout") }} </v-btn>
+    <div class="narbar-searchbar"><SearchField /></div>
+    <div class="navbar-user-options">
+      <v-btn text class="mx-4" @click="logout"> {{ t("logout") }} </v-btn>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import t from "../locale";
+import t from "../../locale";
+import SearchField from "./SearchField.vue";
+
 export default Vue.extend({
   name: "Navbar",
+  components: { SearchField },
   methods: {
     t,
     logout() {
       localStorage.setItem("access", "");
       localStorage.setItem("refresh", "");
       this.$router.go();
+    },
+    redirectHome() {
+      if (this.$router.currentRoute.path !== "/") this.$router.push("/");
     },
   },
 });
@@ -40,6 +51,11 @@ export default Vue.extend({
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
+  * {
+    user-select: none;
+  }
 }
 
 .navbar-logo {
@@ -52,5 +68,17 @@ export default Vue.extend({
   font-weight: 500;
   color: $primary;
   text-transform: capitalize;
+}
+
+.navbar-logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.navbar-user-options {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

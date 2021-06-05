@@ -51,6 +51,11 @@ const routes: Array<RouteConfig> = [
         component: PersonListContent,
         meta: { requiresAuth: true },
       },
+      {
+        path: "activity",
+        component: PersonListContent,
+        meta: { requiresAuth: true },
+      },
     ],
     meta: { requiresAuth: true },
   },
