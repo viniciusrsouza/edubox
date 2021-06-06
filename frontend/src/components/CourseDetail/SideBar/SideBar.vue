@@ -1,5 +1,5 @@
 <template>
-  <v-card width="256" class="mx-auto">
+  <v-card class="mx-auto sidebar-container">
     <v-navigation-drawer permanent>
       <v-list>
         <v-list-item class="px-2" two-line>
@@ -41,11 +41,12 @@
       </v-list>
     </v-navigation-drawer>
     <v-divider></v-divider>
-    <v-list nav dense>
-      <v-list-item>
+    <v-list nav dense class="courses">
+      <v-list-item class="courses-btn">
         <v-list-item-content class="align-text-center text-color-blue">
           <v-list-item-title>
-            Courses <v-icon x-small class="text-color-blue">mdi-open-in-new</v-icon>
+            Courses
+            <v-icon x-small class="text-color-blue">mdi-open-in-new</v-icon>
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -96,18 +97,19 @@ export default Vue.extend({
       },
     ],
   }),
-  created: function(){
+  created: function () {
     console.log(this.$route);
   },
   methods: {
-    redirect: function(path: string){
-      let id = this.$route.params.id
-      let fullPath = `/course/${id}`+path+"/"
-      this.$router.push(fullPath)
-    }
-  }
+    redirect: function (path: string) {
+      let id = this.$route.params.id;
+      let fullPath = `/course/${id}` + path + "/";
+      this.$router.push(fullPath);
+    },
+  },
 });
-</script>>
+</script>
+>
 
 <style lang="scss" scoped>
 .align-text-center {
@@ -115,5 +117,9 @@ export default Vue.extend({
 }
 .text-color-blue {
   color: #3b5c78;
+}
+
+.sidebar-container {
+  width: 256px;
 }
 </style>

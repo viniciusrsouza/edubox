@@ -1,5 +1,5 @@
 <template>
-  <v-card class="distance-top">
+  <v-card class="distance-top" elevation="8">
     <v-row class="mb-6 no-margin-bottom">
       <v-col cols="1" class="margin">
         <v-icon>mdi-thumb-up-outline</v-icon>
@@ -19,10 +19,14 @@
 
     <div v-if="postResponses.length > 1">
       <div v-if="showLess === true" class="align-right">
-        <a class="a-margin" @click="showLess = !showLess">{{t("show_more_responses")}}</a>
+        <a class="a-margin" @click="showLess = !showLess">{{
+          t("show_more_responses")
+        }}</a>
       </div>
       <div v-else class="align-right">
-          <a class="a-margin" @click="showLess = !showLess">{{t("show_less_responses")}}</a>
+        <a class="a-margin" @click="showLess = !showLess">{{
+          t("show_less_responses")
+        }}</a>
       </div>
       <div v-if="showLess">
         <PostResponse
@@ -65,7 +69,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    t
+    t,
   },
   data: () => ({
     showLess: true,
