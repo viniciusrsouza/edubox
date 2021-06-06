@@ -32,7 +32,7 @@
             >Activities</v-list-item-title
           >
         </v-list-item>
-        <v-list-item link @click="redirect('/user')">
+        <v-list-item link @click="redirect('/users')">
           <v-list-item-icon>
             <v-icon class="text-color-blue">mdi-account-multiple</v-icon>
           </v-list-item-icon>
