@@ -1,14 +1,16 @@
 <template>
   <div class="navbar-container">
-    <div class="navbar-logo-container">
-      <div class="navbar-home-logo" @click="redirectHome">
-        <img class="navbar-logo" src="../../../public/logo-aibox.png" />
-        <span class="navbar-title">{{ t("edubox") }}</span>
+    <div class="navbar-content">
+      <div class="navbar-logo-container">
+        <div class="navbar-home-logo" @click="redirectHome">
+          <img class="navbar-logo" src="../../../public/logo-aibox.png" />
+          <span class="navbar-title">{{ t("edubox") }}</span>
+        </div>
       </div>
-    </div>
-    <div class="narbar-searchbar"><SearchField /></div>
-    <div class="navbar-user-options">
-      <v-btn text class="mx-4" @click="logout"> {{ t("logout") }} </v-btn>
+      <div class="narbar-searchbar"><SearchField /></div>
+      <div class="navbar-user-options">
+        <v-btn text class="mx-4" @click="logout"> {{ t("logout") }} </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -41,10 +43,15 @@ export default Vue.extend({
   top: 0;
   background: white;
   z-index: 100;
-  display: flex;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.08);
+}
+
+.navbar-content {
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1920px;
+  margin: 0 auto;
 }
 
 .navbar-home-logo {
