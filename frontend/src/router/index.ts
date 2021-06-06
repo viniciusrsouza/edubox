@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import SignUp from "../views/SignUp.vue";
 import CreateCourse from "../views/CreateCourse.vue";
 import CourseDetail from "../views/CourseDetail.vue";
+import CourseList from "../components/Courses/CourseList.vue";
 import PersonListContent from "../components/CourseDetail/PersonList/PersonListContent.vue";
 import PostListContent from "../components/CourseDetail/PostList/PostListContent.vue";
 
@@ -16,6 +17,36 @@ const routes: Array<RouteConfig> = [
     name: "home",
     component: Home,
     meta: { requiresAuth: true },
+    children: [
+      {
+        path: "",
+        component: CourseList,
+      },
+      {
+        path: "create_course",
+        name: "create_course",
+        component: CreateCourse,
+      },
+      {
+        path: "course/:id",
+        name: "course_details",
+        component: CourseDetail,
+        children: [
+          {
+            path: "",
+            component: PostListContent,
+          },
+          {
+            path: "users",
+            component: PersonListContent,
+          },
+          {
+            path: "activity",
+            component: PersonListContent,
+          },
+        ],
+      },
+    ],
   },
   {
     path: "/login",
@@ -28,35 +59,6 @@ const routes: Array<RouteConfig> = [
     name: "sign_up",
     component: SignUp,
     meta: { requiresUnauth: true },
-  },
-  {
-    path: "/create_course",
-    name: "create_course",
-    component: CreateCourse,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/course/:id",
-    name: "course_details",
-    component: CourseDetail,
-    children: [
-      {
-        path: "",
-        component: PostListContent,
-        meta: { requiresAuth: true },
-      },
-      {
-        path: "users",
-        component: PersonListContent,
-        meta: { requiresAuth: true },
-      },
-      {
-        path: "activity",
-        component: PersonListContent,
-        meta: { requiresAuth: true },
-      },
-    ],
-    meta: { requiresAuth: true },
   },
 ];
 

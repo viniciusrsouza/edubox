@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <three-column-template>
       <template v-slot:sidebar>
         <side-bar />
@@ -23,12 +22,10 @@
 import Vue from "vue";
 import SideBar from "../components/CourseDetail/SideBar/SideBar.vue";
 import ThreeColumnTemplate from "../components/CourseDetail/ThreeColumnTemplate.vue";
-import Navbar from "../components/navbar/Navbar.vue";
 export default Vue.extend({
   components: {
     SideBar,
     ThreeColumnTemplate,
-    Navbar,
   },
 });
 </script>

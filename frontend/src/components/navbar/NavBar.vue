@@ -19,7 +19,7 @@ import t from "../../locale";
 import SearchField from "./SearchField.vue";
 
 export default Vue.extend({
-  name: "Navbar",
+  name: "NavBar",
   components: { SearchField },
   methods: {
     t,
