@@ -16,5 +16,6 @@ const strings = new Map([
   ["create_course", "Create Course"],
   ["join_course", "Join Course"],
   ["search", "Search"],
+  ["sign_in", "Sign in"]
 ]);
 export default strings;

@@ -56,6 +56,19 @@
         >{{ t("sign_up") }}</v-btn
       >
     </v-card-text>
+    <div class="sign-in-container">
+      <div class="text-sign-in">Already have an account?</div>
+      <v-btn
+        elevation="2"
+        x-large
+        color="#3B5C78"
+        style="width: 100%"
+        class="white--text"
+        @click="redirect"
+      >
+        Login
+      </v-btn>
+    </div>
   </v-form>
 </template>
 
@@ -107,6 +120,9 @@ export default Vue.extend({
         this.agree_with_terms
       );
     },
+    redirect() {
+      this.$router.push("/login");
+    },
   },
   components: {
     LogoAndName,
@@ -122,4 +138,12 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.text-sign-in {
+  color: $primary;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.5em;
+}
+</style>
