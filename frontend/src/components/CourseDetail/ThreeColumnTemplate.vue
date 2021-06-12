@@ -22,7 +22,7 @@ export default Vue.extend({});
   display: grid;
   grid-template-areas: "lft mid rgt" ". mid .";
   grid-template-columns: auto minmax(0px, 1000px) auto;
-  gap: 4em;
+  gap: 2em;
   padding: 2em;
 
   @media (max-width: 1024px) {
