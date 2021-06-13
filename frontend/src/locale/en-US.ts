@@ -16,7 +16,12 @@ const strings = new Map([
   ["create_course", "Create Course"],
   ["join_course", "Join Course"],
   ["search", "Search"],
+<<<<<<< HEAD
   ["my_account", "My Account"],
   ["settings", "Settings"],
+=======
+  ["sign_in", "Sign in"],
+  ["save_changes", "Save Changes"],
+>>>>>>> 313fcd8866171177ca73dc7d1d24631247b049d6
 ]);
 export default strings;

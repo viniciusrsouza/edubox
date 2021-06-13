@@ -8,6 +8,7 @@ import CourseDetail from "../views/CourseDetail.vue";
 import CourseList from "../components/Courses/CourseList.vue";
 import PersonListContent from "../components/CourseDetail/PersonList/PersonListContent.vue";
 import PostListContent from "../components/CourseDetail/PostList/PostListContent.vue";
+import UserDetail from "../views/UserDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,11 @@ const routes: Array<RouteConfig> = [
             component: PersonListContent,
           },
         ],
+      },
+      {
+        path: "/user_detail",
+        name: "user_detail",
+        component: UserDetail,
       },
     ],
   },
