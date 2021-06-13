@@ -61,7 +61,7 @@ export default Vue.extend({
   mounted: function () {
     CoursesService.getAll()
       .then(({ data }) => {
-        this.courses = [...this.courses, ...data.results];
+        this.courses.push(...data.results);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -88,7 +88,7 @@ export default Vue.extend({
 .card-list-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
-  gap: 2em;
+  gap: 1.5em;
   margin: 1em 2em;
 }
 </style>

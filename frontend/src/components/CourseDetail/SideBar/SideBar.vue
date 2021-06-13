@@ -16,7 +16,7 @@
       </v-list>
       <v-divider></v-divider>
       <v-list nav dense>
-        <v-list-item link @click="redirect('')">
+        <v-list-item link @click="redirect({ path: '' })">
           <v-list-item-icon>
             <v-icon class="text-color-blue"
               >mdi-newspaper-variant-outline</v-icon
@@ -24,7 +24,7 @@
           </v-list-item-icon>
           <v-list-item-title class="text-color-blue">Feed</v-list-item-title>
         </v-list-item>
-        <v-list-item link @click="redirect('/activity')">
+        <v-list-item link @click="redirect({ path: 'activity' })">
           <v-list-item-icon>
             <v-icon class="text-color-blue">mdi-format-list-bulleted</v-icon>
           </v-list-item-icon>
@@ -32,7 +32,7 @@
             >Activities</v-list-item-title
           >
         </v-list-item>
-        <v-list-item link @click="redirect('/users')">
+        <v-list-item link @click="redirect({ path: 'users' })">
           <v-list-item-icon>
             <v-icon class="text-color-blue">mdi-account-multiple</v-icon>
           </v-list-item-icon>
@@ -70,11 +70,13 @@
 <script lang="ts">
 import Vue from "vue";
 import CourseListItem from "./CourseListItem.vue";
+import { redirect } from "../../../router/utils";
 export default Vue.extend({
   name: "SideBar",
   components: {
     CourseListItem,
   },
+  methods: { redirect },
   data: () => ({
     courses: [
       {
@@ -97,16 +99,6 @@ export default Vue.extend({
       },
     ],
   }),
-  created: function () {
-    console.log(this.$route);
-  },
-  methods: {
-    redirect: function (path: string) {
-      let id = this.$route.params.id;
-      let fullPath = `/course/${id}` + path + "/";
-      this.$router.push(fullPath);
-    },
-  },
 });
 </script>
 >

@@ -9,39 +9,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import t from "../locale";
-import CoursesService from "../services/courses_service";
 import NavBar from "../components/navbar/NavBar.vue";
 
 export default Vue.extend({
   name: "Home",
   components: { NavBar },
-  methods: {
-    t,
-    getCourses: function () {
-      return this.courses.filter((c) => {
-        return c.title
-          .toLowerCase()
-          .startsWith(this.$store.state.navbar.search.toLowerCase());
-      });
-    },
-  },
-  data: () => ({
-    add_options: [
-      { title: t("create_course"), endpoint: "create_course" },
-      { title: t("join_course"), endpoint: "" },
-    ],
-    courses: [],
-  }),
-  mounted: function () {
-    CoursesService.getAll()
-      .then(({ data }) => {
-        this.courses = [...this.courses, ...data.results];
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-  },
 });
 </script>
 

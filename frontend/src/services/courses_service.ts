@@ -1,9 +1,9 @@
 import api from "./api_axios";
 
 const CoursesService = {
-  async getAll() {
+  async getAll(): Promise<GetAllResponse> {
     const params = { limit: 100 };
-    return await api.get("courses", { params });
+    return await api.get("courses/", { params });
   },
 
   async create(payload: CreatePayload) {
@@ -15,6 +15,12 @@ const CoursesService = {
 interface CreatePayload {
   title: string;
   description: string;
+}
+
+interface GetAllResponse {
+  data: {
+    results: [];
+  };
 }
 
 export default CoursesService;

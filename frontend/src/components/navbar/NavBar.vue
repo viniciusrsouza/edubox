@@ -8,9 +8,7 @@
         </div>
       </div>
       <div class="narbar-searchbar"><SearchField /></div>
-      <div class="navbar-user-options">
-        <v-btn text class="mx-4" @click="logout"> {{ t("logout") }} </v-btn>
-      </div>
+      <navbar-options className="navbar-user-options" />
     </div>
   </div>
 </template>
@@ -18,18 +16,14 @@
 <script lang="ts">
 import Vue from "vue";
 import t from "../../locale";
+import NavbarOptions from "./NavbarOptions.vue";
 import SearchField from "./SearchField.vue";
 
 export default Vue.extend({
   name: "NavBar",
-  components: { SearchField },
+  components: { SearchField, NavbarOptions },
   methods: {
     t,
-    logout() {
-      localStorage.setItem("access", "");
-      localStorage.setItem("refresh", "");
-      this.$router.go();
-    },
     redirectHome() {
       if (this.$router.currentRoute.path !== "/") this.$router.push("/");
     },
@@ -37,7 +31,7 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .navbar-container {
   position: sticky;
   top: 0;
