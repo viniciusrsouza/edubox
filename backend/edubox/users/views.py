@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from edubox.users.serializers import CreateAuthUserSerializer
+from edubox.users.serializers import UserSerializer
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from edubox.users.services import services
@@ -28,5 +30,9 @@ class CreateAuthUserView(generics.CreateAPIView):
         else:
             return Response(result, status=status.HTTP_400_BAD_REQUEST)
 
-
-
+class GetUserView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
