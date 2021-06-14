@@ -1,20 +1,18 @@
 <template>
-  <v-container fluid fill-height>
-    <v-row no-gutters style="height: 100%">
-      <v-col cols="8" style="text-align: center">
+  <div class="two-column-wrap">
+    <div class="two-column-container">
+      <div class="two-column-left">
         <img
           src="../../assets/Online_Learning.png"
           alt="onlineLearning"
           style="position: relative; top: 50%; transform: translateY(-50%)"
         />
-      </v-col>
-      <v-col cols="4">
-        <v-card style="height: 100%">
-          <slot> </slot>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+      </div>
+      <div class="two-column-right">
+        <slot />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -24,4 +22,40 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.two-column-wrap {
+  background: $background;
+  height: 100%;
+}
+
+.two-column-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  background: $content-background;
+
+  .two-column-right,
+  & {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.08);
+  }
+  .two-column-right {
+    padding: 2em;
+  }
+  .two-column-left {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .two-column-container {
+    justify-content: center;
+    .two-column-left {
+      display: none;
+    }
+  }
+}
+</style>

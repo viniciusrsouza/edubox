@@ -23,7 +23,8 @@ class CreateAuthUserView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         try:
             result = services.UserRegister.execute(**serializer.validated_data)
-        except:
+        except Exception as e:
+            print(e)
             return Response({'success':False, 'message':'Something gone wrong.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         if result['success']:
             return Response(result, status=status.HTTP_201_CREATED)

@@ -271,7 +271,7 @@ tags
 edubox/media/
 
 .pytest_cache/
-
+backend/db-dev.sqlite3
 
 .ipython/
 .env

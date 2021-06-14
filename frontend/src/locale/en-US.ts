@@ -9,10 +9,16 @@ const strings = new Map([
   ["password", "password"],
   ["confirm_password", "confirm password"],
   ["sign_up", "sign up"],
+  ["logout", "logout"],
   ["write_new_post", "Write a new post"],
   ["show_less_responses", "Show less responses"],
   ["show_more_responses", "Show more responses"],
   ["create_course", "Create Course"],
   ["join_course", "Join Course"],
+  ["search", "Search"],
+  ["my_account", "My Account"],
+  ["settings", "Settings"],
+  ["sign_in", "Sign in"],
+  ["save_changes", "Save Changes"],
 ]);
 export default strings;

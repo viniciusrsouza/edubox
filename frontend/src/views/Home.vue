@@ -1,76 +1,36 @@
 <template>
-  <div class="home-container">
-    <Navbar />
-    <div class="home-top">
-      <div class="home-title">{{ t("courses") }}</div>
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="btn-container ma-4 white--text"
-            color="#3b5c78"
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon class="me-2">mdi-plus-circle-outline</v-icon>
-            {{ t("new_course") }}
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
-            v-for="(item, index) in add_options"
-            :key="index"
-            link
-            :href="item.endpoint"
-          >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </div>
-    <div class="home-content">
-      <Card v-for="course in courses" :key="course.id" :course="course" />
+  <div class="home-wrapper">
+    <nav-bar />
+    <div class="home-container">
+      <router-view />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Navbar from "../components/Navbar.vue";
-import Card from "../components/Courses/Card.vue";
-import t from "../locale";
-import api from "../services/api_axios";
+import NavBar from "../components/navbar/NavBar.vue";
 
 export default Vue.extend({
   name: "Home",
-  components: { Navbar, Card },
-  methods: { t },
-  data: () => ({
-    add_options: [
-      { title: t("create_course"), endpoint: "creation" },
-      { title: t("join_course"), endpoint: "" },
-    ],
-    courses: [],
-  }),
-  mounted: function () {
-    api
-      .get("/api/courses/", {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((response) => {
-        //this.courses.push({...this.courses, ...response.data.results});
-        this.courses = [...this.courses, ...response.data.results];
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-
-    //getCourses()
-  },
+  components: { NavBar },
 });
 </script>
 
 <style lang="scss" scoped>
+.home-wrapper {
+  background: $background;
+  height: 100%;
+}
+
+.home-container {
+  background: $content-background;
+  max-width: 1920px;
+  margin: 0 auto;
+  height: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.08);
+}
+
 .home-title {
   font-size: 2rem;
   font-weight: 500;

@@ -3,60 +3,90 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import SignUp from "../views/SignUp.vue";
-import Creation from "../views/Creation.vue";
+import CreateCourse from "../views/CreateCourse.vue";
 import CourseDetail from "../views/CourseDetail.vue";
-import CoursePeople from "../views/CoursePeople.vue";
+import CourseList from "../components/Courses/CourseList.vue";
 import PersonListContent from "../components/CourseDetail/PersonList/PersonListContent.vue";
 import PostListContent from "../components/CourseDetail/PostList/PostListContent.vue";
+import UserDetail from "../views/UserDetail.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-  },
-  {
-    path: "/signup",
-    name: "Sign Up",
-    component: SignUp,
-  },
-  {
-    path: "/creation",
-    name: "New course",
-    component: Creation,
-  },
-  {
-    path: "/course/:id",
-    name: "Course Detail",
-    component: CourseDetail,
+    meta: { requiresAuth: true },
     children: [
       {
         path: "",
-        component: PostListContent,
+        component: CourseList,
       },
       {
-        path: "user",
-        component: PersonListContent,
+        path: "create_course",
+        name: "create_course",
+        component: CreateCourse,
+      },
+      {
+        path: "course/:id",
+        name: "course_details",
+        component: CourseDetail,
+        children: [
+          {
+            path: "",
+            component: PostListContent,
+          },
+          {
+            path: "users",
+            component: PersonListContent,
+          },
+          {
+            path: "activity",
+            component: PersonListContent,
+          },
+        ],
+      },
+      {
+        path: "/user_detail",
+        name: "user_detail",
+        component: UserDetail,
       },
     ],
   },
   {
-    path: "/course_people",
-    name: "Course People",
-    component: CoursePeople,
+    path: "/login",
+    name: "login",
+    component: Login,
+    meta: { requiresUnauth: true },
+  },
+  {
+    path: "/signup",
+    name: "sign_up",
+    component: SignUp,
+    meta: { requiresUnauth: true },
   },
 ];
 
 const router = new VueRouter({
   routes,
   mode: "history",
+});
+
+router.beforeEach((to, _, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!localStorage.getItem("access")) {
+      next({
+        path: "/login",
+        query: {
+          nextUrl: to.fullPath,
+        },
+      });
+    }
+  } else if (to.matched.some((record) => record.meta.requiresUnauth)) {
+    if (localStorage.getItem("access")) next({ path: "/" });
+  }
+  next();
 });
 
 export default router;

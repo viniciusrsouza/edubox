@@ -16,13 +16,15 @@
         :icon="'mdi-lock'"
         :inputPlaceholder="t('password')"
         :setValue="(e) => (password = e)"
+        type="password"
       />
       <TextForm
         :icon="'mdi-lock'"
         :inputPlaceholder="t('confirm_password')"
         :setValue="(e) => (confirm_password = e)"
+        type="password"
       />
-      <v-checkbox>
+      <v-checkbox @change="agreeChange">
         <template v-slot:label>
           <div>
             I agree with the
@@ -49,10 +51,24 @@
         color="#3B5C78"
         style="width: 100%"
         class="white--text"
+        :disabled="!allFieldsValid()"
         @click="signup"
-        >Sign Up</v-btn
+        >{{ t("sign_up") }}</v-btn
       >
     </v-card-text>
+    <div class="sign-in-container">
+      <div class="text-sign-in">Already have an account?</div>
+      <v-btn
+        elevation="2"
+        x-large
+        color="#3B5C78"
+        style="width: 100%"
+        class="white--text"
+        @click="redirect"
+      >
+        Login
+      </v-btn>
+    </div>
   </v-form>
 </template>
 
@@ -61,7 +77,7 @@ import Vue from "vue";
 import LogoAndName from "./LogoAndName.vue";
 import TextForm from "./TextForm.vue";
 import t from "../../locale";
-import api from "../../services/api_axios";
+import AuthService from "../../services/auth_service";
 
 export default Vue.extend({
   name: "SignUpForm",
@@ -74,7 +90,38 @@ export default Vue.extend({
         password: this.password,
         confirm_password: this.confirm_password,
       };
-      api.post("/users/create/", payload).then((res) => console.log(res));
+      AuthService.signup(payload)
+        .then(({ success }) => {
+          if (success)
+            AuthService.login({
+              username: payload.email,
+              password: payload.password,
+            })
+              .then((res) => {
+                if (res.success) this.$router.push("/");
+              })
+              .catch((err) => {
+                console.log(err.response.data);
+              });
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    },
+    agreeChange(checked) {
+      this.agree_with_terms = checked;
+    },
+    allFieldsValid(): boolean {
+      return (
+        this.full_name &&
+        this.email &&
+        this.password &&
+        this.confirm_password &&
+        this.agree_with_terms
+      );
+    },
+    redirect() {
+      this.$router.push("/login");
     },
   },
   components: {
@@ -82,12 +129,21 @@ export default Vue.extend({
     TextForm,
   },
   data: () => ({
-    full_name: String,
-    email: String,
-    password: String,
-    confirm_password: String,
+    full_name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    agree_with_terms: false,
   }),
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.text-sign-in {
+  color: $primary;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.5em;
+}
+</style>

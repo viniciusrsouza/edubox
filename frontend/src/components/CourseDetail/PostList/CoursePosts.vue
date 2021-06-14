@@ -51,7 +51,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
- .margin-bottom {
-     margin-bottom: 25px;
- }
+.margin-bottom {
+  margin-bottom: 25px;
+}
 </style>
