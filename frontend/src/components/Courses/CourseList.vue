@@ -36,7 +36,7 @@
 import Vue from "vue";
 import Card from "./Card.vue";
 import t from "../../locale";
-import CoursesService from "../../services/courses_service";
+import CoursesService, { Course } from "../../services/courses_service";
 
 export default Vue.extend({
   name: "CourseList",
@@ -56,15 +56,15 @@ export default Vue.extend({
       { title: t("create_course"), endpoint: "create_course" },
       { title: t("join_course"), endpoint: "" },
     ],
-    courses: [],
+    courses: [] as Course[],
   }),
   mounted: function () {
     CoursesService.getAll()
-      .then(({ data }) => {
-        this.courses.push(...data.results);
+      .then(({ results }) => {
+        this.courses.push(...results);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   },
 });

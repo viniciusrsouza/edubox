@@ -58,9 +58,10 @@ export default Vue.extend({
       this.$router.go(0);
     },
     performAction(action: Action): boolean {
+      const obj = Object(this);
       return (
         (action.redirect && redirect({ path: action.redirect })) ||
-        (action.callback && this[action.callback]())
+        (action.callback && obj[action.callback]())
       );
     },
   },

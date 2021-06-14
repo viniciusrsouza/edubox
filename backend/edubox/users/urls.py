@@ -5,5 +5,5 @@ from edubox.users import views
 app_name = "users"
 urlpatterns = [
 
-    path("", view=views.CreateAuthUserView.as_view()),
+    path("", view=views.CreateAndRetrieveAuthUserView.as_view()),
 ]

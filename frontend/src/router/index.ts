@@ -48,8 +48,8 @@ const routes: Array<RouteConfig> = [
         ],
       },
       {
-        path: "/user_detail",
-        name: "user_detail",
+        path: "/account",
+        name: "account",
         component: UserDetail,
       },
     ],

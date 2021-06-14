@@ -44,6 +44,7 @@ import Vue from "vue";
 import Assignment from "./Assignment.vue";
 import Students from "./Students.vue";
 import t from "../../locale";
+import { Course } from "@/services/courses_service";
 export default Vue.extend({
   name: "Card",
   methods: {
@@ -75,13 +76,6 @@ export default Vue.extend({
     };
   },
 });
-
-interface Course {
-  id: number;
-  title: string;
-  description: string;
-  favorite: boolean;
-}
 </script>
 
 <style lang="scss" scoped>

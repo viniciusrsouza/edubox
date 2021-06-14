@@ -108,11 +108,11 @@ export default Vue.extend({
           console.log(err.response.data);
         });
     },
-    agreeChange(checked) {
+    agreeChange(checked: boolean) {
       this.agree_with_terms = checked;
     },
     allFieldsValid(): boolean {
-      return (
+      return !!(
         this.full_name &&
         this.email &&
         this.password &&

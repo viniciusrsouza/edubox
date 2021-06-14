@@ -6,7 +6,9 @@
     :prepend-inner-icon="icon"
     :type="type"
     class="textForm"
-    @input="(e) => setValue(e)"
+    :value="value"
+    @input="$emit('update:value', $event)"
+    :disabled="disabled"
   ></v-text-field>
 </template>
 
@@ -19,7 +21,8 @@ export default Vue.extend({
     inputPlaceholder: String,
     type: String,
     id: String,
-    setValue: Function,
+    disabled: Boolean,
+    value: String,
   },
 });
 </script>
