@@ -15,11 +15,21 @@ class CreateAuthUserSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
 
+    courses = serializers.SerializerMethodField()
+
+    def get_courses(self, instance):
+        courses_list = []
+        a = instance.course_set.all()
+        for i in a:
+            courses_list.append(i.id)
+        return courses_list
+    
     class Meta:
         model = User
         fields = (['id',
                    'email',
-                   'name',])
+                   'name',
+                   'courses',])
     
     def create(self, validated_data):
         return User.objects.create(**validated_data)

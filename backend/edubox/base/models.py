@@ -46,10 +46,16 @@ class Quiz(models.Model):
 
 
 class Course(models.Model):
+    owner = models.ForeignKey('users.User', related_name='owner', on_delete=models.CASCADE)
+    code = models.CharField(max_length=8, unique=True)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     favorite = models.BooleanField(default=False)
+    participants = models.ManyToManyField('users.User', blank=True)
+
+    def __str__(self):
+        return self.title
 
 class PostFile(models.Model):
     post = models.ForeignKey('base.Post', on_delete=models.CASCADE)
@@ -62,8 +68,3 @@ class Post(models.Model):
     author = models.ForeignKey('users.User', on_delete=models.CASCADE)
     is_pinned = models.BooleanField(default=False, blank=True, null=True) 
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-
-
-
-    
-

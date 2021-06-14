@@ -6,4 +6,5 @@ app_name = "users"
 urlpatterns = [
 
     path("", view=views.CreateAndRetrieveAuthUserView.as_view()),
+    path("get/", view=views.GetUserView.as_view()),
 ]

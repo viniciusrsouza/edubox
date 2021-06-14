@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import generics
-from rest_framework import permissions
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from edubox.users.serializers import CreateAuthUserSerializer, UserSerializer
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from edubox.users.services import services
@@ -41,4 +42,13 @@ class CreateAndRetrieveAuthUserView(generics.CreateAPIView, generics.RetrieveAPI
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         instance = request.user
         serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+
+class GetUserView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
