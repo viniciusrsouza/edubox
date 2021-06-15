@@ -7,14 +7,14 @@
         :inputPlaceholder="'Email'"
         :type="'email'"
         :id="'email'"
-        v-model="this.email"
+        v-model="email"
       />
       <TextForm
         :icon="'mdi-lock'"
         :inputPlaceholder="'Password'"
         :type="'password'"
         :id="'pw'"
-        v-model="this.password"
+        v-model="password"
       />
       <v-btn
         elevation="2"
@@ -61,16 +61,16 @@ export default Vue.extend({
         password: this.password,
       };
 
-      console.log(options);
-      return;
-
-      // AuthService.login(options)
-      //   .then(({ success }) => {
-      //     if (success) this.$router.push("/");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err.response.data);
-      //   });
+      AuthService.login(options)
+        .then(({ success }) => {
+          if (success) this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    },
+    teste(a: any) {
+      console.log({ a });
     },
     redirect() {
       this.$router.push("/signup");

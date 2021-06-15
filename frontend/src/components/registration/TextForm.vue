@@ -7,7 +7,7 @@
     :type="type"
     class="textForm"
     :value="value"
-    @input="$emit('update:value', $event)"
+    @input="$emit('input', $event)"
     :disabled="disabled"
   ></v-text-field>
 </template>
@@ -16,6 +16,10 @@
 import Vue from "vue";
 export default Vue.extend({
   name: "TextForm",
+  model: {
+    prop: "value",
+    event: "input",
+  },
   props: {
     icon: String,
     inputPlaceholder: String,
