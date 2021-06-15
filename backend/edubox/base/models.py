@@ -67,6 +67,9 @@ class Membership(models.Model):
     role = models.IntegerField()
     favorite = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('user', 'course')
+
 
 class PostFile(models.Model):
     post = models.ForeignKey('base.Post', on_delete=models.CASCADE)
