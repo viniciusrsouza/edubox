@@ -16,10 +16,10 @@
         </template>
         <v-list>
           <v-list-item
-            v-for="(item, index) in add_options"
+            v-for="(item, index) in getAddOptions()"
             :key="index"
             link
-            :href="item.endpoint"
+            @click="item.action()"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -29,6 +29,30 @@
     <div class="card-list-content">
       <Card v-for="course in getCourses()" :key="course.id" :course="course" />
     </div>
+
+    <v-dialog
+      width="500"
+      v-model="course_dialog"
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-card-title dark> {{ t("join_course") }} </v-card-title>
+        <v-card-text>
+          <div class="course-dialog-text pb-2">{{ t("insert_code") }}</div>
+          <text-form
+            :inputPlaceholder="t('course_code')"
+            icon="mdi-alphabetical"
+            v-model="course_code"
+          />
+        </v-card-text>
+        <v-card-actions class="justify-end">
+          <v-btn text @click="dismissDialog">{{ t("dismiss") }}</v-btn>
+          <v-btn text @click="joinCourse" class="course-dialog-btn-join">
+            {{ t("join") }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -37,26 +61,50 @@ import Vue from "vue";
 import Card from "./Card.vue";
 import t from "../../locale";
 import CoursesService, { Course } from "../../services/courses_service";
+import { redirect } from "@/router/utils";
+import TextForm from "../registration/TextForm.vue";
 
 export default Vue.extend({
   name: "CourseList",
-  components: { Card },
+  components: { Card, TextForm },
   methods: {
     t,
-    getCourses: function () {
+    getCourses() {
       return this.courses.filter((c) => {
         return c.title
           .toLowerCase()
           .startsWith(this.$store.state.navbar.search.toLowerCase());
       });
     },
+
+    getAddOptions() {
+      const updateDialog = () => {
+        this.course_dialog = true;
+      };
+      return [
+        {
+          title: t("create_course"),
+          action: () => redirect({ path: "/create_course" }),
+        },
+        { title: t("join_course"), action: updateDialog },
+      ];
+    },
+
+    joinCourse() {
+      CoursesService.join(this.course_code).then((res) => {
+        console.log(res);
+      });
+    },
+
+    dismissDialog() {
+      this.course_dialog = false;
+      this.course_code = "";
+    },
   },
   data: () => ({
-    add_options: [
-      { title: t("create_course"), endpoint: "create_course" },
-      { title: t("join_course"), endpoint: "" },
-    ],
     courses: [] as Course[],
+    course_dialog: true,
+    course_code: "",
   }),
   mounted: function () {
     CoursesService.getAll()
@@ -90,5 +138,9 @@ export default Vue.extend({
   grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
   gap: 1.5em;
   margin: 1em 2em;
+}
+
+.course-dialog-btn-join {
+  color: $primary;
 }
 </style>
