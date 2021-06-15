@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from edubox.base.serializers import *
 
+
 class PostsListCreate(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
     queryset = Post.objects.all()
@@ -24,8 +25,12 @@ class CourseListCreate(generics.ListCreateAPIView):
 
 class CourseDetail(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
-    serializer_class = CourseSerializer
-    queryset = Course.objects.all()
+    def retrieve(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        instance = request.user
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
 
 class AssignmentListCreate(generics.ListCreateAPIView):
