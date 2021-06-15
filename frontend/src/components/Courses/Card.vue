@@ -44,7 +44,7 @@
                 mdi-content-copy
               </v-icon>
             </template>
-            <span>{{ `${t("course_code")} ${course.code}` }}</span>
+            <span>{{ `${t("course_code_spotlight")} ${course.code}` }}</span>
           </v-tooltip>
         </div>
       </div>

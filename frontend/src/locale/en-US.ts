@@ -21,6 +21,10 @@ const strings = new Map([
   ["sign_in", "Sign in"],
   ["save_changes", "Save Changes"],
   ["teacher_tooltip", "You are the teacher of this class"],
-  ["course_code", "Copy code of this class:"],
+  ["course_code_spotlight", "Copy code of this class:"],
+  ["course_code", "Course Code"],
+  ["insert_code", "8 characters code of the course you want to join."],
+  ["join", "Join"],
+  ["dismiss", "Dismiss"],
 ]);
 export default strings;

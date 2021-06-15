@@ -10,6 +10,10 @@ const CoursesService = {
     await api.post("courses/", payload);
     return { success: true };
   },
+
+  async join(code: string) {
+    return (await api.post(`courses/${code}`)).data;
+  },
 };
 
 interface CreatePayload {
