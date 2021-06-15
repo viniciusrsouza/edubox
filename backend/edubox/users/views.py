@@ -19,12 +19,18 @@ class CreateAndRetrieveAuthUserView(generics.CreateAPIView, generics.RetrieveAPI
     raise_exception = True
     serializer_class = CreateAuthUserSerializer
 
-    def post(self, request):    
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, *args, **kwargs):
+        serializer = CreateAuthUserSerializer(data=request.data.copy())
+        serializer.is_valid(raise_exception=True)
+        try:
+            result = services.UserRegister.execute(**serializer.validated_data)
+        except Exception as e:
+            print(e)
+            return Response({'success': False, 'message': 'Something went wrong.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        if result['success']:
+            return Response(result, status=status.HTTP_201_CREATED)
+        else:
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, *args, **kwargs):
         self.permission_classes = [IsAuthenticated]
@@ -40,8 +46,9 @@ class CreateAndRetrieveAuthUserView(generics.CreateAPIView, generics.RetrieveAPI
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'name','photo','is_superuser']
-        extra_kwargs = {'password': {'write_only': True}, 'is_superuser':{'read_only': True},} 
+        fields = ['id', 'email', 'password', 'name', 'photo', 'is_superuser']
+        extra_kwargs = {'password': {'write_only': True},
+                        'is_superuser': {'read_only': True}, }
 
 
 class GetUserView(APIView):
