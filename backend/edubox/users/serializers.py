@@ -9,7 +9,7 @@ class CreateAuthUserSerializer(serializers.ModelSerializer):
         model = User
         fields = (['id',
                    'email',
-                   'name',
+                   'username',
                    'password',
                    'confirm_password'])
 

@@ -1,14 +1,23 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from .managers import CustomUserManager
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+class User (AbstractUser):
+    username = None
+    first_name = None
+    last_name = None
 
-class User(AbstractUser):
-    name = models.CharField(_("Name of User"), blank=True, max_length=255)
-    institution = models.CharField(blank=True, max_length=255)
-    department = models.CharField(blank=True, max_length=255)
-    picture = models.ImageField(upload_to="uploads/", blank=True)
+    email = models.EmailField(('email address'), unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
-    def get_absolute_url(self):
-        return reverse("users:detail", kwargs={"username": self.username})
+    #permission_classes = (IsAuthenticated,)
+    objects = CustomUserManager()
+
+    name = models.CharField(max_length = 200)
+    photo = models.ImageField(upload_to = 'profileImgs', blank=True)
+
+    def __str__(self):
+        return self.email
