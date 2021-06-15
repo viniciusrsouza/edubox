@@ -4,7 +4,7 @@ from edubox.base import views
 
 urlpatterns = [
 
-    
+
     path("test/", view=views.Test.as_view()),
 
     path("test2/", view=views.Test2.as_view()),
@@ -23,6 +23,6 @@ urlpatterns = [
 
     path("assignments/<int:pk>/", view=views.AssignmentDetail.as_view()),
 
-    path("participants/<str:token>", view=views.ParticipantsCreate.as_view()),
+    path("membership/<str:token>", view=views.MembershipCreate.as_view()),
 
 ]

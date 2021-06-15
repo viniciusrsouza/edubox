@@ -103,7 +103,7 @@ export default Vue.extend({
   },
   data: () => ({
     courses: [] as Course[],
-    course_dialog: true,
+    course_dialog: false,
     course_code: "",
   }),
   mounted: function () {

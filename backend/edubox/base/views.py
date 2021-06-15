@@ -27,31 +27,33 @@ class CourseListCreate(generics.ListCreateAPIView):
     serializer_class = CourseSerializer
 
     def get_queryset(self):
-        return Course.objects.filter()
+        return Course.objects.filter(members=self.request.user)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(owner=request.user)
         headers = self.get_success_headers(serializer.data)
-        p = Participants.objects.create(user = request.user, course = serializer.instance, role = 1)
-        p.save()
+        m = Membership.objects.create(
+            user=request.user, course=serializer.instance, role=1)
+        m.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-class ParticipantsCreate(APIView):
+
+class MembershipCreate(APIView):
     permission_classes = [AllowAny]
-    
+
     def post(self, request, token):
         related_course = get_object_or_404(Course, code=token)
-        p = Participants.objects.create(user = request.user, course = related_course, role = 3)
-        p.save()
-        return Response( status=status.HTTP_201_CREATED)
-        
-
+        m = Membership.objects.create(
+            user=request.user, course=related_course, role=3)
+        m.save()
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class CourseDetail(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
+
     def retrieve(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return Response(status=status.HTTP_401_UNAUTHORIZED)

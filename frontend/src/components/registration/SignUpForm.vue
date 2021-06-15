@@ -85,7 +85,7 @@ export default Vue.extend({
     t,
     signup() {
       const payload = {
-        username: this.full_name,
+        name: this.full_name,
         email: this.email,
         password: this.password,
         confirm_password: this.confirm_password,
@@ -94,7 +94,7 @@ export default Vue.extend({
         .then(({ success }) => {
           if (success)
             AuthService.login({
-              username: payload.email,
+              email: payload.email,
               password: payload.password,
             })
               .then((res) => {

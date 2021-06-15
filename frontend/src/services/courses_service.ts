@@ -12,7 +12,7 @@ const CoursesService = {
   },
 
   async join(code: string) {
-    return (await api.post(`courses/${code}`)).data;
+    return (await api.post(`membership/${code}`)).data;
   },
 };
 
