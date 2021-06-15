@@ -16,12 +16,12 @@ const AuthService = {
 };
 
 interface LoginPayload {
-  username: string;
+  email: string;
   password: string;
 }
 
 interface SignupPayload {
-  full_name: string;
+  username: string;
   email: string;
   password: string;
   confirm_password: string;

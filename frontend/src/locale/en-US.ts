@@ -20,5 +20,7 @@ const strings = new Map([
   ["settings", "Settings"],
   ["sign_in", "Sign in"],
   ["save_changes", "Save Changes"],
+  ["teacher_tooltip", "You are the teacher of this class"],
+  ["course_code", "Copy code of this class:"],
 ]);
 export default strings;

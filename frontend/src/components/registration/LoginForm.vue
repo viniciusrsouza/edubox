@@ -57,7 +57,7 @@ export default Vue.extend({
   methods: {
     login() {
       let options = {
-        username: this.email,
+        email: this.email,
         password: this.password,
       };
 

@@ -5,24 +5,24 @@
       <TextForm
         :icon="'mdi-account'"
         :inputPlaceholder="t('full_name')"
-        :setValue="(e) => (full_name = e)"
+        v-model="full_name"
       />
       <TextForm
         :icon="'mdi-at'"
         :inputPlaceholder="t('email')"
-        :setValue="(e) => (email = e)"
+        v-model="email"
       />
       <TextForm
         :icon="'mdi-lock'"
         :inputPlaceholder="t('password')"
-        :setValue="(e) => (password = e)"
         type="password"
+        v-model="password"
       />
       <TextForm
         :icon="'mdi-lock'"
         :inputPlaceholder="t('confirm_password')"
-        :setValue="(e) => (confirm_password = e)"
         type="password"
+        v-model="confirm_password"
       />
       <v-checkbox @change="agreeChange">
         <template v-slot:label>
@@ -85,7 +85,7 @@ export default Vue.extend({
     t,
     signup() {
       const payload = {
-        full_name: this.full_name,
+        username: this.full_name,
         email: this.email,
         password: this.password,
         confirm_password: this.confirm_password,

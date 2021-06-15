@@ -29,6 +29,10 @@ export interface Course {
   title: string;
   description: string;
   favorite: boolean;
+  created_at: string;
+  owner: number;
+  code: string;
+  role: string;
 }
 
 export default CoursesService;

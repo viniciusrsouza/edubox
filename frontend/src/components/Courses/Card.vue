@@ -18,7 +18,35 @@
           contain
           src="@/assets/undraw/undraw_female_avatar_w3jk.svg"
         />
-        <div class="title-text">{{ course.title }}</div>
+        <div class="title-text">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                class="title-owner-icon"
+                v-if="course.role === 'owner'"
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-school
+              </v-icon>
+            </template>
+            <span>{{ t("teacher_tooltip") }}</span>
+          </v-tooltip>
+          {{ course.title }}
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                class="title-code-icon"
+                v-bind="attrs"
+                v-on="on"
+                @click="copyToClipboard"
+              >
+                mdi-content-copy
+              </v-icon>
+            </template>
+            <span>{{ `${t("course_code")} ${course.code}` }}</span>
+          </v-tooltip>
+        </div>
       </div>
       <div class="description">{{ course.description }}</div>
     </div>
@@ -54,6 +82,14 @@ export default Vue.extend({
     },
     redirect(id: number) {
       this.$router.push(`course/${id}`);
+    },
+    copyToClipboard() {
+      let temp = document.createElement("textarea");
+      temp.value = this.course.code;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
     },
   },
   components: { Assignment, Students },
@@ -97,16 +133,28 @@ export default Vue.extend({
   }
 
   .title {
-    display: inline-flex;
+    display: flex;
     padding: 0.5em 0;
     align-items: center;
   }
 
   .title-text {
+    display: flex;
+    width: 100%;
+    gap: 0.4em;
     color: $text-primary;
     font-weight: bold;
     font-size: 1.2rem;
     padding: 0 0.8em;
+
+    .title-owner-icon {
+      color: $primary;
+      font-size: 1em;
+    }
+
+    .title-code-icon {
+      margin-left: auto;
+    }
   }
 
   .description {
