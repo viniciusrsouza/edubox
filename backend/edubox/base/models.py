@@ -51,11 +51,16 @@ class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
-    favorite = models.BooleanField(default=False)
-    participants = models.ManyToManyField('users.User', blank=True)
 
     def __str__(self):
         return self.title
+
+class Participants(models.Model):
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    course = models.ForeignKey('base.Course', on_delete=models.CASCADE)
+    role = models.IntegerField()
+    favorite = models.BooleanField(default=False)
+    
 
 class PostFile(models.Model):
     post = models.ForeignKey('base.Post', on_delete=models.CASCADE)

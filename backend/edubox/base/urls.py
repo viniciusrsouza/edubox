@@ -23,4 +23,6 @@ urlpatterns = [
 
     path("assignments/<int:pk>/", view=views.AssignmentDetail.as_view()),
 
+    path("participants/<str:token>", view=views.ParticipantsCreate.as_view()),
+
 ]

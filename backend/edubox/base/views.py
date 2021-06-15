@@ -6,6 +6,8 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from edubox.base.serializers import *
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
 
 
 class PostsListCreate(generics.ListCreateAPIView):
@@ -25,14 +27,27 @@ class CourseListCreate(generics.ListCreateAPIView):
     serializer_class = CourseSerializer
 
     def get_queryset(self):
-        return Course.objects.filter(owner=self.request.user)
+        return Course.objects.filter()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(owner=request.user)
         headers = self.get_success_headers(serializer.data)
+        p = Participants.objects.create(user = request.user, course = serializer.instance, role = 1)
+        p.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+class ParticipantsCreate(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request, token):
+        related_course = get_object_or_404(Course, code=token)
+        p = Participants.objects.create(user = request.user, course = related_course, role = 3)
+        p.save()
+        return Response( status=status.HTTP_201_CREATED)
+        
+
 
 
 class CourseDetail(generics.RetrieveAPIView):
