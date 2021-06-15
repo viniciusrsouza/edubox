@@ -1,40 +1,43 @@
 from rest_framework import serializers
 from edubox.users.serializers import UserSerializer
 from edubox.base.models import *
+from django.utils import crypto
+
 
 class PostFileSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = PostFile
-        fields = [  'id',
-                    'post',
-                    'file_path',]
+        fields = ['id',
+                  'post',
+                  'file_path', ]
 
     def create(self, validated_data):
         post = validated_data.pop('post')
         instance = Post.objects.get(id=post)
         return PostFile.objects.create(**validated_data)
-    
+
     def update(self, instance, validated_data):
 
-        instance.file_path  = validated_data.get('file_path', instance.file_path)
+        instance.file_path = validated_data.get(
+            'file_path', instance.file_path)
         instance.save()
         return instance
 
-    
 
 class PostSerializer(serializers.ModelSerializer):
-    files = PostFileSerializer(many=True, required=False, allow_null=True, default=[])
-    
+    files = PostFileSerializer(
+        many=True, required=False, allow_null=True, default=[])
+
     class Meta:
         model = Post
-        fields = [  'id',
-                    'files',
-                    'author',
-                    'course',
-                    'text',
-                    'is_pinned',
-                    'created_at']
+        fields = ['id',
+                  'files',
+                  'author',
+                  'course',
+                  'text',
+                  'is_pinned',
+                  'created_at']
 
     def create(self, validated_data):
         files_data = validated_data.pop('files', None)
@@ -47,11 +50,11 @@ class PostSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        instance.text  = validated_data.get('text', instance.text)
-        instance.text  = validated_data.get('email', instance.email)
-        instance.text  = validated_data.get('email', instance.email)
-        instance.text  = validated_data.get('email', instance.email)
-        instance.text  = validated_data.get('email', instance.email)
+        instance.text = validated_data.get('text', instance.text)
+        instance.text = validated_data.get('email', instance.email)
+        instance.text = validated_data.get('email', instance.email)
+        instance.text = validated_data.get('email', instance.email)
+        instance.text = validated_data.get('email', instance.email)
 
         files = validated_data.pop('files')
         files_serializer = self.fields['files']
@@ -69,21 +72,34 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    
+    role = serializers.SerializerMethodField()
+
     class Meta:
         model = Course
-        fields = [  'id',
-                    'title',
-                    'description',
-                    'favorite',
-                    'created_at']
+        fields = ['id',
+                  'title',
+                  'description',
+                  'favorite',
+                  'created_at',
+                  'owner',
+                  'code',
+                  'role']
+        read_only_fields = ['owner', 'code', 'role']
+
+    def get_role(self, obj):
+        current_user = self.context['request'].user
+        if current_user == obj.owner:
+            return 'owner'
+        return 'student'
 
     def create(self, validated_data):
+        validated_data['code'] = crypto.get_random_string(length=8)
         return Course.objects.create(**validated_data)
-    
+
     def update(self, instance, validated_data):
-        instance.title  = validated_data.get('title', instance.title)
-        instance.description  = validated_data.get('description', instance.description)
+        instance.title = validated_data.get('title', instance.title)
+        instance.description = validated_data.get(
+            'description', instance.description)
         instance.save()
         return instance
 
@@ -94,19 +110,20 @@ class CourseSerializer2(serializers.Serializer):
     description = serializers.CharField(max_length=200)
     created_at = serializers.DateTimeField()
 
+
 class AssignmentSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = Assignment
-        fields = [  'id',
-                    'title',
-                    'teacher',]
+        fields = ['id',
+                  'title',
+                  'teacher', ]
 
     def create(self, validated_data):
         return Course.objects.create(**validated_data)
-    
+
     def update(self, instance, validated_data):
-        instance.title  = validated_data.get('title', instance.title)
-        instance.teacher  = validated_data.get('teacher', instance.teacher)
+        instance.title = validated_data.get('title', instance.title)
+        instance.teacher = validated_data.get('teacher', instance.teacher)
         instance.save()
         return instance
