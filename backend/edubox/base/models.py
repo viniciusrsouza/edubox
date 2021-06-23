@@ -4,11 +4,18 @@ from edubox.users.models import User
 
 class Assignment(models.Model):
     title = models.CharField(max_length=50)
-    teacher = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    course = models.ForeignKey('base.Course', on_delete=models.CASCADE)
+    student = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    description = models.TextField(max_length=500)
+    deadline = models.DateTimeField(blank=True)
+    grade = models.FloatField(default=0.00)
 
     def __str__(self):
         return self.title
 
+class AssignmentFile(models.Model):
+    assignment = models.ForeignKey('base.Assignment', on_delete=models.CASCADE)
+    file_path = models.FileField(upload_to='uploads/')
 
 class GradedAssignment(models.Model):
     student = models.ForeignKey('users.User', on_delete=models.CASCADE)

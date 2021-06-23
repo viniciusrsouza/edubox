@@ -116,13 +116,17 @@ class AssignmentSerializer(serializers.ModelSerializer):
         model = Assignment
         fields = ['id',
                   'title',
-                  'teacher', ]
+                  'course',
+                  'description',
+                  'deadline',
+                  'grade' ]
 
     def create(self, validated_data):
         return Course.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
-        instance.teacher = validated_data.get('teacher', instance.teacher)
+        instance.description = validated_data.get('description', instance.description)
+        instance.grade = validated_data.get('grade', instance.grade)
         instance.save()
         return instance
