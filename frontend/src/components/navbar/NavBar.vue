@@ -4,7 +4,7 @@
       <div class="navbar-logo-container">
         <div class="navbar-home-logo" @click="redirectHome">
           <img class="navbar-logo" src="../../../public/logo-aibox.png" />
-          <span class="navbar-title">{{ t("edubox") }}</span>
+          <span class="navbar-title">{{ t("Common.Edubox") }}</span>
         </div>
       </div>
       <div class="narbar-searchbar"><SearchField /></div>

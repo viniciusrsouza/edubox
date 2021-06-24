@@ -1,7 +1,7 @@
 <template>
   <div class="card-list-container">
     <div class="card-list-top">
-      <div class="card-list-title">{{ t("courses") }}</div>
+      <div class="card-list-title">{{ t("Home.CourseList.Courses") }}</div>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -11,7 +11,7 @@
             v-on="on"
           >
             <v-icon class="me-2">mdi-plus-circle-outline</v-icon>
-            {{ t("new_course") }}
+            {{ t("Home.CourseList.NewCourse") }}
           </v-btn>
         </template>
         <v-list>
@@ -21,13 +21,20 @@
             link
             @click="item.action()"
           >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title class="card-menu-item">{{
+              item.title
+            }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
     </div>
-    <div class="card-list-content">
+    <div class="card-list-content" v-if="getCourses().length > 0">
       <Card v-for="course in getCourses()" :key="course.id" :course="course" />
+    </div>
+    <div class="card-list-no-data" v-else>
+      <div class="no-data-text">
+        {{ t("Home.CourseList.NoData") }}
+      </div>
     </div>
 
     <v-dialog
@@ -36,19 +43,23 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-card-title dark> {{ t("join_course") }} </v-card-title>
+        <v-card-title dark>
+          {{ t("Home.CourseList.JoinCourse") }}
+        </v-card-title>
         <v-card-text>
-          <div class="course-dialog-text pb-2">{{ t("insert_code") }}</div>
+          <div class="course-dialog-text pb-2">
+            {{ t("Home.CourseList.InsertCode") }}
+          </div>
           <text-form
-            :inputPlaceholder="t('course_code')"
+            :inputPlaceholder="t('Home.CourseList.CourseCode')"
             icon="mdi-alphabetical"
             v-model="course_code"
           />
         </v-card-text>
         <v-card-actions class="justify-end">
-          <v-btn text @click="dismissDialog">{{ t("dismiss") }}</v-btn>
+          <v-btn text @click="dismissDialog">{{ t("Common.Dismiss") }}</v-btn>
           <v-btn text @click="joinCourse" class="course-dialog-btn-join">
-            {{ t("join") }}
+            {{ t("Home.CourseList.Join") }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -69,7 +80,7 @@ export default Vue.extend({
   components: { Card, TextForm },
   methods: {
     t,
-    getCourses() {
+    getCourses(): Course[] {
       return this.courses.filter((c) => {
         return c.title
           .toLowerCase()
@@ -83,10 +94,13 @@ export default Vue.extend({
       };
       return [
         {
-          title: t("create_course"),
+          title: t("Home.CourseList.CreateCourse"),
           action: () => redirect({ path: "/create_course" }),
         },
-        { title: t("join_course"), action: updateDialog },
+        {
+          title: t("Home.CourseList.JoinCourse"),
+          action: updateDialog,
+        },
       ];
     },
 
@@ -142,5 +156,9 @@ export default Vue.extend({
 
 .course-dialog-btn-join {
   color: $primary;
+}
+
+.card-menu-item {
+  text-transform: capitalize;
 }
 </style>
