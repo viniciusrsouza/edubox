@@ -4,10 +4,11 @@ from edubox.users.models import User
 
 class Assignment(models.Model):
     title = models.CharField(max_length=50)
-    course = models.ForeignKey('base.Course', on_delete=models.CASCADE)
-    student = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    description = models.TextField(max_length=500)
-    deadline = models.DateTimeField(blank=True)
+    course = models.ForeignKey('base.Course', on_delete=models.CASCADE, null=True)
+    teacher = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    student = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, related_name='student')
+    description = models.TextField(max_length=500, default='')
+    deadline = models.DateTimeField(blank=True, null=True)
     grade = models.FloatField(default=0.00)
 
     def __str__(self):
