@@ -1,7 +1,7 @@
 <template>
   <div class="searchfield-container">
     <v-text-field
-      :label="t('search')"
+      :label="t('Navbar.Search')"
       dense
       outlined
       prepend-inner-icon="mdi-magnify"

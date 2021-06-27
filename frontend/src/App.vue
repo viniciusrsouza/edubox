@@ -6,7 +6,7 @@
 
         <template v-slot:action="{ attrs }">
           <v-btn color="pink" text v-bind="attrs" @click="dismiss">
-            {{ t("dismiss") }}
+            {{ t("Common.Dismiss") }}
           </v-btn>
         </template>
       </v-snackbar>

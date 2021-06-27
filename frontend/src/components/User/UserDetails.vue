@@ -19,18 +19,18 @@
     <v-card-text>
       <TextForm
         :icon="'mdi-account'"
-        :inputPlaceholder="t('full_name')"
+        :inputPlaceholder="t('Auth.FullName')"
         :setValue="(e) => (full_name = e)"
         v-model="this.user.name"
       />
       <TextForm
         :icon="'mdi-at'"
-        :inputPlaceholder="t('email')"
+        :inputPlaceholder="t('Auth.Email')"
         v-model="this.user.email"
       />
       <TextForm
         :icon="'mdi-lock'"
-        :inputPlaceholder="t('password')"
+        :inputPlaceholder="t('Auth.Password')"
         type="password"
         disabled
         v-model="this.user.password"
@@ -41,7 +41,7 @@
         color="#3B5C78"
         style="width: 100%"
         class="white--text"
-        >{{ t("save_changes") }}</v-btn
+        >{{ t("Auth.SaveChanges") }}</v-btn
       >
     </v-card-text>
     <input

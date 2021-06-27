@@ -1,0 +1,48 @@
+{
+  "Common": {
+    "Edubox": "edubox",
+    "Dismiss": "dismiss",
+    "Assignments": "assignments"
+  },
+  "Navbar": {
+    "Search": "search",
+    "MyAccount": "my account",
+    "Settings": "settings",
+    "Logout": "logout"
+  },
+  "Home": {
+    "CourseList": {
+      "NewCourse": "new course",
+      "Courses": "courses",
+      "CreateCourse": "create course",
+      "JoinCourse": "join course",
+      "Join": "join",
+      "NoData": "You're not participating of any course yet.",
+      "InsertCode": "insert code",
+      "CourseCode": "course code"
+    },
+    "CourseCard": {
+      "TeacherTooltip": "You are the teacher of this class",
+      "CourseCodeSpotlight": "Copy code of this class:",
+      "SeeMore": "see more"
+    }
+  },
+  "CoursePage": {
+    "Feed": {
+      "WriteNewPost": "Write new post",
+      "Post": {
+        "ShowLess": "show less responses",
+        "ShowMore": "show more responses"
+      }
+    }
+  },
+  "Auth": {
+    "FullName": "full name",
+    "Email": "email",
+    "Password": "password",
+    "ConfirmPassword": "confirm password",
+    "SignUp": "sign up",
+    "SignIn": "sign in",
+    "SaveChanges": "save changes"
+  }
+}

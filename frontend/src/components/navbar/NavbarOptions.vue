@@ -9,17 +9,46 @@
           <v-icon class="me-2">mdi-chevron-down</v-icon>
         </div>
       </template>
-      <v-list>
-        <v-list-item
-          v-for="(item, index) in user_options"
-          :key="index"
-          link
-          @click="performAction(item.action)"
-        >
+      <v-list v-for="(item, index) in user_options" :key="index">
+        <v-menu offset-x left open-on-hover v-if="item.language">
+          <template v-slot:activator="{ on: on2, attrs: attrs2 }">
+            <v-list-item
+              link
+              @click="performAction(item.action)"
+              v-on="on2"
+              v-bind="attrs2"
+            >
+              <div class="navbar-options-icon">
+                <v-icon>mdi-{{ item.icon }}</v-icon>
+              </div>
+              <v-list-item-title class="navbar-options-title">{{
+                item.title
+              }}</v-list-item-title>
+            </v-list-item>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in user_options"
+              :key="index"
+              link
+              @click="performAction(item.action)"
+            >
+              <div class="navbar-options-icon">
+                <v-icon>mdi-{{ item.icon }}</v-icon>
+              </div>
+              <v-list-item-title class="navbar-options-title">{{
+                item.title
+              }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-list-item link @click="performAction(item.action)" v-else>
           <div class="navbar-options-icon">
             <v-icon>mdi-{{ item.icon }}</v-icon>
           </div>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-title class="navbar-options-title">{{
+            item.title
+          }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -32,6 +61,7 @@ import t from "../../locale";
 import Profile from "../common/Profile.vue";
 import { redirect } from "../../router/utils";
 import NotifiableButton from "../common/NotifiableButton.vue";
+import { Languages } from "@/constants";
 
 export default Vue.extend({
   name: "navbar_options",
@@ -42,12 +72,38 @@ export default Vue.extend({
   data: (): Data => ({
     user_options: [
       {
-        title: t("my_account"),
+        title: t("Navbar.MyAccount"),
         icon: "account",
         action: { redirect: "/account" },
       },
-      { title: t("settings"), icon: "cog", action: { redirect: "/settings" } },
-      { title: t("logout"), icon: "logout", action: { callback: "logout" } },
+      {
+        title: t("Navbar.Settings"),
+        icon: "cog",
+        action: { redirect: "/settings" },
+      },
+      {
+        title: "languages",
+        icon: "translate",
+        action: {},
+        language: true,
+      },
+      {
+        title: t("Navbar.Logout"),
+        icon: "logout",
+        action: { callback: "logout" },
+      },
+    ],
+    languages: [
+      {
+        title: "English",
+        icon: "",
+        language: Languages.EN_US,
+      },
+      {
+        title: "Portuguese",
+        icon: "",
+        language: Languages.PT_BR,
+      },
     ],
   }),
   methods: {
@@ -69,12 +125,20 @@ export default Vue.extend({
 
 interface Data {
   user_options: Array<UserOption>;
+  languages: Array<Language>;
+}
+
+interface Language {
+  title: string;
+  icon: string;
+  language: Languages;
 }
 
 interface UserOption {
   title: string;
   icon: string;
   action: Action;
+  language?: boolean;
 }
 
 interface Action {
@@ -107,5 +171,9 @@ interface Action {
 
 .navbar-options-icon {
   margin-right: 1em;
+}
+
+.navbar-options-title {
+  text-transform: capitalize;
 }
 </style>

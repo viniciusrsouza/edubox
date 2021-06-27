@@ -1,13 +1,9 @@
-const constants = {
-  language: {
-    en_US: "en_US",
-    pt_BR: "pt_BR",
-  },
+export enum Languages {
+  EN_US = "en_US",
+  PT_BR = "pt_BR",
+}
 
-  theme: {
-    light: "light",
-    dark: "dark",
-  },
-};
-
-export default constants;
+export enum Themes {
+  LIGHT = "light",
+  DARK = "dark",
+}

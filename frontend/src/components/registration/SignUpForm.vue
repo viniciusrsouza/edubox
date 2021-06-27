@@ -4,23 +4,23 @@
       <LogoAndName />
       <TextForm
         :icon="'mdi-account'"
-        :inputPlaceholder="t('full_name')"
+        :inputPlaceholder="t('Auth.FullName')"
         v-model="full_name"
       />
       <TextForm
         :icon="'mdi-at'"
-        :inputPlaceholder="t('email')"
+        :inputPlaceholder="t('Auth.Email')"
         v-model="email"
       />
       <TextForm
         :icon="'mdi-lock'"
-        :inputPlaceholder="t('password')"
+        :inputPlaceholder="t('Auth.Password')"
         type="password"
         v-model="password"
       />
       <TextForm
         :icon="'mdi-lock'"
-        :inputPlaceholder="t('confirm_password')"
+        :inputPlaceholder="t('Auth.ConfirmPassword')"
         type="password"
         v-model="confirm_password"
       />
@@ -53,7 +53,7 @@
         class="white--text"
         :disabled="!allFieldsValid()"
         @click="signup"
-        >{{ t("sign_up") }}</v-btn
+        >{{ t("Auth.SignUp") }}</v-btn
       >
     </v-card-text>
     <div class="sign-in-container">

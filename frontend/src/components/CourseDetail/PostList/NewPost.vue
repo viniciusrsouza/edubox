@@ -5,7 +5,7 @@
       auto-grow
       rows="1"
       clear-icon="mdi-close-circle"
-      :label="t('write_new_post')"
+      :label="t('CoursePage.Feed.WriteNewPost')"
       prepend-inner-icon="mdi-pencil-outline"
       value=""
     ></v-textarea>
@@ -20,5 +20,4 @@ export default Vue.extend({
 });
 </script>
 
-<style>
-</style>
+<style></style>

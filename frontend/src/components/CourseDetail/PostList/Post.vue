@@ -20,12 +20,12 @@
     <div v-if="postResponses.length > 1">
       <div v-if="showLess === true" class="align-right">
         <a class="a-margin" @click="showLess = !showLess">{{
-          t("show_more_responses")
+          t("CoursePage.Feed.Post.ShowMore")
         }}</a>
       </div>
       <div v-else class="align-right">
         <a class="a-margin" @click="showLess = !showLess">{{
-          t("show_less_responses")
+          t("CoursePage.Feed.Post.ShowLess")
         }}</a>
       </div>
       <div v-if="showLess">
