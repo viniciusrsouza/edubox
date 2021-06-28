@@ -8,6 +8,7 @@ import CourseDetail from "../views/CourseDetail.vue";
 import CourseList from "../components/Courses/CourseList.vue";
 import PersonListContent from "../components/CourseDetail/PersonList/PersonListContent.vue";
 import PostListContent from "../components/CourseDetail/PostList/PostListContent.vue";
+import AssignmentCardList from "../components/CourseDetail/Assignments/AssignmentCardList.vue";
 import UserDetail from "../views/UserDetail.vue";
 
 Vue.use(VueRouter);
@@ -43,7 +44,7 @@ const routes: Array<RouteConfig> = [
           },
           {
             path: "activity",
-            component: PersonListContent,
+            component: AssignmentCardList,
           },
         ],
       },
