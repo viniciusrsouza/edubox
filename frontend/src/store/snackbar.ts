@@ -23,7 +23,7 @@ const snackbar: SnackbarModule = {
   },
 };
 
-interface State {
+export interface State {
   text: string;
   show: boolean;
 }

@@ -34,6 +34,9 @@
         "ShowLess": "show less responses",
         "ShowMore": "show more responses"
       }
+    },
+    "Assignments": {
+      "NewAssignment": "New Assignment"
     }
   },
   "Auth": {

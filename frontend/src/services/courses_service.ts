@@ -6,6 +6,10 @@ const CoursesService = {
     return (await api.get("courses/", { params })).data;
   },
 
+  async get(id: string): Promise<Course> {
+    return (await api.get(`courses/${id}`)).data;
+  },
+
   async create(payload: CreatePayload) {
     await api.post("courses/", payload);
     return { success: true };
