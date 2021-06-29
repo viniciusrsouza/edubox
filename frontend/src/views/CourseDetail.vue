@@ -1,6 +1,7 @@
 <template>
   <div>
-    <three-column-template>
+    <v-progress-linear v-if="!this.course" indeterminate />
+    <three-column-template v-else>
       <template v-slot:sidebar>
         <side-bar />
       </template>
@@ -19,13 +20,34 @@
 </template>
 
 <script lang="ts">
+import CoursesService from "@/services/courses_service";
 import Vue from "vue";
+import { mapActions, mapState } from "vuex";
 import SideBar from "../components/CourseDetail/SideBar/SideBar.vue";
 import ThreeColumnTemplate from "../components/CourseDetail/ThreeColumnTemplate.vue";
 export default Vue.extend({
   components: {
     SideBar,
     ThreeColumnTemplate,
+  },
+
+  computed: {
+    ...mapState({
+      course: (state) => state.course.course,
+    }),
+  },
+
+  methods: {
+    ...mapActions(["set_course"]),
+    teste() {
+      console.log(this.$store.state);
+    },
+  },
+
+  async created() {
+    const id = this.$route.params.id;
+    const course = await CoursesService.get(id);
+    this.set_course(course);
   },
 });
 </script>

@@ -16,7 +16,7 @@
       </v-list>
       <v-divider></v-divider>
       <v-list nav dense>
-        <v-list-item link @click="redirect({ path: '' })">
+        <v-list-item link @click="redirect({ path: `/course/${course.id}` })">
           <v-list-item-icon>
             <v-icon class="text-color-blue"
               >mdi-newspaper-variant-outline</v-icon
@@ -24,7 +24,10 @@
           </v-list-item-icon>
           <v-list-item-title class="text-color-blue">Feed</v-list-item-title>
         </v-list-item>
-        <v-list-item link @click="redirect({ path: 'activity' })">
+        <v-list-item
+          link
+          @click="redirect({ path: `/course/${course.id}/activity` })"
+        >
           <v-list-item-icon>
             <v-icon class="text-color-blue">mdi-format-list-bulleted</v-icon>
           </v-list-item-icon>
@@ -32,7 +35,10 @@
             >Activities</v-list-item-title
           >
         </v-list-item>
-        <v-list-item link @click="redirect({ path: 'users' })">
+        <v-list-item
+          link
+          @click="redirect({ path: `/course/${course.id}/users` })"
+        >
           <v-list-item-icon>
             <v-icon class="text-color-blue">mdi-account-multiple</v-icon>
           </v-list-item-icon>
@@ -71,8 +77,14 @@
 import Vue from "vue";
 import CourseListItem from "./CourseListItem.vue";
 import { redirect } from "../../../router/utils";
+import { mapState } from "vuex";
 export default Vue.extend({
   name: "SideBar",
+  computed: {
+    ...mapState({
+      course: (state) => state.course.course,
+    }),
+  },
   components: {
     CourseListItem,
   },
