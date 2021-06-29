@@ -27,10 +27,6 @@
             label="Attach Assignment"
             v-model="file"
           ></v-file-input>
-          <!-- <h5 class="attach-file">
-            <v-icon class="main-color" x-large> mdi-paperclip </v-icon>
-            Attach Assignment
-          </h5> -->
         </div>
         <v-btn @click="submit" block color="primary" class="submit-button">
           Submit

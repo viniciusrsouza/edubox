@@ -38,7 +38,6 @@ export default Vue.extend({
         description: "Lorem ipsum blablabla",
         due_date: "March 24, 2021",
       },
-
     ],
   }),
 });
