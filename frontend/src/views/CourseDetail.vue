@@ -13,7 +13,7 @@
         </transition>
       </template>
       <template v-slot:calendar>
-        <h1>Calendar placeholder</h1>
+        <router-view name="calendar"></router-view>
       </template>
     </three-column-template>
   </div>

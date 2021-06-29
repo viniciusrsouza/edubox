@@ -179,28 +179,24 @@ interface Assignment {
 //           Activity posted at {{ assignment.posted_date }}
 //         </div>
 //         <div class="small-font">
-//           {{ assignment.description }}
-//         </div>
-//       </v-col>
+  //         {{ assignment.description }}
+  //       </div>
+  //     </v-col>
 
-//       <v-col class="margin-10" cols="5">
-//         <h3 class="main-color">Due date: {{ assignment.due_date }}</h3>
-//         <div class="rounded-corner main-color">
-//           <v-file-input
-//             class="file-select"
-//             show-size
-//             counter
-//             label="Attach Assignment"
-//             v-model="file"
-//           ></v-file-input>
-//           <!-- <h5 class="attach-file">
-//             <v-icon class="main-color" x-large> mdi-paperclip </v-icon>
-//             Attach Assignment
-//           </h5> -->
-//         </div>
-//         <v-btn @click="submit" block color="primary" class="submit-button">
-//           Submit
-//         </v-btn>
-//       </v-col>
-//     </v-row>
-//   </v-card>
+  //     <v-col class="margin-10" cols="5">
+  //       <h3 class="main-color">Due date: {{ assignment.due_date }}</h3>
+  //       <div class="rounded-corner main-color">
+  //         <v-file-input
+  //           class="file-select"
+  //           show-size
+  //           counter
+  //           label="Attach Assignment"
+  //           v-model="file"
+  //         ></v-file-input>
+  //       </div>
+  //       <v-btn @click="submit" block color="primary" class="submit-button">
+  //         Submit
+  //       </v-btn>
+  //     </v-col>
+  //   </v-row>
+  // </v-card>
