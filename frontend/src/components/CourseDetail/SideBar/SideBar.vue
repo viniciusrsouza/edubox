@@ -8,7 +8,7 @@
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title class="text-color-blue">
-              Linear Algebra
+              {{ course.title }}
             </v-list-item-title>
             <v-list-item-subtitle> Prof. Rosanne Wiseman </v-list-item-subtitle>
           </v-list-item-content>
@@ -81,9 +81,7 @@ import { mapState } from "vuex";
 export default Vue.extend({
   name: "SideBar",
   computed: {
-    ...mapState({
-      course: (state) => state.course.course,
-    }),
+    ...mapState("course", ["course"]),
   },
   components: {
     CourseListItem,

@@ -4,6 +4,7 @@ import { Commit } from "./types";
 const INITIAL_STATE: Course | undefined = undefined;
 
 const course = {
+  namespaced: true,
   state: {
     course: INITIAL_STATE,
   },
@@ -19,7 +20,7 @@ const course = {
   },
 };
 
-interface State {
+export interface State {
   course: Course | undefined;
 }
 

@@ -16,7 +16,7 @@ const navbar = {
   },
 };
 
-interface State {
+export interface State {
   search: string;
 }
 

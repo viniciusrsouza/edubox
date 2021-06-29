@@ -1,11 +1,15 @@
 <template>
-  <div>
+  <v-expansion-panels
+    v-model="panel"
+    multiple
+    class="assignment-list-container"
+  >
     <AssignmentCard
       v-for="assignment in assignments"
       :key="assignment.id"
       :assignment="assignment"
     />
-  </div>
+  </v-expansion-panels>
 </template>
 
 <script lang="ts">
@@ -16,6 +20,7 @@ export default Vue.extend({
     AssignmentCard,
   },
   data: () => ({
+    panel: [0, 1, 2],
     assignments: [
       {
         id: 1,
@@ -38,10 +43,8 @@ export default Vue.extend({
         description: "Lorem ipsum blablabla",
         due_date: "March 24, 2021",
       },
-
     ],
   }),
 });
 </script>
-<style>
-</style>
+<style></style>

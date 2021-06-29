@@ -21,7 +21,7 @@ const global_settings = {
   },
 };
 
-interface State {
+export interface State {
   language: Languages;
   theme: Themes;
 }

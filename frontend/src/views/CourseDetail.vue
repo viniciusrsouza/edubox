@@ -32,19 +32,18 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState({
-      course: (state) => state.course.course,
-    }),
+    ...mapState("course", ["course"]),
   },
 
   methods: {
-    ...mapActions(["set_course"]),
+    ...mapActions("course", ["set_course"]),
     teste() {
       console.log(this.$store.state);
     },
   },
 
   async created() {
+    console.log(this.course);
     const id = this.$route.params.id;
     const course = await CoursesService.get(id);
     this.set_course(course);
