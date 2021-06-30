@@ -28,6 +28,7 @@ class PostFileSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     files = PostFileSerializer(
         many=True, required=False, allow_null=True, default=[])
+    files = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -38,6 +39,13 @@ class PostSerializer(serializers.ModelSerializer):
                   'text',
                   'is_pinned',
                   'created_at']
+
+    def get_files(self, instance):
+        files_list = []
+        a = PostFile.objects.filter(post=instance)
+        for i in a:
+            files_list.append(i.id)
+        return files_list
 
     def create(self, validated_data):
         files_data = validated_data.pop('files', None)
