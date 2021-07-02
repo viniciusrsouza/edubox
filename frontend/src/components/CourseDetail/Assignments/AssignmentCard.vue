@@ -15,6 +15,7 @@
         <div class="a-description">
           {{ assignment.description }}
         </div>
+        <div class="a-separator" />
         <div class="a-submissions">
           <input
             ref="file_picker"
@@ -22,11 +23,13 @@
             type="file"
             @change="onGetFile"
           />
-          <v-btn @click="getFile">
-            <v-icon>mdi-plus</v-icon>
-            {{ t("CoursePage.Assignments.NewAssignment") }}
-          </v-btn>
           <div class="a-list">
+            <h1 class="text-body-1 font-weight-medium">
+              {{ $t("CoursePage.Assignments.Submission") }}
+            </h1>
+            <v-btn @click="getFile" icon color="primary" title="adasd">
+              <v-icon>mdi-file-upload-outline</v-icon>
+            </v-btn>
             <v-chip
               v-if="file"
               class="mx-2 a-submission"
@@ -118,9 +121,14 @@ interface Assignment {
 
 .a-content {
   display: grid;
-  grid-template-columns: auto 300px;
-  gap: 4em;
+  grid-template-columns: auto 1px 200px;
+  gap: 2em;
   padding-top: 1em;
+}
+
+.a-separator {
+  width: 100%;
+  background: $hint;
 }
 
 .a-description {
@@ -131,10 +139,8 @@ interface Assignment {
 .a-submissions {
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-end;
 
   .a-list {
-    padding-top: 1em;
     display: inline-flex;
     flex-direction: column;
     gap: 0.5em;
@@ -182,40 +188,3 @@ interface Assignment {
   width: 70%;
 }
 </style>
-
-//
-<v-card>
-//     <v-row class="mb-6">
-//       <v-col class="margin-10" cols="6">
-//         <div>
-//           <h3 class="main-color">
-//             <v-icon class="main-color" x-large>
-//               mdi-file-document-outline </v-icon
-//             >{{ assignment.title }}
-//           </h3>
-//         </div>
-//         <div class="subtitle">
-//           Activity posted at {{ assignment.posted_date }}
-//         </div>
-//         <div class="small-font">
-  //         {{ assignment.description }}
-  //       </div>
-  //     </v-col>
-
-  //     <v-col class="margin-10" cols="5">
-  //       <h3 class="main-color">Due date: {{ assignment.due_date }}</h3>
-  //       <div class="rounded-corner main-color">
-  //         <v-file-input
-  //           class="file-select"
-  //           show-size
-  //           counter
-  //           label="Attach Assignment"
-  //           v-model="file"
-  //         ></v-file-input>
-  //       </div>
-  //       <v-btn @click="submit" block color="primary" class="submit-button">
-  //         Submit
-  //       </v-btn>
-  //     </v-col>
-  //   </v-row>
-  // </v-card>
