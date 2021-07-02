@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from edubox.base.serializers import *
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 import time
 
 
@@ -16,6 +16,17 @@ class PostsListCreate(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+class PostsList(generics.RetrieveAPIView):
+    permission_classes = [AllowAny]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        #if not request.user.is_authenticated:
+        #    return Response(status=status.HTTP_401_UNAUTHORIZED)
+        instance = get_list_or_404(Post, course=kwargs['pk'])
+        serializer = self.get_serializer(instance, many=True)
+        return Response(serializer.data)
 
 class PostDetail(generics.RetrieveAPIView):
     permission_classes = [AllowAny]

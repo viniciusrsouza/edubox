@@ -17,7 +17,7 @@ class User (AbstractUser):
     objects = CustomUserManager()
 
     name = models.CharField(max_length = 200)
-    photo = models.ImageField(upload_to = 'profileImgs', blank=True)
+    photo = models.ImageField(upload_to = 'profileImgs/', blank=True)
 
     def __str__(self):
         return self.email
