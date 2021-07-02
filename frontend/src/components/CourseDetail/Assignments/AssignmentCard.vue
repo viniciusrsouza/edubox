@@ -3,50 +3,40 @@
     <v-expansion-panel-header class="a-header">
       <v-icon class="a-icon" size="32">mdi-file-document-outline</v-icon>
       <div>
-        <h2 class="a-title">Neural Networks Essay</h2>
-        <span class="a-publish-date">published at 12:28, June 20th</span>
+        <h2 class="a-title">{{ assignment.title }}</h2>
+        <span class="a-publish-date">
+          {{ $t_f("CoursePage.Assignments.PublishDate", assignment) }}
+        </span>
       </div>
       <span class="a-due-date">due July 7th</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <div class="a-content">
         <div class="a-description">
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio
-            dicta temporibus dolorem a et tempora excepturi vel mollitia aut
-            deserunt sapiente in consequatur amet accusamus natus earum, minus,
-            esse fuga blanditiis voluptatibus aperiam, suscipit numquam!
-            Consequatur, laborum ab exercitationem similique dolore obcaecati
-            molestiae maiores quas?
-            <br />
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consequuntur veniam sequi, minus facilis et magni, mollitia ipsum
-            quo, saepe possimus maxime. Minus, numquam corrupti quia sit animi,
-            dolor quae qui ut debitis doloremque deleniti. Ad!
-            <br />
-            <br />
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque
-            nesciunt voluptatum repudiandae sequi? Rem, dolorum velit mollitia
-            labore aut cumque iste accusamus autem reiciendis earum!
-          </p>
+          {{ assignment.description }}
         </div>
         <div class="a-submissions">
-          <v-btn>
-            <v-icon>mdi-add</v-icon>
+          <input
+            ref="file_picker"
+            class="d-none"
+            type="file"
+            @change="onGetFile"
+          />
+          <v-btn @click="getFile">
+            <v-icon>mdi-plus</v-icon>
+            {{ t("CoursePage.Assignments.NewAssignment") }}
           </v-btn>
           <div class="a-list">
-            <v-chip class="ma-2 a-submission" close color="primary" outlined>
+            <v-chip
+              v-if="file"
+              class="mx-2 a-submission"
+              close
+              color="primary"
+              outlined
+              @click:close="file = null"
+            >
               <v-icon left> mdi-file-check-outline </v-icon>
-              file-name.pdf
-            </v-chip>
-            <v-chip class="ma-2 a-submission" close color="primary" outlined>
-              <v-icon left> mdi-file-check-outline </v-icon>
-              file-name.pdf
-            </v-chip>
-            <v-chip class="ma-2 a-submission" close color="primary" outlined>
-              <v-icon left> mdi-file-check-outline </v-icon>
-              file-name.pdf
+              {{ file.name }}
             </v-chip>
           </div>
         </div>
@@ -58,10 +48,12 @@
 <script lang="ts">
 import Vue from "vue";
 import t from "../../../locale";
+
 export default Vue.extend({
   data() {
     return {
       file: null,
+      loading: false,
     };
   },
 
@@ -72,7 +64,21 @@ export default Vue.extend({
   },
   methods: {
     t,
-    submit() {
+    getFile() {
+      this.loading = true;
+      window.addEventListener(
+        "focus",
+        () => {
+          this.loading = false;
+        },
+        { once: true }
+      );
+
+      const fp: any = this.$refs.file_picker;
+      fp?.click?.();
+    },
+    onGetFile(e: any) {
+      this.file = e.target.files[0];
       console.log(this.file);
     },
   },
@@ -120,6 +126,19 @@ interface Assignment {
 .a-description {
   text-align: justify;
   text-justify: inter-word;
+}
+
+.a-submissions {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .a-list {
+    padding-top: 1em;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
 }
 
 .submit-button {

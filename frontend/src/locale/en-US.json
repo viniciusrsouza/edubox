@@ -36,7 +36,8 @@
       }
     },
     "Assignments": {
-      "NewAssignment": "New Assignment"
+      "NewAssignment": "New Assignment",
+      "PublishDate": "published at {posted_date}"
     }
   },
   "Auth": {

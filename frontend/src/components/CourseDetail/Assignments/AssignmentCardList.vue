@@ -1,9 +1,5 @@
 <template>
-  <v-expansion-panels
-    v-model="panel"
-    multiple
-    class="assignment-list-container"
-  >
+  <v-expansion-panels multiple class="assignment-list-container">
     <AssignmentCard
       v-for="assignment in assignments"
       :key="assignment.id"
@@ -20,7 +16,6 @@ export default Vue.extend({
     AssignmentCard,
   },
   data: () => ({
-    panel: [0, 1, 2],
     assignments: [
       {
         id: 1,
