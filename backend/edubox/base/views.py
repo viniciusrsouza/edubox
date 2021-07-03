@@ -12,30 +12,32 @@ import time
 
 
 class PostsListCreate(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+
 class PostsList(generics.RetrieveAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        #if not request.user.is_authenticated:
+        # if not request.user.is_authenticated:
         #    return Response(status=status.HTTP_401_UNAUTHORIZED)
         instance = get_list_or_404(Post, course=kwargs['pk'])
         serializer = self.get_serializer(instance, many=True)
         return Response(serializer.data)
 
+
 class PostDetail(generics.RetrieveAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
 
 class CourseListCreate(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = CourseSerializer
 
     def get_queryset(self):
@@ -53,7 +55,7 @@ class CourseListCreate(generics.ListCreateAPIView):
 
 
 class MembershipCreate(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, token):
         related_course = get_object_or_404(Course, code=token)
@@ -78,25 +80,42 @@ class MembershipCreate(APIView):
     '''
 
 class CourseDetail(generics.RetrieveAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = CourseSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
         instance = get_object_or_404(Course, id=kwargs['pk'])
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
 
 class AssignmentListCreate(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
-    queryset = Assignment.objects.all()
+    permission_classes = [IsAuthenticated]
     serializer_class = AssignmentSerializer
+
+    def get_queryset(self):
+        print(self.kwargs)
+        course = self.kwargs['course_pk']
+        return Assignment.objects.filter(course=course)
+
+    def get(self, request, *args, **kwargs):
+        print(request)
+        return super().get(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        obj = get_object_or_404(Course, id=self.kwargs['course_pk'])
+        serializer.save(course=obj)
 
 
 class AssignmentDetail(generics.RetrieveAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = AssignmentSerializer
     queryset = Assignment.objects.all()
 

@@ -2,13 +2,13 @@
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on">
-        {{ t("CoursePage.Assignments.NewAssignment") }}
+        {{ $t("CoursePage.Assignments.NewAssignment") }}
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title>
-        {{ t("CoursePage.Assignments.NewAssignment") }}
+        {{ $t("CoursePage.Assignments.NewAssignment") }}
       </v-card-title>
 
       <div>
@@ -16,12 +16,7 @@
           <v-row no-gutters style="height: 100%">
             <v-col cols="12">
               <v-form>
-                <v-text-field
-                  label="Name"
-                  solo
-                  v-model="this.title"
-                  @change="(e) => (this.title = e)"
-                ></v-text-field>
+                <v-text-field label="Name" solo v-model="title"></v-text-field>
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -56,8 +51,7 @@
                   solo
                   height="300"
                   auto-grow
-                  v-model="this.description"
-                  @change="(e) => (this.description = e)"
+                  v-model="description"
                 ></v-textarea>
               </v-form>
             </v-col>
@@ -76,6 +70,7 @@
           style="width: 20%"
           class="white--text"
           @click="create"
+          :loading="loading"
           >Create</v-btn
         >
       </v-card-actions>
@@ -85,25 +80,30 @@
 
 <script lang="ts">
 import Vue from "vue";
-import t from "../../../locale";
 export default Vue.extend({
   methods: {
-    t,
     create() {
-      const payload = { title: this.title, description: this.description, due_date: this.date };
-      console.log(payload);
-      console.log(this.date);
+      // eslint-disable-next-line no-undef
+      const payload: models.Assignment = {
+        id: 0,
+        title: this.title,
+        description: this.description,
+        deadline: this.date,
+      };
 
+      this.$services.assignment.create(payload).then(() => {
+        //clearing fields
+        this.date = new Date(
+          Date.now() - new Date().getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.title = "";
+        this.description = "";
 
-      //clearing fields
-      this.date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10);
-      this.title = ""; this.description = "";
-
-      //closes dialog
-      //this.dialog = false;
-
+        //closes dialog
+        this.dialog = false;
+      });
     },
   },
   data() {
@@ -116,10 +116,10 @@ export default Vue.extend({
         .substr(0, 10),
       menu: false,
       modal: false,
+      loading: false,
     };
   },
 });
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,15 +1,9 @@
 import api from "./api_axios";
 
-const UserService = {
-  async fetchUser(): Promise<UserResponse> {
+const service: services.UserService = {
+  async fetchUser() {
     return (await api.get("users/")).data;
   },
 };
 
-interface UserResponse {
-  id: number;
-  email: string;
-  name: string;
-}
-
-export default UserService;
+export default service;

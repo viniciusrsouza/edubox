@@ -1,36 +1,23 @@
 import api from "./api_axios";
 
-const CoursesService = {
-  async getAll(): Promise<GetAllResponse> {
+const service: services.CourseService = {
+  async getAll() {
     const params = { limit: 100 };
     return (await api.get("courses/", { params })).data;
   },
 
-  async get(id: string): Promise<Course> {
+  async get(id: string) {
     return (await api.get(`courses/${id}`)).data;
   },
 
-  async create(payload: CreatePayload) {
-    await api.post("courses/", payload);
-    return { success: true };
+  async create(payload) {
+    return (await api.post("courses/", payload)).data;
   },
 
-  async join(code: string) {
+  async join(code) {
     return (await api.post(`membership/${code}`)).data;
   },
 };
-
-interface CreatePayload {
-  title: string;
-  description: string;
-}
-
-interface GetAllResponse {
-  count: number;
-  results: [];
-  next?: string;
-  previous?: string;
-}
 
 export interface Course {
   id: number;
@@ -43,4 +30,4 @@ export interface Course {
   role: string;
 }
 
-export default CoursesService;
+export default service;

@@ -30,7 +30,7 @@
                 mdi-school
               </v-icon>
             </template>
-            <span>{{ t("Home.CourseCard.TeacherTooltip") }}</span>
+            <span>{{ $t("Home.CourseCard.TeacherTooltip") }}</span>
           </v-tooltip>
           {{ course.title }}
           <v-tooltip bottom>
@@ -45,7 +45,7 @@
               </v-icon>
             </template>
             <span>{{
-              `${t("Home.CourseCard.CourseCodeSpotlight")} ${course.code}`
+              `${$t("Home.CourseCard.CourseCodeSpotlight")} ${course.code}`
             }}</span>
           </v-tooltip>
         </div>
@@ -53,7 +53,7 @@
       <div class="description">{{ course.description }}</div>
     </div>
     <div class="assignments">
-      <div class="assignments-title">{{ t("Common.Assignments") }}:</div>
+      <div class="assignments-title">{{ $t("Common.Assignments") }}:</div>
       <Assignment
         v-for="assignment in assignments"
         :key="assignment.id"
@@ -62,7 +62,7 @@
     </div>
     <div class="footer">
       <v-btn class="btn" @click="redirect(course.id)" text>{{
-        t("Home.CourseCard.SeeMore")
+        $t("Home.CourseCard.SeeMore")
       }}</v-btn>
       <Students :students="[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" />
     </div>
@@ -73,12 +73,10 @@
 import Vue from "vue";
 import Assignment from "./Assignment.vue";
 import Students from "./Students.vue";
-import t from "../../locale";
 import { Course } from "@/services/courses_service";
 export default Vue.extend({
   name: "Card",
   methods: {
-    t,
     onClickStar: function () {
       this.favorite = !this.favorite;
     },
