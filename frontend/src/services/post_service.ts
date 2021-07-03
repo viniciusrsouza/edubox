@@ -9,33 +9,16 @@ const service: services.PostService = {
   async getAll() {
     const course = this._getCourse();
     const params = { limit: 100 };
-    return (await api.get(`posts/${course.id}/`, { params })).data;
+    return (await api.get(`courses/${course.id}/posts`, { params })).data;
   },
   async get(id) {
     const course = this._getCourse();
-    return (await api.get(`posts/${course.id}/${id}`)).data;
+    return (await api.get(`courses/${course.id}/posts/${id}`)).data;
   },
   async create(payload) {
     const course = this._getCourse();
-    return (await api.post(`posts/`, payload)).data;
+    return (await api.post(`courses/${course.id}/posts/`, payload)).data;
   },
-  async getAllWithAuthor() {
-    const course = this._getCourse();
-    const params = { limit: 100 };
-    return (await api.get(`posts/${course.id}/`, { params })).data;
-  }
 };
-
-export interface PostWithAuthor {
-  id: number;
-  author: {
-    id: number;
-    email: string;
-    name: string;
-  };
-  course: number;
-  title: string;
-  text: string;
-}
 
 export default service;

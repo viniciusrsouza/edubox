@@ -9,19 +9,13 @@ export interface Assignment {
 
 export interface Post {
   id: number;
-  author: number;
-  course: number;
-  title: string;
-  text: string;
-}
-
-export interface PostWithAuthor {
-  id: number;
-  author: {
-    id: number;
-    email: string;
-    name: string;
-  };
+  author:
+    | number
+    | {
+        id: number;
+        email: string;
+        name: string;
+      };
   course: number;
   title: string;
   text: string;

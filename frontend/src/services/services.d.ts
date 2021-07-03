@@ -14,7 +14,7 @@ export interface GetListResponse<T> {
 }
 
 export interface Service<T> {
-  getAll(): Promise<GetListResponse<T>>;
+  getAll(includes: string | null = null): Promise<GetListResponse<T>>;
   get(id: string): Promise<T>;
   create(payload: T): Promise<T>;
 }
@@ -26,7 +26,6 @@ export interface AssignmentService extends Service<models.Assignment> {
 
 export interface PostService extends Service<models.Post> {
   _getCourse(): models.Course;
-  getAllWithAuthor(): Promise<[PostWithAuthor]>;
 }
 
 // courses
@@ -48,7 +47,7 @@ export interface UserService {
 
 export interface MemberService {
   _getCourse(): models.Course;
-  getAll(): Promise<[models.Member]>
+  getAll(): Promise<[models.Member]>;
 }
 
 export as namespace services;

@@ -25,6 +25,7 @@ class PostFileSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -32,10 +33,11 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['id',
                   'author',
                   'course',
+                  'title',
                   'text',
                   'is_pinned',
-                  'is_assignment',
                   'created_at']
+        read_only_fields = ['author', 'id', 'created_at', 'course']
 
     '''
     def get_files(self, instance):
@@ -76,6 +78,7 @@ class PostSerializer(serializers.ModelSerializer):
                 PostFile.objects.create(post=instance, **file)
 
         return instance
+
 
 class PostListSerializer(serializers.ModelSerializer):
     '''
@@ -140,11 +143,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
         fields = ['id',
-                  'title',
-                  'course',
-                  'description',
-                  'deadline',
-                  'grade']
+                  'deadline']
 
     def create(self, validated_data):
         return Assignment.objects.create(**validated_data)
@@ -157,6 +156,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class MembershipSerializer(serializers.ModelSerializer):
 
     name = serializers.SerializerMethodField('get_name')
@@ -168,14 +168,13 @@ class MembershipSerializer(serializers.ModelSerializer):
 
     def get_email(self, instance):
         return instance.user.email
-    
+
     def get_photo(self, instance):
         try:
             photo = instance.user.photo_url
             return photo
         except ValueError as x:
             return "null"
-    
 
     class Meta:
         model = Membership

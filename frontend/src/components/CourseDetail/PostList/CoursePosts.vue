@@ -7,15 +7,16 @@
 <script lang="ts">
 import Vue from "vue";
 import PostCard from "./Post.vue";
-import PostService, { PostWithAuthor } from "../../../services/post_service";
+import PostService from "../../../services/post_service";
+import { Post } from "@/models/models";
 export default Vue.extend({
   components: { PostCard },
   name: "CoursePosts",
 
-  mounted: function (){
-    PostService.getAllWithAuthor().then((res) => {
-      this.posts.push(...res);
-    })
+  mounted: function () {
+    PostService.getAll().then((res) => {
+      this.posts.push(...res.results);
+    });
   },
 
   props: {
@@ -23,7 +24,7 @@ export default Vue.extend({
   },
 
   data: () => ({
-    posts: [] as PostWithAuthor[],
+    posts: [] as Post[],
   }),
 });
 </script>
