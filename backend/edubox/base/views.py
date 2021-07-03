@@ -16,11 +16,8 @@ class PostsListCreate(generics.ListCreateAPIView):
     def get_queryset(self):
         return Post.objects.filter(course=self.kwargs['course'])
 
-    def post(self, request, *args, **kwargs):
-        get_object_or_404(Course, members=request.user, id=kwargs['course'])
-        return super().post(request, *args, **kwargs)
-
     def get(self, request, *args, **kwargs):
+        self.serializer_class = PostListSerializer
         return super().get(request, *args, **kwargs)
 
     def perform_create(self, serializer):

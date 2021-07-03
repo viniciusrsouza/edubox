@@ -27,6 +27,19 @@ class PostFileSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id',
+                  'author',
+                  'course',
+                  'title',
+                  'text',
+                  'is_pinned',
+                  'created_at']
+        read_only_fields = ['author', 'id', 'created_at', 'course']
+
+
+class PostListSerializer(serializers.ModelSerializer):
     author = UserSerializer()
 
     class Meta:
@@ -39,65 +52,6 @@ class PostSerializer(serializers.ModelSerializer):
                   'is_pinned',
                   'created_at']
         read_only_fields = ['author', 'id', 'created_at', 'course']
-
-    '''
-    def get_files(self, instance):
-        files_list = []
-        a = PostFile.objects.filter(post=instance)
-        for i in a:
-            files_list.append(i.id)
-        return files_list
-    '''
-
-    def create(self, validated_data):
-        files_data = validated_data.pop('files', None)
-
-        post = Post.objects.create(**validated_data)
-        if files_data:
-            for file_data in files_data:
-                PostFile.objects.create(post=post, **file_data)
-        return post
-
-    def update(self, instance, validated_data):
-
-        instance.text = validated_data.get('text', instance.text)
-        instance.text = validated_data.get('email', instance.email)
-        instance.text = validated_data.get('email', instance.email)
-        instance.text = validated_data.get('email', instance.email)
-        instance.text = validated_data.get('email', instance.email)
-
-        files = validated_data.pop('files')
-        files_serializer = self.fields['files']
-        for file in files:
-            file_id = file.get('id', None)
-            if file_id:
-                file_obj = PostFile.objects.get(id=file_id)
-                file['post'] = instance.id
-                files_serializer.update(file_obj, **file)
-                file_obj.save()
-            else:
-                PostFile.objects.create(post=instance, **file)
-
-        return instance
-
-
-class PostListSerializer(serializers.ModelSerializer):
-    '''
-    files = PostFileSerializer(
-        many=True, required=False, allow_null=True, default=[])
-    files = serializers.SerializerMethodField()
-    '''
-    author = UserSerializer()
-
-    class Meta:
-        model = Post
-        fields = ['id',
-                  'author',
-                  'course',
-                  'text',
-                  'is_pinned',
-                  'is_assignment',
-                  'created_at']
 
 
 class CourseSerializer(serializers.ModelSerializer):

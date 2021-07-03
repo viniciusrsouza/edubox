@@ -13,7 +13,7 @@ from rest_framework import status
 User = get_user_model()
 
 
-class CreateAndRetrieveAuthUserView(generics.CreateAPIView, generics.RetrieveAPIView):
+class CreateAndRetrieveAuthUserView(generics.CreateAPIView, generics.RetrieveAPIView, generics.UpdateAPIView):
     permission_classes = [AllowAny]
     model = User
     raise_exception = True
@@ -43,6 +43,13 @@ class CreateAndRetrieveAuthUserView(generics.CreateAPIView, generics.RetrieveAPI
         instance = request.user
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+    def get_object(self):
+        return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        self.serializer_class = UserSerializer
+        return super().update(request, *args, **kwargs)
 
     class Meta:
         model = User
