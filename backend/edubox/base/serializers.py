@@ -27,9 +27,11 @@ class PostFileSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = UserSerializer()
 
     class Meta:
         model = Post
+        depth = 1
         fields = ['id',
                   'author',
                   'course',

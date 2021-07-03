@@ -22,9 +22,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (['id',
+                   'photo',
                    'email',
-                   'name',])
+                   'name', ])
 
     def create(self, validated_data):
         return User.objects.create(**validated_data)
-    
