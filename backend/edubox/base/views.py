@@ -6,9 +6,7 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from edubox.base.serializers import *
-from django.db.models import Q
-from django.shortcuts import render, get_object_or_404, get_list_or_404
-import time
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 
 class PostsListCreate(generics.ListCreateAPIView):

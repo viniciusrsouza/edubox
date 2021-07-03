@@ -1,10 +1,6 @@
 export interface Assignment {
   id: number;
-  title: string;
-  course?: boolean;
-  description?: string;
   deadline?: string;
-  grade?: number;
 }
 
 export interface Post {
@@ -16,6 +12,7 @@ export interface Post {
         email: string;
         name: string;
       };
+  assignment: null | Assignment;
   course: number;
   title: string;
   text: string;

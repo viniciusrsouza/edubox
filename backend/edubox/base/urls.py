@@ -8,9 +8,10 @@ urlpatterns = [
 
     path("courses/<int:pk>/", view=views.CourseDetail.as_view()),
 
-    path("courses/<int:course>/posts/", view=views.PostsListCreate.as_view()),
+    path("courses/<int:course>/posts/$", view=views.PostsListCreate.as_view()),
 
-    path("courses/<int:course>/posts/", view=views.PostsRetrieve.as_view()),
+    path("courses/<int:course>/posts/<int:pk>",
+         view=views.PostsRetrieve.as_view()),
 
     path("courses/<int:course_pk>/assignments/",
          view=views.AssignmentListCreate.as_view()),
