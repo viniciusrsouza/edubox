@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from edubox.users.serializers import UserSerializer
+from edubox.users.models import *
 from edubox.base.models import *
 from django.utils import crypto
 
@@ -136,5 +137,41 @@ class AssignmentSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.grade = validated_data.get('grade', instance.grade)
+        instance.save()
+        return instance
+
+class MembershipSerializer(serializers.ModelSerializer):
+
+    name = serializers.SerializerMethodField('get_name')
+    email = serializers.SerializerMethodField('get_email')
+    photo = serializers.SerializerMethodField('get_photo')
+
+    def get_name(self, instance):
+        return instance.user.name
+
+    def get_email(self, instance):
+        return instance.user.email
+    
+    def get_photo(self, instance):
+        try:
+            photo = instance.user.photo_url
+            return photo
+        except ValueError as x:
+            return "null"
+    
+
+    class Meta:
+        model = Membership
+        fields = ['id',
+                  'name',
+                  'email',
+                  'photo',
+                  'course',
+                  'role']
+
+    def create(self, validated_data):
+        return Membership.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
         instance.save()
         return instance
