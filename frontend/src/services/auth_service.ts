@@ -1,7 +1,7 @@
 import api from "./api_axios";
 
-const AuthService = {
-  async login(payload: LoginPayload) {
+const service: services.AuthService = {
+  async login(payload) {
     const res = await api.post("token/", payload);
 
     localStorage.setItem("access", res.data.access);
@@ -9,22 +9,10 @@ const AuthService = {
     return { success: true };
   },
 
-  async signup(payload: SignupPayload) {
+  async signup(payload) {
     await api.post("users/", payload);
     return { success: true };
   },
 };
 
-interface LoginPayload {
-  email: string;
-  password: string;
-}
-
-interface SignupPayload {
-  name: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-}
-
-export default AuthService;
+export default service;

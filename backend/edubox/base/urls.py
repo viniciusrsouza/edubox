@@ -19,9 +19,11 @@ urlpatterns = [
 
     path("courses/<int:pk>/", view=views.CourseDetail.as_view()),
 
-    path("assignments/", view=views.AssignmentListCreate.as_view()),
+    path("courses/<int:course_pk>/assignments/",
+         view=views.AssignmentListCreate.as_view()),
 
-    path("assignments/<int:pk>/", view=views.AssignmentDetail.as_view()),
+    path("courses/<int:course_pk>/assignments/<int:pk>/",
+         view=views.AssignmentDetail.as_view()),
 
     path("membership/<str:token>", view=views.MembershipCreate.as_view()),
 

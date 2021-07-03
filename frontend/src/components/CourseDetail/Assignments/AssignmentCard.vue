@@ -24,12 +24,14 @@
             @change="onGetFile"
           />
           <div class="a-list">
-            <h1 class="text-body-1 font-weight-medium">
-              {{ $t("CoursePage.Assignments.Submission") }}
-            </h1>
-            <v-btn @click="getFile" icon color="primary" title="adasd">
-              <v-icon>mdi-file-upload-outline</v-icon>
-            </v-btn>
+            <div class="d-flex align-center">
+              <h1 class="text-body-1 font-weight-medium">
+                {{ $t("CoursePage.Assignments.Submission") }}
+              </h1>
+              <v-btn @click="getFile" icon color="primary" title="adasd">
+                <v-icon>mdi-file-upload-outline</v-icon>
+              </v-btn>
+            </div>
             <v-chip
               v-if="file"
               class="mx-2 a-submission"
@@ -39,7 +41,7 @@
               @click:close="file = null"
             >
               <v-icon left> mdi-file-check-outline </v-icon>
-              {{ file.name }}
+              {{ filename }}
             </v-chip>
           </div>
         </div>
@@ -82,7 +84,17 @@ export default Vue.extend({
     },
     onGetFile(e: any) {
       this.file = e.target.files[0];
-      console.log(this.file);
+    },
+  },
+  computed: {
+    filename() {
+      if (this.file) {
+        const [name, extension] = this.file.name.split(".");
+        return `${
+          name.length > 8 ? `${name.slice(0, 8)}...` : `${name}.`
+        }${extension}`;
+      }
+      return "";
     },
   },
 });
@@ -139,12 +151,6 @@ interface Assignment {
 .a-submissions {
   display: inline-flex;
   flex-direction: column;
-
-  .a-list {
-    display: inline-flex;
-    flex-direction: column;
-    gap: 0.5em;
-  }
 }
 
 .submit-button {

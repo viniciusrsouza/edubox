@@ -4,7 +4,9 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import Locale from "./plugins/locale";
+import Services from "./plugins/services";
 
+Vue.use(Services);
 Vue.use(Locale);
 
 new Vue({
