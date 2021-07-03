@@ -31,7 +31,6 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        depth = 1
         fields = ['id',
                   'author',
                   'course',
