@@ -10,7 +10,7 @@
             <v-list-item-title class="text-color-blue">
               {{ course.title }}
             </v-list-item-title>
-            <v-list-item-subtitle> {{professor.name}} </v-list-item-subtitle>
+            <v-list-item-subtitle> {{ professor.name }} </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -60,10 +60,37 @@
         <v-list-item-icon>
           <v-icon class="text-color-blue">mdi-plus-circle-outline</v-icon>
         </v-list-item-icon>
-        <v-list-item-title class="text-color-blue"
+        <v-list-item-title class="text-color-blue" @click="updateDialog"
           >Join new course</v-list-item-title
         >
       </v-list-item>
+      <v-dialog
+        width="500"
+        v-model="course_dialog"
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-card-title dark>
+            {{ t("Home.CourseList.JoinCourse") }}
+          </v-card-title>
+          <v-card-text>
+            <div class="course-dialog-text pb-2">
+              {{ t("Home.CourseList.InsertCode") }}
+            </div>
+            <text-form
+              :inputPlaceholder="t('Home.CourseList.CourseCode')"
+              icon="mdi-alphabetical"
+              v-model="course_code"
+            />
+          </v-card-text>
+          <v-card-actions class="justify-end">
+            <v-btn text @click="dismissDialog">{{ t("Common.Dismiss") }}</v-btn>
+            <v-btn text @click="joinCourse" class="course-dialog-btn-join">
+              {{ t("Home.CourseList.Join") }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <CourseListItem
         v-for="course in courses"
         :key="course.id"
@@ -80,6 +107,9 @@ import CoursesService, { Course } from "../../../services/courses_service";
 import MemberService, { Member } from "../../../services/members_service";
 import { redirect } from "../../../router/utils";
 import { mapState } from "vuex";
+import t from "../../../locale";
+import TextForm from "../../registration/TextForm.vue";
+
 export default Vue.extend({
   name: "SideBar",
   computed: {
@@ -87,8 +117,26 @@ export default Vue.extend({
   },
   components: {
     CourseListItem,
+    TextForm
   },
-  methods: { redirect },
+  methods: {
+    t,
+    redirect,
+    joinCourse() {
+      CoursesService.join(this.course_code).then((res) => {
+        console.log(res);
+      });
+    },
+
+    dismissDialog() {
+      this.course_dialog = false;
+      this.course_code = "";
+    },
+
+    updateDialog(){
+        this.course_dialog = true;
+    },
+  },
 
   mounted: function () {
     CoursesService.getAllForSideBar().then(({ results }) => {
@@ -106,8 +154,9 @@ export default Vue.extend({
     courses: [] as Course[],
     professors: [] as Member[],
     professor: {} as Member,
+    course_dialog: false,
+    course_code: "",
   }),
-
 });
 </script>
 >
