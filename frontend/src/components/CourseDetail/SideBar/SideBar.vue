@@ -92,30 +92,12 @@ export default Vue.extend({
   mounted: function(){
     CoursesService.getAllForSideBar().then(({results}) => {
       console.log(results);
+      this.courses.push(...results);
     });
   },
 
   data: () => ({
-    courses: [
-      {
-        id: 1,
-        title: "Artificial Intelligence",
-        professor: "Prof. Harold",
-        picture: "https://randomuser.me/api/portraits/men/33.jpg",
-      },
-      {
-        id: 2,
-        title: "Calculus II",
-        professor: "Prof. Mary Jones",
-        picture: "https://randomuser.me/api/portraits/women/60.jpg",
-      },
-      {
-        id: 3,
-        title: "Computer Graphics",
-        professor: "Prof. Christine Silas",
-        picture: "https://randomuser.me/api/portraits/women/0.jpg",
-      },
-    ],
+    courses: [] as Course[],
   }),
 });
 </script>

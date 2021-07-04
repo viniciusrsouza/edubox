@@ -48,6 +48,7 @@ export interface UserService {
 export interface MemberService {
   _getCourse(): models.Course;
   getAll(): Promise<[models.Member]>;
+  getProfessorByCourse(courseId: number): Promise<models.Member>;
 }
 
 export as namespace services;

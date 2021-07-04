@@ -5,15 +5,17 @@
     </v-list-item-avatar>
     <v-list-item-content>
       <v-list-item-title class="text-color-blue">
-        {{course.title}}
+        {{ course.title }}
       </v-list-item-title>
-      <v-list-item-subtitle> {{course.professor}} </v-list-item-subtitle>
+      <v-list-item-subtitle> {{ course.professor }} </v-list-item-subtitle>
     </v-list-item-content>
   </v-list-item>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { Course } from "../../../services/courses_service";
+import MemberService from "../../../services/members_service";
 export default Vue.extend({
   name: "DisciplineListItem",
   props: {
@@ -21,13 +23,19 @@ export default Vue.extend({
       type: Object as () => Course,
     },
   },
+
+  mounted: function () {
+    MemberService.getProfessorByCourse(this.course.id).then((res) => {
+      console.log(res);
+    });
+  },
 });
-interface Course {
-  id: number;
-  title: string;
-  professor: string;
-  picture: string;
-}
+// interface Course {
+//   id: number;
+//   title: string;
+//   professor: string;
+//   picture: string;
+// }
 </script>
 
 <style>
