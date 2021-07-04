@@ -1,5 +1,5 @@
 export interface Assignment {
-  id: number;
+  id?: number;
   deadline?: string;
 }
 

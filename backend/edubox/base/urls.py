@@ -24,5 +24,5 @@ urlpatterns = [
     path("membership/<int:user>/<int:course>/<int:role>",
          view=views.MembershipCreate.as_view()),
 
-    path("memberlist/<int:pk>", view=views.MemberList.as_view()),
+    path("courses/<int:pk>/members", view=views.MemberList.as_view()),
 ]

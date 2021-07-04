@@ -1,5 +1,6 @@
 from edubox.base.serializers import *
 from edubox.base.models import *
+from django_filters import rest_framework as filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
@@ -147,30 +148,11 @@ class AssignmentDetail(generics.RetrieveAPIView):
 # list all members of a course
 
 
-class MemberList(generics.RetrieveAPIView):
+class MemberList(generics.ListAPIView):
     permission_classes = [AllowAny]
-    queryset = Post.objects.all()
     serializer_class = MembershipSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ['role']
 
-    def retrieve(self, request, *args, **kwargs):
-        # if not request.user.is_authenticated:
-        #    return Response(status=status.HTTP_401_UNAUTHORIZED)
-        instance = get_list_or_404(Membership, course=kwargs['pk'])
-        serializer = self.get_serializer(instance, many=True)
-        return Response(serializer.data)
-
-
-class Test3(APIView):
-    permission_classes = [AllowAny]
-
-    def put(self, request, *args, **kwargs):
-        course = Course.objects.get(id=kwargs['pk'])
-        course.title = request.data.get('title')
-        course.description = request.data.get('description')
-        course.save()
-        return Response(course)
-
-
-class Test(APIView):
-    def get(self, request, *args, **kwargs):
-        return Response({'success': True})
+    def get_queryset(self):
+        return Membership.objects.filter(course=self.kwargs['pk'])
