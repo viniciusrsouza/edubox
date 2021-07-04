@@ -80,13 +80,18 @@ class MembershipCreate(APIView):
     '''
 
 class CourseDetail(generics.RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     serializer_class = CourseSerializer
 
     def retrieve(self, request, *args, **kwargs):
         instance = get_object_or_404(Course, id=kwargs['pk'])
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+    
+    def delete(self, request, *args, **kwargs):
+        instance = get_object_or_404(Course, id = kwargs['pk'])
+        instance.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 class AssignmentListCreate(generics.ListCreateAPIView):
