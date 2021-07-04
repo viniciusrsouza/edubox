@@ -106,7 +106,7 @@
             color="#3B5C78"
             style="width: 20%"
             class="white--text"
-            @click="createAssignment"
+            @click="createPost"
             :loading="loading"
             >Create</v-btn
           >
@@ -135,28 +135,56 @@ export default Vue.extend({
   },
   methods: {
     createPost() {
-      // eslint-disable-next-line no-undef
-      const payload: models.Post = {
-        id: 0,
-        author: this.userId,
-        course: this.course.id,
-        title: this.title,
-        text: this.description,
-      };
+      if (!this.isAssignment) {
+        // eslint-disable-next-line no-undef
+        const payload: models.Post = {
+          id: 0,
+          author: this.userId,
+          course: this.course.id,
+          title: this.title,
+          text: this.description,
+        };
 
-      this.$services.post.create(payload).then(() => {
-        //clearing fields
-        this.date = new Date(
-          Date.now() - new Date().getTimezoneOffset() * 60000
-        )
-          .toISOString()
-          .substr(0, 10);
-        this.title = "";
-        this.description = "";
+        this.$services.post.create(payload).then(() => {
+          //clearing fields
+          this.date = new Date(
+            Date.now() - new Date().getTimezoneOffset() * 60000
+          )
+            .toISOString()
+            .substr(0, 10);
+          this.title = "";
+          this.description = "";
 
-        //closes dialog
-        this.dialog = false;
-      });
+          //closes dialog
+          this.dialog = false;
+        });
+      }
+      else{
+        // eslint-disable-next-line no-undef
+        const payload ={
+          id: 0,
+          author: this.userId,
+          course: this.course.id,
+          title: this.title,
+          text: this.description,
+          is_assignment: true,
+          deadline: new Date(this.date).toISOString(),
+        };
+
+        this.$services.post.create(payload).then(() => {
+          //clearing fields
+          this.date = new Date(
+            Date.now() - new Date().getTimezoneOffset() * 60000
+          )
+            .toISOString()
+            .substr(0, 10);
+          this.title = "";
+          this.description = "";
+
+          //closes dialog
+          this.dialog = false;
+        });
+      }
     },
     createAssignment() {
       // eslint-disable-next-line no-undef
@@ -165,7 +193,7 @@ export default Vue.extend({
         title: this.title,
         course: this.course.id,
         description: this.description,
-        deadline: new Date(this.date).toISOString()
+        deadline: new Date(this.date).toISOString(),
       };
 
       console.log(new Date(this.date).toISOString());
