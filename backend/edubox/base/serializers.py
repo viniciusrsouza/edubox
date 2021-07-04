@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from edubox.users.serializers import UserSerializer
+from edubox.users.models import *
 from edubox.base.models import *
 from django.utils import crypto
 

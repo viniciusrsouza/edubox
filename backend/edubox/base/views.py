@@ -16,9 +16,6 @@ class PostsListCreate(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
 
 class PostsList(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
@@ -66,7 +63,21 @@ class MembershipCreate(APIView):
             user=request.user, course=related_course, role=3)
         m.save()
         return Response(status=status.HTTP_201_CREATED)
-
+    
+    def  put(self, request, user, course, role):
+        member = get_object_or_404(Membership, user=user, course=course)
+        member.role = role
+        member.save()
+        return Response(status=status.HTTP_200_OK)
+    '''
+    def put(self, request, user, course):
+        member = get_object_or_404(Membership, user=user, course=course)
+        serializer = Membership(member, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    '''
 
 class CourseDetail(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
@@ -113,6 +124,18 @@ class AssignmentDetail(generics.RetrieveAPIView):
     serializer_class = AssignmentSerializer
     queryset = Assignment.objects.all()
 
+#list all members of a course
+class MemberList(generics.RetrieveAPIView):
+    permission_classes = [AllowAny]
+    queryset = Post.objects.all()
+    serializer_class = MembershipSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        #if not request.user.is_authenticated:
+        #    return Response(status=status.HTTP_401_UNAUTHORIZED)
+        instance = get_list_or_404(Membership, course=kwargs['pk'])
+        serializer = self.get_serializer(instance, many=True)
+        return Response(serializer.data)
 
 class Test2(APIView):
     permission_classes = [AllowAny]
