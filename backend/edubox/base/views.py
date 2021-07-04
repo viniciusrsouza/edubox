@@ -20,6 +20,15 @@ class PostsListCreate(generics.ListCreateAPIView):
         self.serializer_class = PostListSerializer
         return super().get(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        if 'assignment' in request.data:
+            assignment = request.data['assignment']
+            assignment_serializer = AssignmentSerializer(data=assignment)
+            assignment_serializer.is_valid(raise_exception=True)
+            assignment = assignment_serializer.save()
+            request.data.update({'assignment': assignment.id})
+        return super().post(request, *args, **kwargs)
+
     def perform_create(self, serializer):
         course = get_object_or_404(Course,
                                    members=self.request.user,
@@ -149,49 +158,6 @@ class MemberList(generics.RetrieveAPIView):
         instance = get_list_or_404(Membership, course=kwargs['pk'])
         serializer = self.get_serializer(instance, many=True)
         return Response(serializer.data)
-
-
-class Test2(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-        courses = Course.objects.all()
-
-        # Criar objeto
-        #course_created = Course.objects.create(title="Sd", description="sistemas distribuidos")
-        #print(course_created.title, course_created.description)
-
-        # alterar objeto
-        #course = Course.objects.get(id=2)
-        #course.title = "Compiladores 2"
-        #course.description = "Continua chata pra caralho"
-        # course.save()
-
-        # deletar
-        #course = Course.objects.get(id=1)
-        # course.delete()
-
-        # filter
-        #courses = Course.objects.filter(id__in=[2,3])
-        # for course in courses:
-        #    course.title = course.title + ' alo'
-        #    course.save()
-        # courses = Course.objects.filter(author__org__name)
-        # autor = Author.objects.filter(nome='caio')
-
-        return Response({"Ola": "Ok", "data": CourseSerializer(courses, many=True).data})
-
-    def post(self, request, *args, **kwargs):
-        # CRIANDO NA MÃO
-        # print(request.data)
-        #course_created = Course.objects.create(**request.data)
-        # ou Course.objects.create(title=request.data.get('title), description=request.data.get('description'))
-
-        # CRIANDO COM SERIALIZER
-        course_serializer = CourseSerializer(data=request.data)
-        course_serializer.is_valid(raise_exception=True)
-        course_serializer.save()
-        return Response({})
 
 
 class Test3(APIView):

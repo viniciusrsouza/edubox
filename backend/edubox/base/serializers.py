@@ -26,34 +26,6 @@ class PostFileSerializer(serializers.ModelSerializer):
         return instance
 
 
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ['id',
-                  'author',
-                  'course',
-                  'title',
-                  'text',
-                  'is_pinned',
-                  'created_at']
-        read_only_fields = ['author', 'id', 'created_at', 'course']
-
-
-class PostListSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
-
-    class Meta:
-        model = Post
-        fields = ['id',
-                  'author',
-                  'course',
-                  'title',
-                  'text',
-                  'is_pinned',
-                  'created_at']
-        read_only_fields = ['author', 'id', 'created_at', 'course']
-
-
 class CourseSerializer(serializers.ModelSerializer):
     role = serializers.SerializerMethodField()
 
@@ -144,3 +116,33 @@ class MembershipSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.save()
         return instance
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id',
+                  'author',
+                  'course',
+                  'title',
+                  'text',
+                  'assignment',
+                  'created_at']
+        read_only_fields = ['author', 'id', 'created_at', 'course']
+
+
+class PostListSerializer(serializers.ModelSerializer):
+    author = UserSerializer()
+    assignment = AssignmentSerializer()
+
+    class Meta:
+        model = Post
+        fields = ['id',
+                  'author',
+                  'course',
+                  'title',
+                  'text',
+                  'assignment',
+                  'created_at']
+        read_only_fields = ['author', 'id',
+                            'created_at', 'course', 'assignment']
