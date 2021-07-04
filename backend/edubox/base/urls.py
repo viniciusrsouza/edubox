@@ -13,7 +13,7 @@ urlpatterns = [
 
     path("posts/", view=views.PostsListCreate.as_view()),
 
-    path("posts/<int:pk>/", view=views.PostsList.as_view()),
+    path("posts/<int:course>/", view=views.PostsList.as_view()),
 
     path("courses/", view=views.CourseListCreate.as_view()),
 

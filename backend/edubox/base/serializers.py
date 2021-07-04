@@ -25,28 +25,26 @@ class PostFileSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
 class PostSerializer(serializers.ModelSerializer):
-    files = PostFileSerializer(
-        many=True, required=False, allow_null=True, default=[])
-    files = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ['id',
-                  'files',
                   'author',
                   'course',
                   'text',
                   'is_pinned',
+                  'is_assignment',
                   'created_at']
 
+    '''
     def get_files(self, instance):
         files_list = []
         a = PostFile.objects.filter(post=instance)
         for i in a:
             files_list.append(i.id)
         return files_list
+    '''
 
     def create(self, validated_data):
         files_data = validated_data.pop('files', None)
@@ -78,6 +76,24 @@ class PostSerializer(serializers.ModelSerializer):
                 PostFile.objects.create(post=instance, **file)
 
         return instance
+
+class PostListSerializer(serializers.ModelSerializer):
+    '''
+    files = PostFileSerializer(
+        many=True, required=False, allow_null=True, default=[])
+    files = serializers.SerializerMethodField()
+    '''
+    author = UserSerializer()
+
+    class Meta:
+        model = Post
+        fields = ['id',
+                  'author',
+                  'course',
+                  'text',
+                  'is_pinned',
+                  'is_assignment',
+                  'created_at']
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -163,11 +179,9 @@ class MembershipSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Membership
-        fields = ['id',
-                  'name',
+        fields = ['name',
                   'email',
                   'photo',
-                  'course',
                   'role']
 
     def create(self, validated_data):

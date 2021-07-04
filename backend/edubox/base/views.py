@@ -12,20 +12,20 @@ import time
 
 
 class PostsListCreate(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
 class PostsList(generics.RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostListSerializer
 
     def retrieve(self, request, *args, **kwargs):
         # if not request.user.is_authenticated:
         #    return Response(status=status.HTTP_401_UNAUTHORIZED)
-        instance = get_list_or_404(Post, course=kwargs['pk'])
+        instance = get_list_or_404(Post, course=kwargs['course'])
         serializer = self.get_serializer(instance, many=True)
         return Response(serializer.data)
 
