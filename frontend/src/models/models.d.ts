@@ -7,6 +7,14 @@ export interface Assignment {
   grade?: number;
 }
 
+export interface Post {
+  id: number;
+  author: number;
+  course: number;
+  title: string;
+  description: string;
+}
+
 export interface Course {
   id: number;
   title: string;

@@ -22,6 +22,10 @@ export interface AssignmentService extends Service<models.Assignment> {
   _getCourse(): models.Course;
 }
 
+export interface PostService extends Service<models.Post> {
+  _getCourse(): models.Course;
+}
+
 // courses
 export interface CourseService extends Service<models.Course> {
   join(code: string): any;

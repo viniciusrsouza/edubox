@@ -8,6 +8,7 @@ declare module "vue/types/vue" {
       course: services.CourseService;
       auth: services.AuthService;
       user: services.UserService;
+      post: services.PostService;
     };
   }
 }
