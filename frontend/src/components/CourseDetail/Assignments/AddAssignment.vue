@@ -1,11 +1,5 @@
 <template>
   <v-dialog v-model="dialog" width="500">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on">
-        {{ $t("CoursePage.Assignments.NewAssignment") }}
-      </v-btn>
-    </template>
-
     <v-card>
       <v-card-title>
         {{ $t("CoursePage.Assignments.NewAssignment") }}

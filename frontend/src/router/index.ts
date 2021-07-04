@@ -46,8 +46,7 @@ const routes: Array<RouteConfig> = [
           {
             path: "activity",
             components: {
-              default:  AssignmentCardList,
-              calendar: AddAssignment
+              default: AssignmentCardList,
             },
           },
         ],

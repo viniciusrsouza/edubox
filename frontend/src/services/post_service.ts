@@ -6,10 +6,11 @@ const service: services.PostService = {
     const state: any = store.state;
     return state.course.course as models.Course;
   },
-  async getAll() {
+  async getAll(includes) {
     const course = this._getCourse();
     const params = { limit: 100 };
-    return (await api.get(`courses/${course.id}/posts`, { params })).data;
+    return (await api.get(`courses/${course.id}/posts?${includes}`, { params }))
+      .data;
   },
   async get(id) {
     const course = this._getCourse();

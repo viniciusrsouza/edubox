@@ -16,6 +16,7 @@ export interface Post {
   course: number;
   title: string;
   text: string;
+  created_at?: string;
 }
 
 export interface Course {

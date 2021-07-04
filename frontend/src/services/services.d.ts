@@ -45,9 +45,10 @@ export interface UserService {
   fetchUser(): Promise<models.User>;
 }
 
+// member
 export interface MemberService {
   _getCourse(): models.Course;
-  getAll(): Promise<[models.Member]>;
+  getAll(): Promise<GetListResponse<T>>;
 }
 
 export as namespace services;

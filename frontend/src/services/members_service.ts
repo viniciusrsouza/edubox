@@ -8,8 +8,8 @@ const service: services.MemberService = {
   },
   async getAll() {
     const course = this._getCourse();
-    // const params = { limit: 100 };
-    return (await api.get(`memberlist/${course.id}`)).data;
+    const params = { limit: 100 };
+    return (await api.get(`courses/${course.id}/members`, { params })).data;
   },
 };
 

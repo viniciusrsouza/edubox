@@ -3,17 +3,23 @@
     <v-expansion-panel-header class="a-header">
       <v-icon class="a-icon" size="32">mdi-file-document-outline</v-icon>
       <div>
-        <h2 class="a-title">{{ assignment.title }}</h2>
+        <h2 class="a-title">{{ post.title }}</h2>
         <span class="a-publish-date">
-          {{ $t_f("CoursePage.Assignments.PublishDate", assignment) }}
+          {{
+            $t_f("CoursePage.Assignments.PublishDate", {
+              created_at: pretty_date(post.created_at),
+            })
+          }}
         </span>
       </div>
-      <span class="a-due-date">due July 7th</span>
+      <span class="a-due-date"
+        >due {{ pretty_date(post.assignment.deadline) }}</span
+      >
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <div class="a-content">
         <div class="a-description">
-          {{ assignment.description }}
+          {{ post.text }}
         </div>
         <div class="a-separator" />
         <div class="a-submissions">
@@ -51,6 +57,7 @@
 </template>
 
 <script lang="ts">
+import { Post } from "@/models/models";
 import Vue from "vue";
 import t from "../../../locale";
 
@@ -63,8 +70,8 @@ export default Vue.extend({
   },
 
   props: {
-    assignment: {
-      type: Object as () => Assignment,
+    post: {
+      type: Object as () => Post,
     },
   },
   methods: {
@@ -85,6 +92,11 @@ export default Vue.extend({
     onGetFile(e: any) {
       this.file = e.target.files[0];
     },
+    pretty_date(date: string) {
+      const d = new Date(date);
+      const p_date = `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`;
+      return p_date;
+    },
   },
   computed: {
     filename() {
@@ -98,14 +110,6 @@ export default Vue.extend({
     },
   },
 });
-
-interface Assignment {
-  id: number;
-  title: string;
-  posted_date: string;
-  description: string;
-  due_date: string;
-}
 </script>
 
 <style lang="scss" scoped>

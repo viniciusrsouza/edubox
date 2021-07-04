@@ -14,10 +14,10 @@ export default Vue.extend({
     Person,
   },
 
-  mounted: function(){
-    MemberService.getAll().then((res)=> {
-      this.people.push(...res);
-    })
+  mounted: function () {
+    MemberService.getAll().then((res) => {
+      this.people.push(...res.results);
+    });
   },
 
   data: () => ({

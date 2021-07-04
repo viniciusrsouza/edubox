@@ -1,14 +1,11 @@
 <template>
   <v-expansion-panels multiple class="assignment-list-container">
-    <AssignmentCard
-      v-for="assignment in assignments"
-      :key="assignment.id"
-      :assignment="assignment"
-    />
+    <AssignmentCard v-for="post in assignments" :key="post.id" :post="post" />
   </v-expansion-panels>
 </template>
 
 <script lang="ts">
+import { Post } from "@/models/models";
 import Vue from "vue";
 import AssignmentCard from "./AssignmentCard.vue";
 export default Vue.extend({
@@ -16,33 +13,12 @@ export default Vue.extend({
     AssignmentCard,
   },
   data: () => ({
-    assignments: [
-      {
-        id: 1,
-        title: "Activity 1",
-        posted_date: "11:24",
-        description:
-          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus voluptatibus voluptates facere, nihil quis corrupti. Odit natus sequi commodi ex delectus et voluptatem eaque, quo voluptas est nobis ut tenetur velit laudantium molestias placeat culpa eligendi repellendus aliquid tempora doloribus! Consequatur nam consequuntur corrupti inventore asperiores ut reiciendis voluptatem qui.",
-        due_date: "March 24, 2021",
-      },
-      {
-        id: 2,
-        title: "Activity 2",
-        posted_date: "11:24",
-        description:
-          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus voluptatibus voluptates facere, nihil quis corrupti. Odit natus sequi commodi ex delectus et voluptatem eaque, quo voluptas est nobis ut tenetur velit laudantium molestias placeat culpa eligendi repellendus aliquid tempora doloribus! Consequatur nam consequuntur corrupti inventore asperiores ut reiciendis voluptatem qui.",
-        due_date: "March 24, 2021",
-      },
-      {
-        id: 3,
-        title: "Activity 3",
-        posted_date: "11:24",
-        description:
-          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus voluptatibus voluptates facere, nihil quis corrupti. Odit natus sequi commodi ex delectus et voluptatem eaque, quo voluptas est nobis ut tenetur velit laudantium molestias placeat culpa eligendi repellendus aliquid tempora doloribus! Consequatur nam consequuntur corrupti inventore asperiores ut reiciendis voluptatem qui.",
-        due_date: "March 24, 2021",
-      },
-    ],
+    assignments: [] as Post[],
   }),
+  async created() {
+    const res = await this.$services.post.getAll("assignment");
+    this.assignments = res.results;
+  },
 });
 </script>
 <style></style>

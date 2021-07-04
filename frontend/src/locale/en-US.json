@@ -39,7 +39,7 @@
       "AddFile": "Add File",
       "Submission": "Submission",
       "NewAssignment": "New Assignment",
-      "PublishDate": "published at {posted_date}"
+      "PublishDate": "published at {created_at}"
     }
   },
   "Auth": {

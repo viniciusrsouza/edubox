@@ -11,11 +11,14 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 
 
 class PostsListCreate(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        return Post.objects.filter(course=self.kwargs['course'])
+        queryset = Post.objects.filter(course=self.kwargs['course'])
+        if 'assignment' in self.request.query_params:
+            return queryset.exclude(assignment__isnull=True)
+        return queryset
 
     def get(self, request, *args, **kwargs):
         self.serializer_class = PostListSerializer
@@ -25,9 +28,9 @@ class PostsListCreate(generics.ListCreateAPIView):
         if 'assignment' in request.data:
             assignment = request.data['assignment']
             assignment_serializer = AssignmentSerializer(data=assignment)
-            assignment_serializer.is_valid(raise_exception=True)
-            assignment = assignment_serializer.save()
-            request.data.update({'assignment': assignment.id})
+            if assignment_serializer.is_valid():
+                assignment = assignment_serializer.save()
+                request.data.update({'assignment': assignment.id})
         return super().post(request, *args, **kwargs)
 
     def perform_create(self, serializer):
