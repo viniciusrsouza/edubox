@@ -117,6 +117,7 @@
 </template>
 
 <script lang="ts">
+import { Assignment } from "@/models/models";
 import Vue from "vue";
 import { mapState } from "vuex";
 import UserService from "../../../services/user_service";
@@ -135,69 +136,23 @@ export default Vue.extend({
   },
   methods: {
     createPost() {
-      if (!this.isAssignment) {
-        // eslint-disable-next-line no-undef
-        const payload: models.Post = {
-          id: 0,
-          author: this.userId,
-          course: this.course.id,
-          title: this.title,
-          text: this.description,
-        };
-
-        this.$services.post.create(payload).then(() => {
-          //clearing fields
-          this.date = new Date(
-            Date.now() - new Date().getTimezoneOffset() * 60000
-          )
-            .toISOString()
-            .substr(0, 10);
-          this.title = "";
-          this.description = "";
-
-          //closes dialog
-          this.dialog = false;
-        });
-      }
-      else{
-        // eslint-disable-next-line no-undef
-        const payload ={
-          id: 0,
-          author: this.userId,
-          course: this.course.id,
-          title: this.title,
-          text: this.description,
-          is_assignment: true,
+      let assignment: Assignment | null = null;
+      if (this.isAssignment) {
+        assignment = {
           deadline: new Date(this.date).toISOString(),
         };
-
-        this.$services.post.create(payload).then(() => {
-          //clearing fields
-          this.date = new Date(
-            Date.now() - new Date().getTimezoneOffset() * 60000
-          )
-            .toISOString()
-            .substr(0, 10);
-          this.title = "";
-          this.description = "";
-
-          //closes dialog
-          this.dialog = false;
-        });
       }
-    },
-    createAssignment() {
       // eslint-disable-next-line no-undef
-      const payload: models.Assignment = {
+      const payload: models.Post = {
         id: 0,
-        title: this.title,
+        author: this.userId,
         course: this.course.id,
-        description: this.description,
-        deadline: new Date(this.date).toISOString(),
+        title: this.title,
+        text: this.description,
+        assignment: assignment,
       };
 
-      console.log(new Date(this.date).toISOString());
-      this.$services.assignment.create(payload).then(() => {
+      this.$services.post.create(payload).then(() => {
         //clearing fields
         this.date = new Date(
           Date.now() - new Date().getTimezoneOffset() * 60000
