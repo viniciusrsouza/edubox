@@ -87,6 +87,7 @@ export default Vue.extend({
       const payload = {
         name: this.full_name,
         email: this.email,
+        photo: null,
         password: this.password,
         confirm_password: this.confirm_password,
       };

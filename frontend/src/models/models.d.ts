@@ -12,7 +12,19 @@ export interface Post {
   author: number;
   course: number;
   title: string;
-  description: string;
+  text: string;
+}
+
+export interface PostWithAuthor {
+  id: number;
+  author: {
+    id: number;
+    email: string;
+    name: string;
+  };
+  course: number;
+  title: string;
+  text: string;
 }
 
 export interface Course {
@@ -42,6 +54,13 @@ export interface User {
   id: number;
   email: string;
   name: string;
+}
+
+export interface Member {
+  id: number;
+  email: string;
+  name: string;
+  picture: string;
 }
 
 export as namespace models;

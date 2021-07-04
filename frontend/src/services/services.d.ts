@@ -1,3 +1,5 @@
+import { PostWithAuthor } from "@/models/models";
+
 // common
 export interface SuccessResponse {
   success: boolean;
@@ -24,6 +26,7 @@ export interface AssignmentService extends Service<models.Assignment> {
 
 export interface PostService extends Service<models.Post> {
   _getCourse(): models.Course;
+  getAllWithAuthor(): Promise<[PostWithAuthor]>;
 }
 
 // courses
@@ -40,6 +43,11 @@ export interface AuthService {
 // user
 export interface UserService {
   fetchUser(): Promise<models.User>;
+}
+
+export interface MemberService {
+  _getCourse(): models.Course;
+  getAll(): Promise<[models.Member]>
 }
 
 export as namespace services;

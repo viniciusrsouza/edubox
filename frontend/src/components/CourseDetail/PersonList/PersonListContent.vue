@@ -7,11 +7,19 @@
 <script lang="ts">
 import Vue from "vue";
 import Person from "./Person.vue";
+import MemberService from "../../../services/members_service";
 export default Vue.extend({
   name: "PersonListContent",
   components: {
     Person,
   },
+
+  mounted: function(){
+    MemberService.getAll().then((res)=> {
+      console.log(res);
+    })
+  },
+
   data: () => ({
     people: [
       {

@@ -5,7 +5,7 @@
         <v-icon>mdi-thumb-up-outline</v-icon>
       </v-col>
       <v-col cols="10">
-        <p>{{ post.content }}</p>
+        <p>{{ post.text }}</p>
       </v-col>
     </v-row>
     <v-list-item>
@@ -13,10 +13,10 @@
         <v-img src="@/assets/undraw/undraw_male_avatar_323b.svg"></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title> by {{ post.created_by }} </v-list-item-title>
+        <v-list-item-title> by {{ post.author.name }} </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-
+    <!-- 
     <div v-if="postResponses.length > 1">
       <div v-if="showLess === true" class="align-right">
         <a class="a-margin" @click="showLess = !showLess">{{
@@ -49,20 +49,20 @@
         :key="response.id"
         :response="response"
       />
-    </div>
+    </div> -->
   </v-card>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import PostResponse from "./PostResponse.vue";
+// import PostResponse from "./PostResponse.vue";
 import t from "../../../locale";
 export default Vue.extend({
-  name: "Post",
+  name: "PostCard",
 
-  components: {
-    PostResponse,
-  },
+  // components: {
+  //   PostResponse,
+  // },
   props: {
     post: {
       type: Object as () => Post,
@@ -73,44 +73,49 @@ export default Vue.extend({
   },
   data: () => ({
     showLess: true,
-    postResponses: [
-      {
-        id: 1,
-        content:
-          "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
-        created_by: "Vinicius Souza",
-        created_at: "03/02/2021 13:53:00",
-      },
-      {
-        id: 2,
-        content:
-          "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
-        created_by: "Matheus Mosca",
-        created_at: "03/02/2021 13:53:00",
-      },
-      {
-        id: 3,
-        content:
-          "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
-        created_by: "Matheus Mosca",
-        created_at: "03/02/2021 13:53:00",
-      },
-      {
-        id: 4,
-        content:
-          "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
-        created_by: "Matheus Mosca",
-        created_at: "03/02/2021 13:53:00",
-      },
-    ],
+    // postResponses: [
+    //   {
+    //     id: 1,
+    //     content:
+    //       "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
+    //     created_by: "Vinicius Souza",
+    //     created_at: "03/02/2021 13:53:00",
+    //   },
+    //   {
+    //     id: 2,
+    //     content:
+    //       "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
+    //     created_by: "Matheus Mosca",
+    //     created_at: "03/02/2021 13:53:00",
+    //   },
+    //   {
+    //     id: 3,
+    //     content:
+    //       "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
+    //     created_by: "Matheus Mosca",
+    //     created_at: "03/02/2021 13:53:00",
+    //   },
+    //   {
+    //     id: 4,
+    //     content:
+    //       "Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection. It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.",
+    //     created_by: "Matheus Mosca",
+    //     created_at: "03/02/2021 13:53:00",
+    //   },
+    // ],
   }),
 });
 
 interface Post {
   id: number;
-  content: string;
-  created_by: string;
-  created_at: string;
+  author: {
+    id: number;
+    email: string;
+    name: string;
+  };
+  course: number;
+  title: string;
+  text: string;
 }
 </script>
 

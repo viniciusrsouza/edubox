@@ -141,7 +141,7 @@ export default Vue.extend({
         author: this.userId,
         course: this.course.id,
         title: this.title,
-        description: this.description,
+        text: this.description,
       };
 
       this.$services.post.create(payload).then(() => {
