@@ -17,6 +17,11 @@ const service: services.CourseService = {
   async join(code) {
     return (await api.post(`membership/${code}`)).data;
   },
+
+  async getAllForSideBar() {
+    const params = { limit: 3 };
+    return (await api.get("courses/", { params })).data;
+  },
 };
 
 export interface Course {

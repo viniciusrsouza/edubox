@@ -8,9 +8,16 @@ const service: services.MemberService = {
   },
   async getAll() {
     const course = this._getCourse();
-    const params = { limit: 100 };
-    return (await api.get(`memberlist/${course.id}/`, { params })).data;
+    // const params = { limit: 100 };
+    return (await api.get(`memberlist/${course.id}`)).data;
   },
 };
+
+export interface Member {
+  id: number;
+  email: string;
+  name: string;
+  picture: string;
+}
 
 export default service;

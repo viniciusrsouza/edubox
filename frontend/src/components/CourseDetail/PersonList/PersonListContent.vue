@@ -7,7 +7,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Person from "./Person.vue";
-import MemberService from "../../../services/members_service";
+import MemberService, { Member } from "../../../services/members_service";
 export default Vue.extend({
   name: "PersonListContent",
   components: {
@@ -16,49 +16,12 @@ export default Vue.extend({
 
   mounted: function(){
     MemberService.getAll().then((res)=> {
-      console.log(res);
+      this.people.push(...res);
     })
   },
 
   data: () => ({
-    people: [
-      {
-        id: 1,
-        name: "Julia Maria",
-        email: "julia@gmail.com",
-        picture_source: "https://randomuser.me/api/portraits/women/10.jpg",
-      },
-      {
-        id: 2,
-        name: "Julia Maria",
-        email: "julia@gmail.com",
-        picture_source: "https://randomuser.me/api/portraits/women/10.jpg",
-      },
-      {
-        id: 3,
-        name: "Julia Maria",
-        email: "julia@gmail.com",
-        picture_source: "https://randomuser.me/api/portraits/women/10.jpg",
-      },
-      {
-        id: 4,
-        name: "Julia Maria",
-        email: "julia@gmail.com",
-        picture_source: "https://randomuser.me/api/portraits/women/10.jpg",
-      },
-      {
-        id: 5,
-        name: "Julia Maria",
-        email: "julia@gmail.com",
-        picture_source: "https://randomuser.me/api/portraits/women/10.jpg",
-      },
-      {
-        id: 6,
-        name: "Julia Maria",
-        email: "julia@gmail.com",
-        picture_source: "https://randomuser.me/api/portraits/women/10.jpg",
-      },
-    ],
+    people: [] as Member[],
   }),
 });
 </script>

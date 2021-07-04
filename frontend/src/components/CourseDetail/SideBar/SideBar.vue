@@ -76,6 +76,7 @@
 <script lang="ts">
 import Vue from "vue";
 import CourseListItem from "./CourseListItem.vue";
+import CoursesService, {Course} from "../../../services/courses_service";
 import { redirect } from "../../../router/utils";
 import { mapState } from "vuex";
 export default Vue.extend({
@@ -87,6 +88,13 @@ export default Vue.extend({
     CourseListItem,
   },
   methods: { redirect },
+
+  mounted: function(){
+    CoursesService.getAllForSideBar().then(({results}) => {
+      console.log(results);
+    });
+  },
+
   data: () => ({
     courses: [
       {

@@ -2,7 +2,7 @@
   <v-card class="bottom-distance">
     <v-list-item>
       <v-list-item-avatar>
-        <v-img :src="person.picture_source"></v-img>
+        <v-img :src="person.photo"></v-img>
       </v-list-item-avatar>
       <v-list-item-title>{{ person.name }}</v-list-item-title>
       <v-list-item-title>Email: {{ person.email }}</v-list-item-title>
@@ -22,10 +22,10 @@ export default Vue.extend({
 });
 
 interface Person {
-  id: number;
   name: string;
   email: string;
-  picture_source: string;
+  photo: string;
+  role: number;
 }
 </script>
 

@@ -32,6 +32,7 @@ export interface PostService extends Service<models.Post> {
 // courses
 export interface CourseService extends Service<models.Course> {
   join(code: string): any;
+  getAllForSideBar(): Promise<GetListResponse<models.Course>>;
 }
 
 // auth
