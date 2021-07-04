@@ -3,7 +3,7 @@
     <v-card>
       <NewPost />
     </v-card>
-    <CoursePosts :key="course" />
+    <CoursePosts :key="course.id" />
   </div>
 </template>
 
@@ -24,5 +24,4 @@ export default Vue.extend({
 });
 </script>
 
-<style>
-</style>
+<style></style>

@@ -12,9 +12,9 @@ const service: services.MemberService = {
     return (await api.get(`courses/${course.id}/members`, { params })).data;
   },
 
-  async getProfessorByCourse(courseId){
+  async getProfessorByCourse(courseId) {
     return (await api.get(`courses/${courseId}/members?role=1`)).data;
-  }
+  },
 };
 
 export interface Member {

@@ -1,13 +1,13 @@
 <template>
   <v-list-item class="px-2" two-line link @click="redirectToCourse">
     <v-list-item-avatar>
-      <v-img :src="this.professor.photo"></v-img>
+      <v-img :src="person_photo"></v-img>
     </v-list-item-avatar>
     <v-list-item-content>
       <v-list-item-title class="text-color-blue">
         {{ course.title }}
       </v-list-item-title>
-      <v-list-item-subtitle> {{ this.professor.name }} </v-list-item-subtitle>
+      <v-list-item-subtitle> {{ professor.name }} </v-list-item-subtitle>
     </v-list-item-content>
   </v-list-item>
 </template>
@@ -41,11 +41,21 @@ export default Vue.extend({
     },
   },
 
-  mounted: function () {
+  created: function () {
     MemberService.getProfessorByCourse(this.course.id).then(({ results }) => {
       this.professors.push(...results);
       this.professor = this.professors[0];
     });
+  },
+
+  computed: {
+    person_photo() {
+      const _ = this.professor.photo
+        ? `http://localhost:5001${this.professor.photo}`
+        : require("../../../assets/undraw/undraw_male_avatar_323b.svg");
+      console.log(_);
+      return _;
+    },
   },
 });
 // interface Course {

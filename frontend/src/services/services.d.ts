@@ -48,12 +48,10 @@ export interface UserService {
 // member
 export interface MemberService {
   _getCourse(): models.Course;
-<<<<<<< HEAD
   getAll(): Promise<GetListResponse<T>>;
-=======
-  getAll(): Promise<[models.Member]>;
-  getProfessorByCourse(courseId: number): Promise<GetListResponse<models.Member>>;
->>>>>>> 733a63e5e9423c7bfb5281670df7ff1309fab765
+  getProfessorByCourse(
+    courseId: number
+  ): Promise<GetListResponse<models.Member>>;
 }
 
 export as namespace services;

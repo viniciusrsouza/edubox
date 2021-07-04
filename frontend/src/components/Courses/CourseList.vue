@@ -31,11 +31,11 @@
     <div class="card-list-content" v-if="getCourses().length > 0">
       <Card v-for="course in getCourses()" :key="course.id" :course="course" />
     </div>
-    <div class="card-list-no-data" v-else>
+    <!-- <div class="card-list-no-data" v-else>
       <div class="no-data-text">
         {{ t("Home.CourseList.NoData") }}
       </div>
-    </div>
+    </div> -->
 
     <v-dialog
       width="500"
