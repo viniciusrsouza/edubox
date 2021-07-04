@@ -10,7 +10,7 @@
             <v-list-item-title class="text-color-blue">
               {{ course.title }}
             </v-list-item-title>
-            <v-list-item-subtitle> Prof. Rosanne Wiseman </v-list-item-subtitle>
+            <v-list-item-subtitle> {{professor.name}} </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -76,7 +76,8 @@
 <script lang="ts">
 import Vue from "vue";
 import CourseListItem from "./CourseListItem.vue";
-import CoursesService, {Course} from "../../../services/courses_service";
+import CoursesService, { Course } from "../../../services/courses_service";
+import MemberService, { Member } from "../../../services/members_service";
 import { redirect } from "../../../router/utils";
 import { mapState } from "vuex";
 export default Vue.extend({
@@ -89,16 +90,24 @@ export default Vue.extend({
   },
   methods: { redirect },
 
-  mounted: function(){
-    CoursesService.getAllForSideBar().then(({results}) => {
+  mounted: function () {
+    CoursesService.getAllForSideBar().then(({ results }) => {
       console.log(results);
       this.courses.push(...results);
+    });
+
+    MemberService.getProfessorByCourse(this.course.id).then(({ results }) => {
+      this.professors.push(...results);
+      this.professor = this.professors[0];
     });
   },
 
   data: () => ({
     courses: [] as Course[],
+    professors: [] as Member[],
+    professor: {} as Member,
   }),
+
 });
 </script>
 >
