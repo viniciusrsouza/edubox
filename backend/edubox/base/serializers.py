@@ -155,8 +155,6 @@ class AssignmentSerializer(serializers.ModelSerializer):
         instance.grade = validated_data.get('grade', instance.grade)
         instance.save()
         return instance
-<<<<<<< HEAD
-=======
 
 class MembershipSerializer(serializers.ModelSerializer):
 
@@ -191,4 +189,3 @@ class MembershipSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.save()
         return instance
->>>>>>> 449e394... update PostSerializer
