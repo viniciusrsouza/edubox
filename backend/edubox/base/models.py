@@ -3,21 +3,19 @@ from edubox.users.models import User
 
 
 class Assignment(models.Model):
-    title = models.CharField(max_length=50)
-    course = models.ForeignKey('base.Course', on_delete=models.CASCADE, null=True)
-    #teacher = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    student = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, related_name='student')
-    description = models.TextField(max_length=500, default='')
+    post = models.ForeignKey('base.Post', on_delete=models.CASCADE, null=True)
     deadline = models.DateTimeField(blank=True, null=True)
-    grade = models.FloatField(default=0.00)
 
-    def __str__(self):
-        return self.title
+class Submission(models.Model):
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey('base.Post', on_delete=models.CASCADE, null=True)
+    file_path = models.FileField(upload_to='submissionFile/', blank=True, null=True)
+    grade = models.FloatField()
 
-class AssignmentFile(models.Model):
-    assignment = models.ForeignKey('base.Assignment', on_delete=models.CASCADE)
-    file_path = models.FileField(upload_to='uploads/')
+    class Meta:
+        unique_together = ('user', 'post')
 
+'''
 class GradedAssignment(models.Model):
     student = models.ForeignKey('users.User', on_delete=models.CASCADE)
     assignment = models.ForeignKey(
@@ -26,6 +24,7 @@ class GradedAssignment(models.Model):
 
     def __str__(self):
         return self.student.username
+'''
 
 
 class Choice(models.Model):
@@ -85,9 +84,11 @@ class PostFile(models.Model):
 
 
 class Post(models.Model):
+    title = models.CharField(max_length=200, blank=True, null=True)
     course = models.ForeignKey(
         'base.Course', on_delete=models.CASCADE, blank=True, null=True)
     text = models.CharField(max_length=10000, blank=True, null=True)
     author = models.ForeignKey('users.User', on_delete=models.CASCADE)
     is_pinned = models.BooleanField(default=False, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    is_assignment = models.BooleanField(default=False, blank=True, null=True)

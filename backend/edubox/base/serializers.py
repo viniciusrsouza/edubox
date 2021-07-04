@@ -24,28 +24,26 @@ class PostFileSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
 class PostSerializer(serializers.ModelSerializer):
-    files = PostFileSerializer(
-        many=True, required=False, allow_null=True, default=[])
-    files = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ['id',
-                  'files',
                   'author',
                   'course',
                   'text',
                   'is_pinned',
+                  'is_assignment',
                   'created_at']
 
+    '''
     def get_files(self, instance):
         files_list = []
         a = PostFile.objects.filter(post=instance)
         for i in a:
             files_list.append(i.id)
         return files_list
+    '''
 
     def create(self, validated_data):
         files_data = validated_data.pop('files', None)
@@ -77,6 +75,24 @@ class PostSerializer(serializers.ModelSerializer):
                 PostFile.objects.create(post=instance, **file)
 
         return instance
+
+class PostListSerializer(serializers.ModelSerializer):
+    '''
+    files = PostFileSerializer(
+        many=True, required=False, allow_null=True, default=[])
+    files = serializers.SerializerMethodField()
+    '''
+    author = UserSerializer()
+
+    class Meta:
+        model = Post
+        fields = ['id',
+                  'author',
+                  'course',
+                  'text',
+                  'is_pinned',
+                  'is_assignment',
+                  'created_at']
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -139,3 +155,40 @@ class AssignmentSerializer(serializers.ModelSerializer):
         instance.grade = validated_data.get('grade', instance.grade)
         instance.save()
         return instance
+<<<<<<< HEAD
+=======
+
+class MembershipSerializer(serializers.ModelSerializer):
+
+    name = serializers.SerializerMethodField('get_name')
+    email = serializers.SerializerMethodField('get_email')
+    photo = serializers.SerializerMethodField('get_photo')
+
+    def get_name(self, instance):
+        return instance.user.name
+
+    def get_email(self, instance):
+        return instance.user.email
+    
+    def get_photo(self, instance):
+        try:
+            photo = instance.user.photo_url
+            return photo
+        except ValueError as x:
+            return "null"
+    
+
+    class Meta:
+        model = Membership
+        fields = ['name',
+                  'email',
+                  'photo',
+                  'role']
+
+    def create(self, validated_data):
+        return Membership.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.save()
+        return instance
+>>>>>>> 449e394... update PostSerializer
