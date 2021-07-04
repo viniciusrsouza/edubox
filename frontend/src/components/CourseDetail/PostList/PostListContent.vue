@@ -3,7 +3,7 @@
     <v-card>
       <NewPost />
     </v-card>
-    <CoursePosts/>
+    <CoursePosts :key="course" />
   </div>
 </template>
 
@@ -11,10 +11,15 @@
 import Vue from "vue";
 import NewPost from "./NewPost.vue";
 import CoursePosts from "./CoursePosts.vue";
+import { mapState } from "vuex";
 export default Vue.extend({
   components: {
     NewPost,
     CoursePosts,
+  },
+
+  computed: {
+    ...mapState("course", ["course"]),
   },
 });
 </script>

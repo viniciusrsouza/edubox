@@ -10,7 +10,7 @@
             <v-list-item-title class="text-color-blue">
               {{ course.title }}
             </v-list-item-title>
-            <v-list-item-subtitle> Prof. Rosanne Wiseman </v-list-item-subtitle>
+            <v-list-item-subtitle> {{ professor.name }} </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -60,10 +60,37 @@
         <v-list-item-icon>
           <v-icon class="text-color-blue">mdi-plus-circle-outline</v-icon>
         </v-list-item-icon>
-        <v-list-item-title class="text-color-blue"
+        <v-list-item-title class="text-color-blue" @click="updateDialog"
           >Join new course</v-list-item-title
         >
       </v-list-item>
+      <v-dialog
+        width="500"
+        v-model="course_dialog"
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-card-title dark>
+            {{ t("Home.CourseList.JoinCourse") }}
+          </v-card-title>
+          <v-card-text>
+            <div class="course-dialog-text pb-2">
+              {{ t("Home.CourseList.InsertCode") }}
+            </div>
+            <text-form
+              :inputPlaceholder="t('Home.CourseList.CourseCode')"
+              icon="mdi-alphabetical"
+              v-model="course_code"
+            />
+          </v-card-text>
+          <v-card-actions class="justify-end">
+            <v-btn text @click="dismissDialog">{{ t("Common.Dismiss") }}</v-btn>
+            <v-btn text @click="joinCourse" class="course-dialog-btn-join">
+              {{ t("Home.CourseList.Join") }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <CourseListItem
         v-for="course in courses"
         :key="course.id"
@@ -76,9 +103,13 @@
 <script lang="ts">
 import Vue from "vue";
 import CourseListItem from "./CourseListItem.vue";
-import CoursesService, {Course} from "../../../services/courses_service";
+import CoursesService, { Course } from "../../../services/courses_service";
+import MemberService, { Member } from "../../../services/members_service";
 import { redirect } from "../../../router/utils";
 import { mapState } from "vuex";
+import t from "../../../locale";
+import TextForm from "../../registration/TextForm.vue";
+
 export default Vue.extend({
   name: "SideBar",
   computed: {
@@ -86,36 +117,45 @@ export default Vue.extend({
   },
   components: {
     CourseListItem,
+    TextForm
   },
-  methods: { redirect },
+  methods: {
+    t,
+    redirect,
+    joinCourse() {
+      CoursesService.join(this.course_code).then((res) => {
+        console.log(res);
+      });
+    },
 
-  mounted: function(){
-    CoursesService.getAllForSideBar().then(({results}) => {
+    dismissDialog() {
+      this.course_dialog = false;
+      this.course_code = "";
+    },
+
+    updateDialog(){
+        this.course_dialog = true;
+    },
+  },
+
+  mounted: function () {
+    CoursesService.getAllForSideBar().then(({ results }) => {
       console.log(results);
+      this.courses.push(...results);
+    });
+
+    MemberService.getProfessorByCourse(this.course.id).then(({ results }) => {
+      this.professors.push(...results);
+      this.professor = this.professors[0];
     });
   },
 
   data: () => ({
-    courses: [
-      {
-        id: 1,
-        title: "Artificial Intelligence",
-        professor: "Prof. Harold",
-        picture: "https://randomuser.me/api/portraits/men/33.jpg",
-      },
-      {
-        id: 2,
-        title: "Calculus II",
-        professor: "Prof. Mary Jones",
-        picture: "https://randomuser.me/api/portraits/women/60.jpg",
-      },
-      {
-        id: 3,
-        title: "Computer Graphics",
-        professor: "Prof. Christine Silas",
-        picture: "https://randomuser.me/api/portraits/women/0.jpg",
-      },
-    ],
+    courses: [] as Course[],
+    professors: [] as Member[],
+    professor: {} as Member,
+    course_dialog: false,
+    course_code: "",
   }),
 });
 </script>
